@@ -1,0 +1,8 @@
+[network]
+  name = "private"
+
+[backup]
+  directory = "/home/tyler/drive"
+
+[homeServer]
+  directory = "/home/tyler/homeserver"
