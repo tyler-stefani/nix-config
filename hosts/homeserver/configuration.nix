@@ -59,6 +59,7 @@
 
   environment.systemPackages = with pkgs; [
     git
+    git-crypt
     lazygit
     chezmoi
     eza

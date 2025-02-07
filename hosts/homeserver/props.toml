@@ -2,7 +2,8 @@
   name = "private"
 
 [backup]
-  directory = "/home/tyler/drive"
+  apps.directory = "/home/tyler/backup/apps"
+  data.directory = "/home/tyler/backup/data"
 
 [homeServer]
   directory = "/home/tyler/homeserver"

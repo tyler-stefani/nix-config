@@ -28,7 +28,14 @@
           in
           nixpkgs.lib.nixosSystem {
             system = system;
-            specialArgs = { inherit inputs outputs props; };
+            specialArgs = {
+              inherit
+                self
+                inputs
+                outputs
+                props
+                ;
+            };
             modules = [
               ./hosts/homeserver/configuration.nix
               ./modules
