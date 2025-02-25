@@ -10,7 +10,7 @@
           "/var/run/docker.sock:/var/run/docker.sock"
         ];
         networks = [
-          props.network.name
+          props.networks.proxy.name
         ];
       };
     };

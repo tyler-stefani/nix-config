@@ -18,7 +18,7 @@
         "${props.homeServer.directory}/nginx/letsencrypt:/etc/letsencrypt"
       ];
       networks = [
-        props.network.name
+        props.networks.proxy.name
       ];
     };
   };
