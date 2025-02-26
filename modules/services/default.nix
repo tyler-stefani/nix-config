@@ -1,6 +1,6 @@
 {
   imports = [
     ./portainer.nix
-    ./backup.nix
+    ./restic.nix
   ];
 }
