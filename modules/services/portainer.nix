@@ -1,17 +1,31 @@
-{ props, ... }:
-
+{ lib, config, ... }:
+with lib;
 {
-  virtualisation.oci-containers = {
-    containers = {
+
+  options = {
+    portainer = {
+      enable = mkEnableOption "a container manager";
+      dataDir = mkOption {
+        type = types.str;
+      };
+    };
+  };
+
+  config = mkIf config.portainer.enable {
+    virtualisation.oci-containers = {
       containers = {
-        image = "portainer/portainer-ce:latest";
-        volumes = [
-          "${props.homeServer.directory}/portainer/data:/data"
-          "/var/run/docker.sock:/var/run/docker.sock"
-        ];
-        networks = [
-          props.networks.proxy.name
-        ];
+        containers = {
+          image = "portainer/portainer-ce:latest";
+          volumes = [
+            "${config.portainer.dataDir}/portainer/data:/data"
+            "/var/run/docker.sock:/var/run/docker.sock"
+          ];
+          networks =
+            [ ]
+            ++ (lists.optionals config.containerNetworks.bridge.enable [
+              config.containerNetworks.bridge.name
+            ]);
+        };
       };
     };
   };
