@@ -77,6 +77,40 @@
     flake = "/home/tyler/nix-config";
   };
 
+  neovim.enable = true;
+
+  tailscale.enable = true;
+  containerNetworks = {
+    bridge = {
+      enable = true;
+      name = "private";
+    };
+    ipvlan = {
+      enable = true;
+    };
+  };
+  pihole = {
+    enable = true;
+    dataDir = "/home/tyler/homeserver";
+    ip = "192.168.0.200";
+  };
+  nginx = {
+    enable = true;
+    dataDir = "/home/tyler/homeserver";
+  };
+
+  portainer = {
+    enable = true;
+    dataDir = "/home/tyler/homeserver";
+  };
+  restic = {
+    enable = true;
+    paths = [
+      "/home/tyler/backup/apps"
+      "/home/tyler/backup/data"
+    ];
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

@@ -24,7 +24,6 @@
         homeserver =
           let
             inherit (self) outputs;
-            props = builtins.fromTOML (builtins.readFile "${self}/hosts/homeserver/props.toml");
           in
           nixpkgs.lib.nixosSystem {
             system = system;
@@ -33,7 +32,6 @@
                 self
                 inputs
                 outputs
-                props
                 ;
             };
             modules = [
