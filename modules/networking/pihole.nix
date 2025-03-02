@@ -6,23 +6,21 @@
 }:
 with lib;
 let
-  cfg = config.pihole;
-  vlan = config.containerNetworks.ipvlan;
+  cfg = config.services.piholeOCI;
+  vlan = config.networking.oci.networks.ipvlan;
 in
 {
-  options = {
-    pihole = {
-      enable = mkEnableOption "Enables Pi-hole via oci container";
-      ip = mkOption {
-        type = types.str;
-      };
-      dataDir = mkOption {
-        type = types.str;
-      };
-      timeZone = mkOption {
-        type = types.str;
-        default = "America/Chicago";
-      };
+  options.services.piholeOCI = {
+    enable = mkEnableOption "Pi-hole via oci container";
+    ip = mkOption {
+      type = types.str;
+    };
+    dataDir = mkOption {
+      type = types.str;
+    };
+    timeZone = mkOption {
+      type = types.str;
+      default = "America/Chicago";
     };
   };
 

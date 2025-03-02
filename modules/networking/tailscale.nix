@@ -1,17 +1,12 @@
 { config, lib, ... }:
-
+let
+  cfg = config.services.tailscale;
+in
 {
-
-  options = {
-    tailscale.enable = lib.mkEnableOption "Whether to add this machine to the tailnet";
-  };
-
-  config = lib.mkIf config.tailscale.enable {
-    services.tailscale.enable = true;
-
+  config = lib.mkIf cfg.enable {
     networking.firewall = {
-      trustedInterfaces = [ "tailscale0" ];
-      allowedUDPPorts = [ config.services.tailscale.port ];
+      trustedInterfaces = [ cfg.interfaceName ];
+      allowedUDPPorts = [ cfg.port ];
       allowedTCPPorts = [ 22 ];
     };
   };

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ self, pkgs, ... }:
 
 {
   imports = [
@@ -77,10 +77,14 @@
     flake = "/home/tyler/nix-config";
   };
 
-  neovim.enable = true;
+  programs.nixvim.enable = true;
 
-  tailscale.enable = true;
-  containerNetworks = {
+  services.tailscale.enable = true;
+
+  virtualisation.docker.enable = true;
+  virtualisation.oci-containers.backend = "docker";
+
+  networking.oci.networks = {
     bridge = {
       enable = true;
       name = "private";
@@ -89,26 +93,37 @@
       enable = true;
     };
   };
-  pihole = {
+  services.piholeOCI = {
     enable = true;
     dataDir = "/home/tyler/homeserver";
     ip = "192.168.0.200";
   };
-  nginx = {
+  services.nginxOCI = {
     enable = true;
     dataDir = "/home/tyler/homeserver";
   };
 
-  portainer = {
+  services.portainerOCI = {
     enable = true;
     dataDir = "/home/tyler/homeserver";
   };
-  restic = {
+
+  services.restic = {
     enable = true;
-    paths = [
-      "/home/tyler/backup/apps"
-      "/home/tyler/backup/data"
-    ];
+    backups.cloud = {
+      initialize = true;
+      paths = [
+        "/home/tyler/backup/apps"
+        "/home/tyler/backup/data"
+      ];
+      timerConfig = {
+        OnCalendar = "01:00";
+        Persistent = true;
+      };
+      repositoryFile = "${self}/secrets/backup/repository";
+      environmentFile = "${self}/secrets/backup/environment";
+      passwordFile = "${self}/secrets/backup/password";
+    };
   };
 
   # This value determines the NixOS release from which the default

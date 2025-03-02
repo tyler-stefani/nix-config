@@ -1,70 +1,56 @@
 {
-  self,
   lib,
   config,
   pkgs,
   ...
 }:
 with lib;
-let
-  cfg = config.restic;
-in
 {
-  options = {
-    restic = {
-      enable = mkEnableOption "a backup service";
-      paths = mkOption {
-        type = types.listOf types.path;
-        default = [ ];
-      };
-      keepSnapshots = {
-        daily = mkOption {
-          type = types.ints.unsigned;
-          default = 3;
-        };
-        weekly = mkOption {
-          type = types.ints.unsigned;
-          default = 3;
-        };
-        monthly = mkOption {
-          type = types.ints.unsigned;
-          default = 3;
-        };
-        yearly = mkOption {
-          type = types.ints.unsigned;
-          default = 3;
-        };
-      };
+  options.services.restic = {
+    enable = mkEnableOption "a scheduled backup service";
+    backups = mkOption {
+      type = types.attrsOf (
+        types.submodule (
+          { name, config, ... }:
+          {
+            options = {
+              snapshotsToKeep = {
+                daily = mkOption {
+                  type = types.ints.unsigned;
+                  default = 3;
+                };
+                weekly = mkOption {
+                  type = types.ints.unsigned;
+                  default = 3;
+                };
+                monthly = mkOption {
+                  type = types.ints.unsigned;
+                  default = 3;
+                };
+                yearly = mkOption {
+                  type = types.ints.unsigned;
+                  default = 3;
+                };
+              };
+            };
+
+            config = {
+              pruneOpts = [
+                "--keep-daily ${toString config.snapshotsToKeep.daily}"
+                "--keep-weekly ${toString config.snapshotsToKeep.weekly}"
+                "--keep-monthly ${toString config.snapshotsToKeep.monthly}"
+                "--keep-yearly ${toString config.snapshotsToKeep.yearly}"
+              ];
+            };
+          }
+        )
+      );
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf config.services.restic.enable {
     environment.systemPackages = [
       pkgs.restic
     ];
-
-    services.restic.backups = {
-      cloud = {
-        initialize = true;
-
-        paths = cfg.paths;
-
-        timerConfig = {
-          OnCalendar = "01:00";
-          Persistent = true;
-        };
-
-        pruneOpts = [
-          "--keep-daily ${toString cfg.keepSnapshots.daily}"
-          "--keep-weekly ${toString cfg.keepSnapshots.weekly}"
-          "--keep-monthly ${toString cfg.keepSnapshots.monthly}"
-          "--keep-yearly ${toString cfg.keepSnapshots.yearly}"
-        ];
-
-        repositoryFile = "${self}/secrets/backup/repository";
-        environmentFile = "${self}/secrets/backup/environment";
-        passwordFile = "${self}/secrets/backup/password";
-      };
-    };
   };
 }
