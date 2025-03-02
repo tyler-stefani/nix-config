@@ -1,9 +1,15 @@
-{ self, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./localization.nix
+    ./users.nix
+    ./networking.nix
+    ./virtualization.nix
+    ./programs.nix
+    ./services.nix
   ];
 
   # Bootloader.
@@ -12,47 +18,6 @@
 
   nix.settings = {
     experimental-features = "nix-command flakes";
-  };
-
-  networking.hostName = "homeserver";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "America/Chicago";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  users.users.tyler = {
-    isNormalUser = true;
-    description = "tyler";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-    ];
-    packages = [ ];
-    shell = pkgs.fish;
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -67,64 +32,6 @@
     zoxide
     starship
   ];
-
-  programs.fish.enable = true;
-
-  programs.nh = {
-    enable = true;
-    clean.enable = true;
-    clean.extraArgs = "--keep-since 3d --keep 3";
-    flake = "/home/tyler/nix-config";
-  };
-
-  programs.nixvim.enable = true;
-
-  services.tailscale.enable = true;
-
-  virtualisation.docker.enable = true;
-  virtualisation.oci-containers.backend = "docker";
-
-  networking.oci.networks = {
-    bridge = {
-      enable = true;
-      name = "private";
-    };
-    ipvlan = {
-      enable = true;
-    };
-  };
-  services.piholeOCI = {
-    enable = true;
-    dataDir = "/home/tyler/homeserver";
-    ip = "192.168.0.200";
-  };
-  services.nginxOCI = {
-    enable = true;
-    dataDir = "/home/tyler/homeserver";
-  };
-
-  services.portainerOCI = {
-    enable = true;
-    dataDir = "/home/tyler/homeserver";
-  };
-
-  services.restic = {
-    enable = true;
-    backups.cloud = {
-      initialize = true;
-      paths = [
-        "/home/tyler/backup/apps"
-        "/home/tyler/backup/data"
-      ];
-      timerConfig = {
-        OnCalendar = "01:00";
-        Persistent = true;
-      };
-      repositoryFile = "${self}/secrets/backup/repository";
-      environmentFile = "${self}/secrets/backup/environment";
-      passwordFile = "${self}/secrets/backup/password";
-    };
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
