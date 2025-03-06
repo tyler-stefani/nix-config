@@ -7,6 +7,10 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -14,6 +18,7 @@
       self,
       nixpkgs,
       nixvim,
+      stylix,
       ...
     }@inputs:
     let
@@ -38,6 +43,7 @@
               ./hosts/homeserver/configuration.nix
               ./modules
               nixvim.nixosModules.nixvim
+              stylix.nixosModules.stylix
             ];
           };
       };
