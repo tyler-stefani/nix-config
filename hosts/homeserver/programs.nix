@@ -7,7 +7,7 @@
       enable = true;
       clean.enable = true;
       clean.extraArgs = "--keep-since 3d --keep 3";
-      flake = "/home/tyler/nix-config";
+      flake = "/home/tyler/shared/nix";
     };
 
     nixvim.enable = true;
