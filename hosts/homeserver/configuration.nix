@@ -10,6 +10,7 @@
     ./virtualization.nix
     ./programs.nix
     ./services.nix
+    ./monitoring.nix
   ];
 
   # Bootloader.
