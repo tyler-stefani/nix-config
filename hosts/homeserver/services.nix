@@ -5,17 +5,17 @@
 
     piholeOCI = {
       enable = true;
-      dataDir = "/home/tyler/homeserver";
+      dataDir = "/home/tyler/apps";
       ip = "192.168.0.200";
     };
     nginxOCI = {
       enable = true;
-      dataDir = "/home/tyler/homeserver";
+      dataDir = "/home/tyler/apps";
     };
 
     portainerOCI = {
       enable = true;
-      dataDir = "/home/tyler/homeserver";
+      dataDir = "/home/tyler/apps";
     };
 
     restic = {
@@ -23,8 +23,7 @@
       backups.cloud = {
         initialize = true;
         paths = [
-          "/home/tyler/backup/apps"
-          "/home/tyler/backup/data"
+          "/home/tyler/shared/safe"
         ];
         timerConfig = {
           OnCalendar = "01:00";
@@ -48,7 +47,7 @@
           user = "tyler";
           password = builtins.readFile "${self}/secrets/sync/password";
         };
-        folders.notes.path = "/home/tyler/backup/data/notes";
+        folders.notes.path = "/home/tyler/shared/safe/data/notes";
       };
     };
   };
