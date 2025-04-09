@@ -18,20 +18,11 @@
       dataDir = "/home/tyler/apps";
     };
 
-    restic = {
+    grafana = {
       enable = true;
-      backups.cloud = {
-        initialize = true;
-        paths = [
-          "/home/tyler/shared/safe"
-        ];
-        timerConfig = {
-          OnCalendar = "01:00";
-          Persistent = true;
-        };
-        repositoryFile = "${self}/secrets/backup/repository";
-        environmentFile = "${self}/secrets/backup/environment";
-        passwordFile = "${self}/secrets/backup/password";
+      settings.server = {
+        domain = "monitoring.peebo.world";
+        http_addr = "0.0.0.0";
       };
     };
 
@@ -51,4 +42,6 @@
       };
     };
   };
+
+  networking.firewall.allowedTCPPorts = [ 3000 ];
 }

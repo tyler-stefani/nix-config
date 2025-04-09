@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   services.prometheus = {
     enable = true;
@@ -24,7 +24,7 @@
       enable = true;
       enabledCollectors = [ "systemd" ];
     };
-    exporters.restic = {
+    exporters.restic = lib.mkIf config.services.restic.enable {
       enable = true;
       repositoryFile = config.services.restic.backups.cloud.repositoryFile;
       passwordFile = config.services.restic.backups.cloud.passwordFile;
@@ -32,14 +32,4 @@
       refreshInterval = 21600;
     };
   };
-
-  services.grafana = {
-    enable = true;
-    settings.server = {
-      domain = "monitoring.peebo.world";
-      http_addr = "0.0.0.0";
-    };
-  };
-
-  networking.firewall.allowedTCPPorts = [ 3000 ];
 }

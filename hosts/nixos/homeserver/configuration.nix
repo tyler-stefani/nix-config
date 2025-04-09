@@ -1,27 +1,26 @@
-{ pkgs, ... }:
+{ self, pkgs, ... }:
 
 {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./localization.nix
     ./users.nix
     ./networking.nix
-    ./virtualization.nix
     ./programs.nix
     ./services.nix
-    ./monitoring.nix
+
+    "${self}/traits/all/base.nix"
+    "${self}/traits/nixos/base.nix"
+    "${self}/traits/nixos/backup.nix"
+    "${self}/traits/nixos/containers.nix"
+    "${self}/traits/nixos/monitoring.nix"
   ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  nix.settings = {
-    experimental-features = "nix-command flakes";
-  };
-
-  nixpkgs.config.allowUnfree = true;
+  boot.kernelPackages = pkgs.linuxPackages_6_1;
+  boot.crashDump.enable = true;
 
   environment.systemPackages = with pkgs; [
     git
