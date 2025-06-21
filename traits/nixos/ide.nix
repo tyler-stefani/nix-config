@@ -6,6 +6,7 @@
 with lib;
 {
   programs.nixvim = {
+    enable = true;
     plugins = {
       telescope.enable = true;
       oil = {

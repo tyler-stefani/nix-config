@@ -5,14 +5,13 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./users.nix
-    ./networking.nix
-    ./programs.nix
     ./services.nix
 
     "${self}/traits/all/base.nix"
     "${self}/traits/nixos/base.nix"
     "${self}/traits/nixos/backup.nix"
     "${self}/traits/nixos/containers.nix"
+    "${self}/traits/nixos/ide.nix"
     "${self}/traits/nixos/monitoring.nix"
   ];
 
@@ -20,6 +19,20 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_6_1;
+
+  networking = {
+    hostName = "homeserver";
+    networkmanager.enable = true;
+    oci.networks = {
+      bridge = {
+        enable = true;
+        name = "private";
+      };
+      ipvlan = {
+        enable = true;
+      };
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     git
