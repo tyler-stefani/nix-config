@@ -6,13 +6,6 @@
 with lib;
 {
   programs.nixvim = {
-    colorschemes.catppuccin = {
-      enable = true;
-      settings = {
-        flavour = "frappe";
-      };
-    };
-
     plugins = {
       telescope.enable = true;
       oil = {
