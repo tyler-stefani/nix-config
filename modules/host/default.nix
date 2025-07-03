@@ -14,9 +14,6 @@ with lib;
       appData = mkOption {
         type = types.path;
       };
-      secrets = mkOption {
-        type = types.path;
-      };
     };
   };
 
