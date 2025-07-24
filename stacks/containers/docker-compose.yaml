@@ -1,0 +1,13 @@
+services:
+  containers:
+    image: "portainer/portainer-ce:latest"
+    volumes:
+      - /home/tyler/apps/portainer/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - private
+
+networks:
+  private:
+    external: true
+

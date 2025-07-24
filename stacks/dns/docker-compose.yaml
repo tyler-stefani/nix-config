@@ -1,0 +1,37 @@
+services:
+  hole:
+    image: pihole/pihole:latest
+    hostname: hole
+    dns:
+      - 9.9.9.9
+    volumes:
+      - /home/tyler/apps/pihole/etc-pihole:/etc/pihole
+      - /home/tyler/apps/pihole/etc-dnsmasq:/etc/dnsmasq.d
+    environment:
+      TZ: ${TIMEZONE}
+      WEBPASSWORD: ${PASSWORD}
+    networks:
+      vlan:
+        ipv4_address: 192.168.0.200
+
+  hole-sidecar:
+    image: tailscale/tailscale:latest
+    depends_on:
+      - hole
+    volumes:
+      - /home/tyler/apps/tailscale/state:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      TS_AUTHKEY: "${TS_AUTHKEY}?ephemeral=false"
+      TS_EXTRA_ARGS: "--advertise-tags=tag:container"
+      TS_STATE_DIR: "/var/lib/tailscale"
+      TS_USERSPACE: false
+    network_mode: "service:hole"
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    privileged: true
+
+networks:
+  vlan:
+    external: true

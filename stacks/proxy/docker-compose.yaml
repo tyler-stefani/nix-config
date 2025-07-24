@@ -1,0 +1,16 @@
+services:
+  proxy:
+    image: "docker.io/jc21/nginx-proxy-manager:latest"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /home/tyler/apps/nginx/data:/data
+      - /home/tyler/apps/nginx/letsencrypt:/etc/letsencrypt
+    networks:
+      - private
+
+networks:
+  private:
+    external: true
+
