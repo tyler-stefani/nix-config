@@ -11,6 +11,7 @@
     (self + /traits/nixos/base.nix)
     (self + /traits/nixos/containers.nix)
     (self + /traits/nixos/dns.nix)
+    (self + /traits/nixos/feed.nix)
     (self + /traits/nixos/ide.nix)
     (self + /traits/nixos/mesh-vpn.nix)
     (self + /traits/nixos/monitoring.nix)
@@ -26,8 +27,8 @@
   hostConfig = {
     hostName = "homeserver";
     directories = {
-      personalData = /home/tyler/shared/safe/data;
-      appData = /home/tyler/shared/safe/apps;
+      personalData = "/home/tyler/shared/safe/data";
+      appData = "/home/tyler/shared/safe/apps";
     };
   };
 
