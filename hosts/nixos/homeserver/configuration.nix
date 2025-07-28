@@ -51,6 +51,8 @@
     fsType = "fuse.mergerfs";
     device = "/mnt/merge/*";
     options = [
+      "allow_other"
+      "use_ino"
       "cache.files=partial"
       "dropcacheonclose=true"
       "category.create=mfs"
