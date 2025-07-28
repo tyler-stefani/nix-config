@@ -21,6 +21,7 @@
     "usbhid"
     "usb_storage"
     "sd_mod"
+    "fuse"
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
