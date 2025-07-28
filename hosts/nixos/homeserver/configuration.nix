@@ -46,6 +46,16 @@
     };
   };
 
+  fileSystems."/home" = {
+    fsType = "fuse.mergerfs";
+    device = "/mnt/merge/*";
+    options = [
+      "cache.files=partial"
+      "dropcacheonclose=true"
+      "category.create=mfs"
+    ];
+  };
+
   environment.systemPackages = with pkgs; [
     git
     git-crypt
@@ -55,6 +65,8 @@
     bat
     zoxide
     starship
+    mergerfs
+    mergerfs-tools
   ];
 
   stylix = {
