@@ -58,6 +58,8 @@
     ];
   };
 
+  programs.fuse.userAllowOther = true;
+
   environment.systemPackages = with pkgs; [
     git
     git-crypt
