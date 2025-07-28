@@ -42,6 +42,7 @@ with lib;
         Environment = envLines;
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
+        ProtectHome = "off";
         Restart = "always";
       };
     })
