@@ -8,6 +8,7 @@
       "wheel"
       "docker"
     ];
+    homeMode = "711";
     packages = [ ];
     shell = pkgs.fish;
   };

@@ -21,6 +21,7 @@
     "usbhid"
     "usb_storage"
     "sd_mod"
+    "fuse"
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
@@ -28,6 +29,23 @@
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/467ac82e-7f1f-470e-9c8a-6819cf1883ae";
+    fsType = "ext4";
+  };
+
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/393a25a0-a622-416f-b438-144eafde2e02";
+    fsType = "ext4";
+    neededForBoot = true;
+    options = [ "noatime" ];
+  };
+
+  fileSystems."/mnt/merge/01" = {
+    device = "/dev/disk/by-uuid/0290cc1a-49af-4f30-9c74-5e03a4c08482";
+    fsType = "ext4";
+  };
+
+  fileSystems."/mnt/merge/02" = {
+    device = "/dev/disk/by-uuid/dd00d208-6f77-4767-adb8-a0a1b52bf29f";
     fsType = "ext4";
   };
 
