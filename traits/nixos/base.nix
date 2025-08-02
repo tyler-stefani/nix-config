@@ -1,9 +1,5 @@
 { ... }:
 {
-  # Set your time zone.
-  time.timeZone = "America/Chicago";
-
-  # Select internationalisation properties.
   i18n = {
     defaultLocale = "en_US.UTF-8";
 
@@ -20,9 +16,10 @@
     };
   };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "-K 7d -k 3";
+    flake = "/home/tyler/shared/nix";
   };
 }

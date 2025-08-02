@@ -1,16 +1,21 @@
-{ pkgs, ... }:
+{ self, pkgs, ... }:
 
 {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./localization.nix
     ./users.nix
-    ./networking.nix
-    ./virtualization.nix
-    ./programs.nix
-    ./services.nix
-    ./monitoring.nix
+
+    (self + /traits/all/base.nix)
+    (self + /traits/nixos/backup.nix)
+    (self + /traits/nixos/base.nix)
+    (self + /traits/nixos/containers.nix)
+    (self + /traits/nixos/dns.nix)
+    (self + /traits/nixos/ide.nix)
+    (self + /traits/nixos/mesh-vpn.nix)
+    (self + /traits/nixos/monitoring.nix)
+    (self + /traits/nixos/proxy.nix)
+    (self + /traits/nixos/sync.nix)
   ];
 
   # Bootloader.
@@ -18,11 +23,27 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_6_1;
 
-  nix.settings = {
-    experimental-features = "nix-command flakes";
+  hostConfig = {
+    hostName = "homeserver";
+    directories = {
+      personalData = /home/tyler/shared/safe/data;
+      appData = /home/tyler/shared/safe/apps;
+    };
   };
 
-  nixpkgs.config.allowUnfree = true;
+  networking = {
+    networkmanager.enable = true;
+    firewall.allowedTCPPorts = [ 3000 ];
+    oci.networks = {
+      bridge = {
+        enable = true;
+        name = "private";
+      };
+      ipvlan = {
+        enable = true;
+      };
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     git

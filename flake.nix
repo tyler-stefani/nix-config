@@ -40,7 +40,7 @@
                 ;
             };
             modules = [
-              ./hosts/homeserver/configuration.nix
+              ./hosts/nixos/homeserver/configuration.nix
               ./modules
               nixvim.nixosModules.nixvim
               stylix.nixosModules.stylix
