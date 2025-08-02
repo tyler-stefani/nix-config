@@ -14,6 +14,7 @@
     (self + /traits/nixos/feed.nix)
     (self + /traits/nixos/ide.nix)
     (self + /traits/nixos/mesh-vpn.nix)
+    (self + /traits/nixos/minecraft.nix)
     (self + /traits/nixos/monitoring.nix)
     (self + /traits/nixos/photos.nix)
     (self + /traits/nixos/proxy.nix)
