@@ -1,0 +1,25 @@
+services:
+  minecraft:
+    image: itzg/minecraft-bedrock-server
+    environment:
+      EULA: "TRUE"
+    ports:
+      - "19132:19132/udp"
+    volumes:
+      - /home/tyler/apps/minecraft/data:/data
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+  zerotier:
+    image: zerotier/zerotier
+    volumes:
+      - /home/tyler/apps/zerotier/one:/var/lib/zerotier-one
+    devices:
+      - "/dev/net/tun:dev/net/tun"
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    restart: unless-stopped
+    depends_on:
+      - minecraft
+    network_mode: "service:minecraft"
