@@ -12,6 +12,8 @@ services:
       - ${BACKUP_LOCATION}:/usr/src/app/upload/backups
       - /home/tyler/shared/safe/data/photos/library-kim:/usr/src/app/library-kim
       - /etc/localtime:/etc/localtime:ro
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
     depends_on:
       - redis
       - database
