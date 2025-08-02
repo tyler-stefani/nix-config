@@ -15,6 +15,7 @@
     (self + /traits/nixos/ide.nix)
     (self + /traits/nixos/mesh-vpn.nix)
     (self + /traits/nixos/monitoring.nix)
+    (self + /traits/nixos/photos.nix)
     (self + /traits/nixos/proxy.nix)
     (self + /traits/nixos/sync.nix)
   ];
