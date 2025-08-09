@@ -1,25 +1,25 @@
 services:
   minecraft:
     image: itzg/minecraft-bedrock-server
+    hostname: minecraft
     environment:
       EULA: "TRUE"
+      DIFFICULTY: "normal"
+      LEVEL_NAME: "Mungcrango"
     ports:
       - "19132:19132/udp"
     volumes:
-      - /home/tyler/apps/minecraft/data:/data
+      - ${MINECRAFT_DIR}:/data
     stdin_open: true
     tty: true
     restart: unless-stopped
-  zerotier:
-    image: zerotier/zerotier
+  netbird:
+    image: netbirdio/netbird:latest
     volumes:
-      - /home/tyler/apps/zerotier/one:/var/lib/zerotier-one
-    devices:
-      - "/dev/net/tun:dev/net/tun"
+      - ${NETBIRD_DIR}:/var/lib/netbird
+    network_mode: "service:minecraft"
     cap_add:
       - NET_ADMIN
       - SYS_ADMIN
+      - SYS_RESOURCE
     restart: unless-stopped
-    depends_on:
-      - minecraft
-    network_mode: "service:minecraft"
