@@ -23,7 +23,7 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=miniflux
     volumes:
-      - /home/tyler/apps/miniflux/data:/var/lib/postgresql/data
+      - ${DATA_DIR}:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "miniflux"]
       interval: 10s
