@@ -5,8 +5,8 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - /home/tyler/apps/nginx/data:/data
-      - /home/tyler/apps/nginx/letsencrypt:/etc/letsencrypt
+      - ${DATA_DIR}:/data
+      - ${LETSENCRYPT_DIR}:/etc/letsencrypt
     networks:
       - private
 

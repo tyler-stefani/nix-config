@@ -10,7 +10,7 @@ services:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
       - ${LIBRARY_LOCATION}:/usr/src/app/upload/library
       - ${BACKUP_LOCATION}:/usr/src/app/upload/backups
-      - /home/tyler/shared/safe/data/photos/library-kim:/usr/src/app/library-kim
+      - ${EXTERNAL_LIBRARY_LOCATION}:/usr/src/app/library-kim
       - /etc/localtime:/etc/localtime:ro
     environment:
       DB_PASSWORD: ${DB_PASSWORD}

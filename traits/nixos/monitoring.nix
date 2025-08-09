@@ -27,9 +27,9 @@
       };
       exporters.restic = lib.mkIf config.services.restic.enable {
         enable = true;
-        repositoryFile = config.services.restic.backups.cloud.repositoryFile;
-        passwordFile = config.services.restic.backups.cloud.passwordFile;
-        environmentFile = config.services.restic.backups.cloud.environmentFile;
+        repositoryFile = config.services.restic.backups.notes.repositoryFile;
+        passwordFile = config.services.restic.backups.notes.passwordFile;
+        environmentFile = config.services.restic.backups.notes.environmentFile;
         refreshInterval = 21600;
       };
     };
