@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,12 +21,14 @@
     {
       self,
       nixpkgs,
+      home-manager,
       nixvim,
       stylix,
       ...
     }@inputs:
     let
       system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
     in
     {
       nixosConfigurations = {
@@ -41,11 +47,21 @@
             };
             modules = [
               ./hosts/nixos/homeserver/configuration.nix
-              ./modules
+              ./modules/nixos
               nixvim.nixosModules.nixvim
               stylix.nixosModules.stylix
             ];
           };
+      };
+
+      homeConfigurations = {
+        tyler = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ./users/tyler
+            ./modules/home-manager
+          ];
+        };
       };
 
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-tree;
