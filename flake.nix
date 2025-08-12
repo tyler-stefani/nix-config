@@ -48,8 +48,6 @@
             modules = [
               ./hosts/nixos/homeserver/configuration.nix
               ./modules/nixos
-              nixvim.nixosModules.nixvim
-              stylix.nixosModules.stylix
             ];
           };
       };
@@ -57,9 +55,14 @@
       homeConfigurations = {
         tyler = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
+          extraSpecialArgs = {
+            inherit self;
+          };
           modules = [
             ./users/tyler
             ./modules/home-manager
+            nixvim.homeModules.nixvim
+            stylix.homeModules.stylix
           ];
         };
       };

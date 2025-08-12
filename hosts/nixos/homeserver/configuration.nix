@@ -12,7 +12,6 @@
     (self + /traits/nixos/containers.nix)
     (self + /traits/nixos/dns.nix)
     (self + /traits/nixos/feed.nix)
-    (self + /traits/nixos/ide.nix)
     (self + /traits/nixos/mesh-vpn.nix)
     (self + /traits/nixos/minecraft.nix)
     (self + /traits/nixos/monitoring.nix)
@@ -74,15 +73,6 @@
     mergerfs
     mergerfs-tools
   ];
-
-  stylix = {
-    enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
-    targets = {
-      fish.enable = true;
-      nixvim.enable = true;
-    };
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
