@@ -1,5 +1,9 @@
 { self, pkgs, ... }:
 {
+  imports = [
+    (self + /traits/all/ide.nix)
+  ];
+
   home.username = "tyler";
   home.homeDirectory = "/home/tyler";
   programs = {
@@ -50,7 +54,7 @@
     starship = {
       enable = true;
       enableTransience = true;
-      settingsPath = ./starship.toml;
+      settings = pkgs.lib.importTOML ./starship.toml;
     };
     git = {
       enable = true;
@@ -67,5 +71,17 @@
       };
     };
   };
+
+  stylix = {
+    enable = true;
+    autoEnable = false;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+    targets = {
+      fish.enable = true;
+      nixvim.enable = true;
+      starship.enable = true;
+    };
+  };
+
   home.stateVersion = "24.11";
 }

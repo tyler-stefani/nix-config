@@ -1,53 +1,33 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-palette = 'nord'
-
 command_timeout = 1000
 
 format = """
-[](ice)\
+[](cyan)\
 $os\
 $username\
 $hostname\
-[](fg:ice bg:sky)\
+[](fg:cyan bg:blue)\
 $directory\
-[](fg:sky bg:blue)\
+[](fg:blue bg:brown)\
 $git_branch\
 $git_status\
-[](fg:blue bg:purple)\
+[](fg:brown bg:purple)\
 $rust\
 $golang\
 $nodejs\
 $java\
 $python\
-[](fg:purple bg:nord2)\
+[](fg:purple bg:base02)\
 $docker_context\
-[](fg:nord2 bg:nord1)\
+[](fg:base02 bg:base01)\
 $time\
-[ ](fg:nord1)\
+[ ](fg:base01)\
 $line_break$character"""
-
-[palettes.nord]
-nord0 = "#2e3440"
-nord1 = "#3b4252"
-nord2 = "#434c5e"
-nord3 = "#4c566a"
-nord4 = "#d8dee9"
-nord5 = "#e5e9f0"
-nord6 = "#eceff4"
-teal = "#8fbcbb"
-ice = "#88c0d0"
-sky = "#81a1c1"
-blue = "#5e81ac"
-red = "#bf616a"
-orange = "#d08770"
-yellow = "#ebcb8b"
-green = "#a3be8c"
-purple = "#b48ead"
 
 [os]
 disabled = false
-style = "bold bg:ice fg:nord0"
+style = "bold bg:cyan fg:black"
 
 [os.symbols]
 Windows = ""
@@ -73,16 +53,16 @@ NixOS = "󱄅 "
 
 [username]
 show_always = true
-style_user = "bg:ice fg:nord0"
-style_root = "bg:ice fg:nord0"
+style_user = "bg:cyan fg:black"
+style_root = "bg:cyan fg:black"
 format = '[$user]($style)'
 
 [hostname]
-style = "bg:ice fg:nord0"
+style = "bg:cyan fg:black"
 format = "[@$hostname ]($style)"
 
 [directory]
-style = "bg:sky fg:nord0"
+style = "bg:blue fg:black"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -96,48 +76,48 @@ truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:blue"
-format = '[[ $symbol $branch ](fg:nord0 bg:blue)]($style)'
+style = "bg:brown"
+format = '[[ $symbol $branch ](fg:black bg:brown)]($style)'
 
 [git_status]
-style = "bg:blue"
-format = '[[($all_status$ahead_behind )](fg:nord0 bg:blue)]($style)'
+style = "bg:brown"
+format = '[[($all_status$ahead_behind )](fg:black bg:brown)]($style)'
 
 [nodejs]
 symbol = ""
 style = "bg:purple"
-format = '[[ $symbol( $version) ](fg:nord0 bg:purple)]($style)'
+format = '[[ $symbol( $version) ](fg:black bg:purple)]($style)'
 
 [rust]
 symbol = ""
 style = "bg:purple"
-format = '[[ $symbol( $version) ](fg:nord0 bg:purple)]($style)'
+format = '[[ $symbol( $version) ](fg:black bg:purple)]($style)'
 
 [golang]
 symbol = "󰟓"
 style = "bg:purple"
-format = '[[ $symbol( $version)( $mod_version) ](fg:nord0 bg:purple)]($style)'
+format = '[[ $symbol( $version)( $mod_version) ](fg:black bg:purple)]($style)'
 
 [java]
 symbol = " "
 style = "bg:purple"
-format = '[[ $symbol( $version) ](fg:nord0 bg:purple)]($style)'
+format = '[[ $symbol( $version) ](fg:black bg:purple)]($style)'
 
 [python]
 symbol = ""
 style = "bg:purple"
-format = '[[ $symbol( $version) ](fg:nord0 bg:purple)]($style)'
+format = '[[ $symbol( $version) ](fg:black bg:purple)]($style)'
 
 [docker_context]
 symbol = ""
-style = "bg:nord2"
-format = '[[ $symbol( $context) ](fg:nord6 bg:nord2)]($style)'
+style = "bg:base02"
+format = '[[ $symbol( $context) ](fg:base06 bg:base02)]($style)'
 
 [time]
 disabled = false
 time_format = "%R"
-style = "bg:nord1"
-format = '[[  $time ](fg:nord6 bg:nord1)]($style)'
+style = "bg:base01"
+format = '[[  $time ](fg:base06 bg:base01)]($style)'
 
 [line_break]
 disabled = false
