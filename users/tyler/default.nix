@@ -4,8 +4,17 @@
     (self + /traits/all/ide.nix)
   ];
 
-  home.username = "tyler";
-  home.homeDirectory = "/home/tyler";
+  home = {
+    username = "tyler";
+    homeDirectory = "/home/tyler";
+    packages = with pkgs; [
+      eza
+      bat
+      zoxide
+      starship
+    ];
+  };
+
   programs = {
     fish = {
       enable = true;

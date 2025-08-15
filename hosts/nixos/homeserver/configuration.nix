@@ -65,11 +65,6 @@
     git
     git-crypt
     lazygit
-    chezmoi
-    eza
-    bat
-    zoxide
-    starship
     mergerfs
     mergerfs-tools
   ];
