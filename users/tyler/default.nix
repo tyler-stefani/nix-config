@@ -1,7 +1,7 @@
-{ self, pkgs, ... }:
+{ pkgs, flakeDir, ... }:
 {
   imports = [
-    (self + /traits/all/ide.nix)
+    (flakeDir + /traits/all/ide.nix)
   ];
 
   home = {

@@ -25,38 +25,31 @@
       nixvim,
       stylix,
       ...
-    }@inputs:
+    }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
+      flakeDir = ./.;
     in
     {
       nixosConfigurations = {
-        homeserver =
-          let
-            inherit (self) outputs;
-          in
-          nixpkgs.lib.nixosSystem {
-            system = system;
-            specialArgs = {
-              inherit
-                self
-                inputs
-                outputs
-                ;
-            };
-            modules = [
-              ./hosts/nixos/homeserver/configuration.nix
-              ./modules/nixos
-            ];
+        homeserver = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit self;
           };
+          modules = [
+            ./hosts/nixos/homeserver/configuration.nix
+            ./modules/nixos
+          ];
+        };
       };
 
       homeConfigurations = {
         tyler = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
-            inherit self;
+            inherit flakeDir;
           };
           modules = [
             ./users/tyler
