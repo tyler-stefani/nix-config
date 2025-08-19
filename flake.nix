@@ -30,6 +30,12 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
       flakeDir = ./.;
+      homeModules = [
+        ./users/tyler
+        ./modules/home-manager
+        nixvim.homeModules.nixvim
+        stylix.homeModules.stylix
+      ];
     in
     {
       nixosConfigurations = {
@@ -49,11 +55,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.tyler = {
-                imports = [
-                  (flakeDir + /users/tyler)
-                  nixvim.homeModules.nixvim
-                  stylix.homeModules.stylix
-                ];
+                imports = homeModules;
               };
             }
           ];
@@ -66,12 +68,7 @@
           extraSpecialArgs = {
             inherit flakeDir;
           };
-          modules = [
-            ./users/tyler
-            ./modules/home-manager
-            nixvim.homeModules.nixvim
-            stylix.homeModules.stylix
-          ];
+          modules = homeModules;
         };
       };
 
