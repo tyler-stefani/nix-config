@@ -41,6 +41,21 @@
           modules = [
             ./hosts/nixos/homeserver/configuration.nix
             ./modules/nixos
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs = {
+                inherit flakeDir;
+              };
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.tyler = {
+                imports = [
+                  (flakeDir + /users/tyler)
+                  nixvim.homeModules.nixvim
+                  stylix.homeModules.stylix
+                ];
+              };
+            }
           ];
         };
       };
