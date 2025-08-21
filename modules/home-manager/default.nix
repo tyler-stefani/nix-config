@@ -1,5 +1,5 @@
 {
   imports = [
-    ./programs/starship.nix
+    ./programs
   ];
 }
