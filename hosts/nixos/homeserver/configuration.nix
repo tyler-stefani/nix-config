@@ -12,6 +12,7 @@
     (self + /traits/nixos/containers.nix)
     (self + /traits/nixos/dns.nix)
     (self + /traits/nixos/feed.nix)
+    (self + /traits/nixos/keep.nix)
     (self + /traits/nixos/mesh-vpn.nix)
     (self + /traits/nixos/minecraft.nix)
     (self + /traits/nixos/monitoring.nix)
