@@ -1,6 +1,6 @@
 services:
   containers:
-    image: "portainer/portainer-ce:latest"
+    image: "portainer/portainer-ce:${PORTAINER_VERSION:-lts}"
     volumes:
       - /home/tyler/apps/portainer/data:/data
       - /var/run/docker.sock:/var/run/docker.sock

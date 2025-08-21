@@ -13,6 +13,7 @@
     {
       dir = self + /stacks/proxy;
       env = {
+        NPM_VERSION = "2.12.6";
         DATA_DIR = dataDir;
         LETSENCRYPT_DIR = letsencryptDir;
       };

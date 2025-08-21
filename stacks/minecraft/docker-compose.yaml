@@ -1,6 +1,6 @@
 services:
   minecraft:
-    image: itzg/minecraft-bedrock-server
+    image: itzg/minecraft-bedrock-server:${BEDROCK_VERSION:-latest}
     hostname: minecraft
     environment:
       EULA: "TRUE"

@@ -1,6 +1,6 @@
 services:
   hole:
-    image: pihole/pihole:latest
+    image: pihole/pihole:${PIHOLE_VERSION:-latest}
     hostname: hole
     dns:
       - 9.9.9.9

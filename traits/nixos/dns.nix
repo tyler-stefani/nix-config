@@ -7,6 +7,7 @@ in
   virtualisation.docker-compose.dns = {
     dir = self + /stacks/dns;
     env = {
+      PIHOLE_VERSION = "2025.08.0";
       TIMEZONE = "America/Chicago";
       PASSWORD = builtins.readFile "${self}/secrets/dns/password";
       TS_AUTHKEY = builtins.readFile "${self}/secrets/dns/authkey";

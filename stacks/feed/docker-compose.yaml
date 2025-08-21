@@ -1,8 +1,6 @@
 services:
   feed:
-    image: miniflux/miniflux:latest
-    ports:
-      - "8080:8080"
+    image: miniflux/miniflux:${MINIFLUX_VERSION}
     depends_on:
       db:
         condition: service_healthy
@@ -16,6 +14,7 @@ services:
       - default
       - proxy
     restart: always
+
   db:
     image: postgres:17-alpine
     environment:

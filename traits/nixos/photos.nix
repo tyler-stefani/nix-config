@@ -15,7 +15,7 @@ in
       BACKUP_LOCATION = "${config.hostConfig.directories.appData}/immich";
       DB_DATA_LOCATION = dbDir;
       TZ = "America/Chicago";
-      IMMICH_VERSION = "v1.134.0";
+      IMMICH_VERSION = "v1.138.1";
       DB_DATABASE_NAME = "immich";
       DB_USERNAME = "postgres";
       DB_PASSWORD = builtins.readFile (self + /secrets/photos/db-password);

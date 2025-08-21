@@ -7,6 +7,7 @@
     {
       dir = self + /stacks/feed;
       env = {
+        MINIFLUX_VERSION = "2.2.11";
         DATA_DIR = dataDir;
         DB_PASSWORD = builtins.readFile (self + /secrets/feed/db-password);
         API_TOKEN = builtins.readFile (self + /secrets/feed/api-key);
