@@ -55,6 +55,12 @@ in
     {
       systemd.services = mapAttrs' (
         name: value:
+        let
+          composeFile = pkgs.writeTextFile {
+            name = "${svcName name}.yaml";
+            text = builtins.readFile "${value.dir}/docker-compose.yaml";
+          };
+        in
         nameValuePair (svcName name) ({
           wantedBy = [ "multi-user.target" ];
           requires = [ "docker.service" ];
@@ -62,13 +68,14 @@ in
           description = "Docker Compose manager for ${name}";
 
           serviceConfig = {
-            WorkingDirectory = value.dir;
             Environment = mapAttrsToList (k: v: "${k}=${v}") value.env;
-            ExecStart = "${pkgs.docker-compose}/bin/docker-compose up";
-            ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
+            ExecStart = "${pkgs.docker-compose}/bin/docker-compose -f ${composeFile} -p ${name} up";
+            ExecStop = "${pkgs.docker-compose}/bin/docker-compose -f ${composeFile} -p ${name} down";
             ProtectHome = "off";
             Restart = "always";
           };
+
+          restartTriggers = [ composeFile ];
         })
       ) cfg;
 
