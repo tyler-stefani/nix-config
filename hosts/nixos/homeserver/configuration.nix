@@ -9,6 +9,7 @@
     (self + /traits/all/base.nix)
     (self + /traits/nixos/backup.nix)
     (self + /traits/nixos/base.nix)
+    (self + /traits/nixos/blog.nix)
     (self + /traits/nixos/containers.nix)
     (self + /traits/nixos/dns.nix)
     (self + /traits/nixos/feed.nix)

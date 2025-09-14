@@ -1,0 +1,14 @@
+services:
+  blog:
+    image: writeas/writefreely:latest
+    volumes:
+      - "${CONFIG_FILE}:/go/config.ini"
+      - "${KEYS_DIR}:/go/keys"
+      - "${DB_FILE}:/go/writefreely.db"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
+    name: "private"
