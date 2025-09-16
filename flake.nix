@@ -19,7 +19,6 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       home-manager,
       nixvim,
@@ -29,7 +28,7 @@
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
-      flakeDir = ./.;
+      flakePath = ./.;
       homeModules = [
         ./users/tyler
         ./modules/home-manager
@@ -42,7 +41,7 @@
         homeserver = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit self;
+            inherit flakePath;
           };
           modules = [
             ./hosts/nixos/homeserver/configuration.nix
@@ -50,7 +49,7 @@
             home-manager.nixosModules.home-manager
             {
               home-manager.extraSpecialArgs = {
-                inherit flakeDir;
+                inherit flakePath;
               };
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -66,7 +65,7 @@
         tyler = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
-            inherit flakeDir;
+            inherit flakePath;
           };
           modules = homeModules;
         };

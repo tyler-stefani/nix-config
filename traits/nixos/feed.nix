@@ -1,16 +1,16 @@
-{ self, ... }:
+{ flakePath, ... }:
 {
   config.virtualisation.docker-compose.feed =
     let
       dataDir = "/home/tyler/apps/miniflux/data";
     in
     {
-      dir = self + /stacks/feed;
+      dir = flakePath + /stacks/feed;
       env = {
         MINIFLUX_VERSION = "2.2.11";
         DATA_DIR = dataDir;
-        DB_PASSWORD = builtins.readFile (self + /secrets/feed/db-password);
-        API_TOKEN = builtins.readFile (self + /secrets/feed/api-key);
+        DB_PASSWORD = builtins.readFile (flakePath + /secrets/feed/db-password);
+        API_TOKEN = builtins.readFile (flakePath + /secrets/feed/api-key);
       };
       backup = {
         enable = true;

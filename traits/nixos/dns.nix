@@ -1,16 +1,16 @@
-{ self, ... }:
+{ flakePath, ... }:
 let
   data = "/home/tyler/apps/pihole/etc-pihole";
   dnsmasq = "/home/tyler/apps/pihole/etc-dnsmasq";
 in
 {
   virtualisation.docker-compose.dns = {
-    dir = self + /stacks/dns;
+    dir = flakePath + /stacks/dns;
     env = {
       PIHOLE_VERSION = "2025.08.0";
       TIMEZONE = "America/Chicago";
-      PASSWORD = builtins.readFile "${self}/secrets/dns/password";
-      TS_AUTHKEY = builtins.readFile "${self}/secrets/dns/authkey";
+      PASSWORD = builtins.readFile (flakePath + /secrets/dns/password);
+      TS_AUTHKEY = builtins.readFile (flakePath + /secrets/dns/authkey);
       DATA_DIR = data;
       DNSMASQ_DIR = dnsmasq;
     };

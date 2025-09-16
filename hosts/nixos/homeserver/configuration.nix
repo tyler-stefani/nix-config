@@ -1,4 +1,4 @@
-{ self, pkgs, ... }:
+{ flakePath, pkgs, ... }:
 
 {
   imports = [
@@ -6,21 +6,21 @@
     ./hardware-configuration.nix
     ./users.nix
 
-    (self + /traits/all/base.nix)
-    (self + /traits/nixos/backup.nix)
-    (self + /traits/nixos/base.nix)
-    (self + /traits/nixos/blog.nix)
-    (self + /traits/nixos/containers.nix)
-    (self + /traits/nixos/dns.nix)
-    (self + /traits/nixos/feed.nix)
-    (self + /traits/nixos/keep.nix)
-    (self + /traits/nixos/media.nix)
-    (self + /traits/nixos/mesh-vpn.nix)
-    (self + /traits/nixos/minecraft.nix)
-    (self + /traits/nixos/monitoring.nix)
-    (self + /traits/nixos/photos.nix)
-    (self + /traits/nixos/proxy.nix)
-    (self + /traits/nixos/sync.nix)
+    (flakePath + /traits/all/base.nix)
+    (flakePath + /traits/nixos/backup.nix)
+    (flakePath + /traits/nixos/base.nix)
+    (flakePath + /traits/nixos/blog.nix)
+    (flakePath + /traits/nixos/containers.nix)
+    (flakePath + /traits/nixos/dns.nix)
+    (flakePath + /traits/nixos/feed.nix)
+    (flakePath + /traits/nixos/keep.nix)
+    (flakePath + /traits/nixos/media.nix)
+    (flakePath + /traits/nixos/mesh-vpn.nix)
+    (flakePath + /traits/nixos/minecraft.nix)
+    (flakePath + /traits/nixos/monitoring.nix)
+    (flakePath + /traits/nixos/photos.nix)
+    (flakePath + /traits/nixos/proxy.nix)
+    (flakePath + /traits/nixos/sync.nix)
   ];
 
   # Bootloader.

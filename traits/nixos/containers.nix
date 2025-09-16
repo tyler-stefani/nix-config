@@ -1,10 +1,10 @@
-{ self, ... }:
+{ flakePath, ... }:
 {
   virtualisation = {
     docker.enable = true;
     oci-containers.backend = "docker";
     docker-compose.containers = {
-      dir = self + /stacks/containers;
+      dir = flakePath + /stacks/containers;
     };
   };
 }

@@ -1,4 +1,4 @@
-{ self, ... }:
+{ flakePath, ... }:
 {
   networking.firewall.allowedTCPPorts = [
     80
@@ -11,7 +11,7 @@
       letsencryptDir = "/home/tyler/apps/nginx/letsencrypt";
     in
     {
-      dir = self + /stacks/proxy;
+      dir = flakePath + /stacks/proxy;
       env = {
         NPM_VERSION = "2.12.6";
         DATA_DIR = dataDir;
