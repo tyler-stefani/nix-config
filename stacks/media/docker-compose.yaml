@@ -1,0 +1,19 @@
+services:
+  media:
+    image: lscr.io/linuxserver/jellyfin:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+    volumes:
+      - "${CONFIG_DIR}:/config"
+      - "${MOVIE_DIR}:/data/movies"
+      - "${SHOW_DIR}:/data/tvshows"
+    networks:
+      - proxy
+    restart: unless-stopped
+
+networks:
+  proxy:
+    external: true
+    name: private
