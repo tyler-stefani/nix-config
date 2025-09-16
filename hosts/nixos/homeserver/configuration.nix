@@ -36,8 +36,6 @@
     };
   };
 
-  nix.package = pkgs.lixPackageSets.stable.lix;
-
   networking = {
     networkmanager.enable = true;
     firewall.allowedTCPPorts = [ 3000 ];
