@@ -1,4 +1,7 @@
-{ flakePath, config, ... }:
+{
+  config,
+  ...
+}:
 let
   uploadDir = "/home/tyler/apps/immich/upload";
   libDir = "${config.hostConfig.directories.personalData}/photos/library";
@@ -7,7 +10,7 @@ let
 in
 {
   config.virtualisation.docker-compose.photos = {
-    dir = flakePath + /stacks/photos;
+    dir = ./.;
     env = {
       UPLOAD_LOCATION = uploadDir;
       LIBRARY_LOCATION = libDir;
@@ -18,7 +21,7 @@ in
       IMMICH_VERSION = "v1.138.1";
       DB_DATABASE_NAME = "immich";
       DB_USERNAME = "postgres";
-      DB_PASSWORD = builtins.readFile (flakePath + /secrets/photos/db-password);
+      DB_PASSWORD = builtins.readFile ./secrets/db-password;
     };
     backup = {
       enable = true;

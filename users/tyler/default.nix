@@ -1,7 +1,7 @@
-{ pkgs, flakePath, ... }:
+{ pkgs, traits, ... }:
 {
   imports = [
-    (flakePath + /traits/all/ide.nix)
+    traits.all.ide
   ];
 
   home = {

@@ -28,7 +28,28 @@
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
-      flakePath = ./.;
+      traits = {
+        all = {
+          base = ./traits/all/base;
+          ide = ./traits/all/ide;
+        };
+        nixos = {
+          backup = ./traits/nixos/backup;
+          base = ./traits/nixos/base;
+          blog = ./traits/nixos/blog;
+          containers = ./traits/nixos/containers;
+          dns = ./traits/nixos/dns;
+          feed = ./traits/nixos/feed;
+          keep = ./traits/nixos/keep;
+          media = ./traits/nixos/media;
+          mesh-vpn = ./traits/nixos/mesh-vpn;
+          minecraft = ./traits/nixos/minecraft;
+          monitoring = ./traits/nixos/monitoring;
+          photos = ./traits/nixos/photos;
+          proxy = ./traits/nixos/proxy;
+          sync = ./traits/nixos/sync;
+        };
+      };
       homeModules = [
         ./users/tyler
         ./modules/home-manager
@@ -41,7 +62,7 @@
         homeserver = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit flakePath;
+            inherit traits;
           };
           modules = [
             ./hosts/nixos/homeserver/configuration.nix
@@ -49,7 +70,7 @@
             home-manager.nixosModules.home-manager
             {
               home-manager.extraSpecialArgs = {
-                inherit flakePath;
+                inherit traits;
               };
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -65,7 +86,7 @@
         tyler = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
-            inherit flakePath;
+            inherit traits;
           };
           modules = homeModules;
         };

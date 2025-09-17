@@ -1,4 +1,8 @@
-{ flakePath, pkgs, ... }:
+{
+  traits,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -6,21 +10,22 @@
     ./hardware-configuration.nix
     ./users.nix
 
-    (flakePath + /traits/all/base.nix)
-    (flakePath + /traits/nixos/backup.nix)
-    (flakePath + /traits/nixos/base.nix)
-    (flakePath + /traits/nixos/blog.nix)
-    (flakePath + /traits/nixos/containers.nix)
-    (flakePath + /traits/nixos/dns.nix)
-    (flakePath + /traits/nixos/feed.nix)
-    (flakePath + /traits/nixos/keep.nix)
-    (flakePath + /traits/nixos/media.nix)
-    (flakePath + /traits/nixos/mesh-vpn.nix)
-    (flakePath + /traits/nixos/minecraft.nix)
-    (flakePath + /traits/nixos/monitoring.nix)
-    (flakePath + /traits/nixos/photos.nix)
-    (flakePath + /traits/nixos/proxy.nix)
-    (flakePath + /traits/nixos/sync.nix)
+    traits.all.base
+
+    traits.nixos.backup
+    traits.nixos.base
+    traits.nixos.blog
+    traits.nixos.containers
+    traits.nixos.dns
+    traits.nixos.feed
+    traits.nixos.keep
+    traits.nixos.media
+    traits.nixos.mesh-vpn
+    traits.nixos.minecraft
+    traits.nixos.monitoring
+    traits.nixos.photos
+    traits.nixos.proxy
+    traits.nixos.sync
   ];
 
   # Bootloader.

@@ -1,4 +1,4 @@
-{ flakePath, ... }:
+{ ... }:
 let
   mkBackup =
     { name, path }:
@@ -10,9 +10,9 @@ let
         Persistent = true;
         RandomizedDelaySec = 1800;
       };
-      repositoryFile = builtins.toString (flakePath + /secrets/backup/repository);
-      environmentFile = builtins.toString (flakePath + /secrets/backup/environment);
-      passwordFile = builtins.toString (flakePath + /secrets/backup/password);
+      repositoryFile = builtins.toString ./secrets/repository;
+      environmentFile = builtins.toString ./secrets/environment;
+      passwordFile = builtins.toString ./secrets/password;
       extraBackupArgs = [
         "--tag"
         name

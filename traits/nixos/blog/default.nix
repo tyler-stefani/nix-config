@@ -1,10 +1,10 @@
-{ flakePath, ... }:
+{ ... }:
 let
   appDir = "/home/tyler/apps/blog";
 in
 {
   config.virtualisation.docker-compose.blog = {
-    dir = flakePath + /stacks/blog;
+    dir = ./.;
     env = {
       CONFIG_FILE = "${appDir}/config.ini";
       KEYS_DIR = "${appDir}/keys";

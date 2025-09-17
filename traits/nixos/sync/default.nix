@@ -1,4 +1,4 @@
-{ flakePath, ... }:
+{ ... }:
 {
   services.syncthing = {
     enable = true;
@@ -10,7 +10,7 @@
     settings = {
       gui = {
         user = "tyler";
-        password = builtins.readFile (flakePath + /secrets/sync/password);
+        password = builtins.readFile ./secrets/password;
       };
       folders.notes.path = "/home/tyler/shared/safe/data/notes";
     };

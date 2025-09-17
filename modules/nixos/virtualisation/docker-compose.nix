@@ -1,5 +1,4 @@
 {
-  flakePath,
   config,
   lib,
   pkgs,
@@ -90,9 +89,9 @@ in
               timerConfig = value.backup.timerConfig // {
                 RandomizedDelaySec = 1800;
               };
-              repositoryFile = builtins.toString (flakePath + /secrets/backup/repository);
-              environmentFile = builtins.toString (flakePath + /secrets/backup/environment);
-              passwordFile = builtins.toString (flakePath + /secrets/backup/password);
+              repositoryFile = builtins.toString ../../../traits/nixos/backup/secrets/repository;
+              environmentFile = builtins.toString ../../../traits/nixos/backup/secrets/environment;
+              passwordFile = builtins.toString ../../../traits/nixos/backup/secrets/password;
               extraBackupArgs = [
                 "--tag"
                 name

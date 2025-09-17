@@ -1,5 +1,4 @@
 {
-  flakePath,
   config,
   lib,
   ...
@@ -41,7 +40,7 @@
     grafana = {
       enable = true;
       settings.server = {
-        domain = builtins.readFile (flakePath + /secrets/monitoring/domain);
+        domain = builtins.readFile ./secrets/domain;
         http_addr = "0.0.0.0";
       };
     };

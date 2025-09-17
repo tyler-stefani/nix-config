@@ -1,11 +1,11 @@
-{ flakePath, ... }:
+{ ... }:
 let
   minecraftDir = "/home/tyler/apps/minecraft/data";
   netbirdDir = "/home/tyler/apps/netbird/client/data";
 in
 {
   config.virtualisation.docker-compose.minecraft = {
-    dir = flakePath + /stacks/minecraft;
+    dir = ./.;
     env = {
       MINECRAFT_DIR = minecraftDir;
       NETBIRD_DIR = netbirdDir;

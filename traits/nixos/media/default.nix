@@ -1,10 +1,10 @@
-{ flakePath, ... }:
+{ ... }:
 let
   configDir = "/home/tyler/apps/jellyfin/config";
 in
 {
   config.virtualisation.docker-compose.media = {
-    dir = flakePath + /stacks/media;
+    dir = ./.;
     env = {
       CONFIG_DIR = configDir;
       MOVIE_DIR = "/home/tyler/shared/media/movies";
