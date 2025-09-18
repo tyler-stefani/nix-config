@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   networking.firewall.allowedTCPPorts = [
     80
@@ -7,8 +7,8 @@
 
   virtualisation.docker-compose.proxy =
     let
-      dataDir = "/home/tyler/apps/nginx/data";
-      letsencryptDir = "/home/tyler/apps/nginx/letsencrypt";
+      dataDir = "${config.host.mounts.config}/nginx/data";
+      letsencryptDir = "${config.host.mounts.config}/nginx/letsencrypt";
     in
     {
       dir = ./.;

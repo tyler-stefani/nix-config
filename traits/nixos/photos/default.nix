@@ -3,10 +3,10 @@
   ...
 }:
 let
-  uploadDir = "/home/tyler/apps/immich/upload";
-  libDir = "${config.hostConfig.directories.personalData}/photos/library";
-  extLibDir = "/home/tyler/shared/safe/data/photos/library-kim";
-  dbDir = "/home/tyler/apps/immich/postgres";
+  uploadDir = "${config.host.mounts.config}/immich/upload";
+  libDir = "${config.host.mounts.data}/photos/library";
+  extLibDir = "${config.host.mounts.data}/photos/library-kim";
+  dbDir = "${config.host.mounts.config}/immich/postgres";
 in
 {
   config.virtualisation.docker-compose.photos = {
@@ -15,7 +15,7 @@ in
       UPLOAD_LOCATION = uploadDir;
       LIBRARY_LOCATION = libDir;
       EXTERNAL_LIBRARY_LOCATION = extLibDir;
-      BACKUP_LOCATION = "${config.hostConfig.directories.appData}/immich";
+      BACKUP_LOCATION = "/home/tyler/shared/safe/apps/immich";
       DB_DATA_LOCATION = dbDir;
       TZ = "America/Chicago";
       IMMICH_VERSION = "v1.138.1";

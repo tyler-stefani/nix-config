@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 let
   mkBackup =
     { name, path }:
@@ -25,11 +25,11 @@ in
     backups = {
       notes = mkBackup {
         name = "notes";
-        path = "/home/tyler/shared/safe/data/notes";
+        path = "${config.host.mounts.data}/notes";
       };
       records = mkBackup {
         name = "records";
-        path = "/home/tyler/shared/safe/data/records";
+        path = "${config.host.mounts.data}/records";
       };
     };
   };

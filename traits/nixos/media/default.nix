@@ -1,14 +1,14 @@
-{ ... }:
+{ config, ... }:
 let
-  configDir = "/home/tyler/apps/jellyfin/config";
+  configDir = "${config.host.mounts.config}/jellyfin/config";
 in
 {
   config.virtualisation.docker-compose.media = {
     dir = ./.;
     env = {
       CONFIG_DIR = configDir;
-      MOVIE_DIR = "/home/tyler/shared/media/movies";
-      SHOW_DIR = "/home/tyler/shared/media/shows";
+      MOVIE_DIR = "${config.host.mounts.media}/movies";
+      SHOW_DIR = "${config.host.mounts.media}/shows";
     };
     backup = {
       enable = true;

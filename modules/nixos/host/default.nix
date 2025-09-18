@@ -3,23 +3,26 @@
 with lib;
 
 {
-  options.hostConfig = {
-    hostName = mkOption {
+  options.host = {
+    name = mkOption {
       type = types.str;
     };
-    directories = {
-      personalData = mkOption {
-        type = types.path;
+    mounts = {
+      data = mkOption {
+        type = types.str;
       };
-      appData = mkOption {
-        type = types.path;
+      config = mkOption {
+        type = types.str;
+      };
+      media = mkOption {
+        type = types.str;
       };
     };
   };
 
   config = {
     networking = {
-      hostName = config.hostConfig.hostName;
+      hostName = config.host.name;
     };
   };
 }

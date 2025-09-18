@@ -33,11 +33,12 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_6_1;
 
-  hostConfig = {
-    hostName = "homeserver";
-    directories = {
-      personalData = "/home/tyler/shared/safe/data";
-      appData = "/home/tyler/shared/safe/apps";
+  host = {
+    name = "homeserver";
+    mounts = {
+      data = "/home/tyler/shared/safe/data";
+      config = "/home/tyler/apps";
+      media = "/home/tyler/shared/media";
     };
   };
 

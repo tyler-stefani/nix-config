@@ -1,7 +1,7 @@
-{ ... }:
+{ config, ... }:
 let
-  minecraftDir = "/home/tyler/apps/minecraft/data";
-  netbirdDir = "/home/tyler/apps/netbird/client/data";
+  minecraftDir = "${config.host.mounts.config}/minecraft/data";
+  netbirdDir = "${config.host.mounts.config}/netbird/client/data";
 in
 {
   config.virtualisation.docker-compose.minecraft = {
