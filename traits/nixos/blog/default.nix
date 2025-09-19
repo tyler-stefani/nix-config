@@ -1,6 +1,6 @@
-{ config, ... }:
+{ mounts, ... }:
 let
-  appDir = "${config.host.mounts.config}/blog";
+  appDir = "${mounts.config}/blog";
 in
 {
   config.virtualisation.docker-compose.blog = {

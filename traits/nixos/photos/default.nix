@@ -1,12 +1,12 @@
 {
-  config,
+  mounts,
   ...
 }:
 let
-  uploadDir = "${config.host.mounts.config}/immich/upload";
-  libDir = "${config.host.mounts.data}/photos/library";
-  extLibDir = "${config.host.mounts.data}/photos/library-kim";
-  dbDir = "${config.host.mounts.config}/immich/postgres";
+  uploadDir = "${mounts.config}/immich/upload";
+  libDir = "${mounts.data}/photos/library";
+  extLibDir = "${mounts.data}/photos/library-kim";
+  dbDir = "${mounts.config}/immich/postgres";
 in
 {
   config.virtualisation.docker-compose.photos = {

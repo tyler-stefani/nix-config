@@ -1,7 +1,7 @@
-{ config, ... }:
+{ mounts, ... }:
 let
-  data = "${config.host.mounts.config}/pihole/etc-pihole";
-  dnsmasq = "${config.host.mounts.config}/pihole/etc-dnsmasq";
+  data = "${mounts.config}/pihole/etc-pihole";
+  dnsmasq = "${mounts.config}/pihole/etc-dnsmasq";
 in
 {
   virtualisation.docker-compose.dns = {

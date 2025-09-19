@@ -1,4 +1,4 @@
-{ config, ... }:
+{ mounts, ... }:
 {
   services.syncthing = {
     enable = true;
@@ -12,7 +12,7 @@
         user = "tyler";
         password = builtins.readFile ./secrets/password;
       };
-      folders.notes.path = "${config.host.mounts.data}/notes";
+      folders.notes.path = "${mounts.data}/notes";
     };
   };
 }

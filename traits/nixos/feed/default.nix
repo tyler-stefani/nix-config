@@ -1,8 +1,8 @@
-{ config, ... }:
+{ mounts, ... }:
 {
   config.virtualisation.docker-compose.feed =
     let
-      dataDir = "${config.host.mounts.config}/miniflux/data";
+      dataDir = "${mounts.config}/miniflux/data";
     in
     {
       dir = ./.;

@@ -1,6 +1,5 @@
 {
   imports = [
-    ./host
     ./networking
     ./programs
     ./services

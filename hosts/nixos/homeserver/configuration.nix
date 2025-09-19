@@ -33,16 +33,14 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_6_1;
 
-  host = {
-    name = "homeserver";
-    mounts = {
-      data = "/home/tyler/shared/safe/data";
-      config = "/home/tyler/apps";
-      media = "/home/tyler/shared/media";
-    };
+  _module.args.mounts = {
+    data = "/home/tyler/shared/safe/data";
+    config = "/home/tyler/apps";
+    media = "/home/tyler/shared/media";
   };
 
   networking = {
+    hostName = "homeserver";
     networkmanager.enable = true;
     firewall.allowedTCPPorts = [ 3000 ];
     oci.networks = {
