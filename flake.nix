@@ -7,6 +7,7 @@
       url = "github:nix-community/home-manager?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-parts.url = "github:hercules-ci/flake-parts";
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,13 +22,12 @@
     {
       nixpkgs,
       home-manager,
+      flake-parts,
       nixvim,
       stylix,
       ...
-    }:
+    }@inputs:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
       traits = {
         all = {
           base = ./traits/all/base;
@@ -57,41 +57,47 @@
         stylix.homeModules.stylix
       ];
     in
-    {
-      nixosConfigurations = {
-        homeserver = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit traits;
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" ];
+
+      perSystem =
+        { pkgs, ... }:
+        {
+          legacyPackages.homeConfigurations.tyler = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = { inherit traits; };
+            modules = homeModules;
           };
-          modules = [
-            ./hosts/nixos/homeserver/configuration.nix
-            ./modules/nixos
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.extraSpecialArgs = {
+
+          formatter = pkgs.nixfmt-tree;
+        };
+
+      flake =
+        { ... }:
+        {
+          nixosConfigurations = {
+            homeserver = nixpkgs.lib.nixosSystem {
+              system = "x86_64-linux";
+              specialArgs = {
                 inherit traits;
               };
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.tyler = {
-                imports = homeModules;
-              };
-            }
-          ];
-        };
-      };
-
-      homeConfigurations = {
-        tyler = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = {
-            inherit traits;
+              modules = [
+                ./hosts/nixos/homeserver/configuration.nix
+                ./modules/nixos
+                home-manager.nixosModules.home-manager
+                {
+                  home-manager.extraSpecialArgs = {
+                    inherit traits;
+                  };
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.useUserPackages = true;
+                  home-manager.users.tyler = {
+                    imports = homeModules;
+                  };
+                }
+              ];
+            };
           };
-          modules = homeModules;
         };
-      };
-
-      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-tree;
     };
 }
