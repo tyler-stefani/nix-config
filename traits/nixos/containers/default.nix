@@ -4,7 +4,7 @@
     docker.enable = true;
     oci-containers.backend = "docker";
     docker-compose.containers = {
-      dir = ./.;
+      file = ./docker-compose.yaml;
     };
   };
 }

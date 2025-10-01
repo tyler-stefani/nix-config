@@ -14,9 +14,9 @@ in
     type = types.attrsOf (
       types.submodule {
         options = {
-          dir = mkOption {
+          file = mkOption {
             type = types.path;
-            description = "Path to directory containing a docker-compose.yaml";
+            description = "Path to the docker-compose yaml file";
           };
           env = mkOption {
             type = types.attrsOf types.str;
@@ -57,7 +57,7 @@ in
         let
           composeFile = pkgs.writeTextFile {
             name = "${svcName name}.yaml";
-            text = builtins.readFile "${value.dir}/docker-compose.yaml";
+            text = builtins.readFile value.file;
           };
         in
         nameValuePair (svcName name) ({

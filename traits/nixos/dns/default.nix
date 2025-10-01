@@ -5,7 +5,7 @@ let
 in
 {
   virtualisation.docker-compose.dns = {
-    dir = ./.;
+    file = ./docker-compose.yaml;
     env = {
       PIHOLE_VERSION = "2025.08.0";
       TIMEZONE = "America/Chicago";

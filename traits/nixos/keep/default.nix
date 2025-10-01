@@ -1,7 +1,7 @@
 { mounts, ... }:
 {
   config.virtualisation.docker-compose.keep = {
-    dir = ./.;
+    file = ./docker-compose.yaml;
     env = {
       KARAKEEP_VERSION = "0.26.0";
       DATA_DIR = "${mounts.config}/karakeep/data";

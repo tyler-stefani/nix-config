@@ -10,7 +10,7 @@ let
 in
 {
   config.virtualisation.docker-compose.photos = {
-    dir = ./.;
+    file = ./docker-compose.yaml;
     env = {
       UPLOAD_LOCATION = uploadDir;
       LIBRARY_LOCATION = libDir;

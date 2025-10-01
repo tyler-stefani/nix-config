@@ -5,7 +5,7 @@
       dataDir = "${mounts.config}/miniflux/data";
     in
     {
-      dir = ./.;
+      file = ./docker-compose.yaml;
       env = {
         MINIFLUX_VERSION = "2.2.11";
         DATA_DIR = dataDir;

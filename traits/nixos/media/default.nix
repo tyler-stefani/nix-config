@@ -4,7 +4,7 @@ let
 in
 {
   config.virtualisation.docker-compose.media = {
-    dir = ./.;
+    file = ./docker-compose.yaml;
     env = {
       CONFIG_DIR = configDir;
       MOVIE_DIR = "${mounts.media}/movies";

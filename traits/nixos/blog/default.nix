@@ -4,7 +4,7 @@ let
 in
 {
   config.virtualisation.docker-compose.blog = {
-    dir = ./.;
+    file = ./docker-compose.yaml;
     env = {
       CONFIG_FILE = "${appDir}/config.ini";
       KEYS_DIR = "${appDir}/keys";

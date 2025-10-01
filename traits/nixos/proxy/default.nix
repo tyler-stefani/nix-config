@@ -11,7 +11,7 @@
       letsencryptDir = "${mounts.config}/nginx/letsencrypt";
     in
     {
-      dir = ./.;
+      file = ./docker-compose.yaml;
       env = {
         NPM_VERSION = "2.12.6";
         DATA_DIR = dataDir;

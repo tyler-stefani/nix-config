@@ -5,7 +5,7 @@ let
 in
 {
   config.virtualisation.docker-compose.minecraft = {
-    dir = ./.;
+    file = ./docker-compose.yaml;
     env = {
       MINECRAFT_DIR = minecraftDir;
       NETBIRD_DIR = netbirdDir;
