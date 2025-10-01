@@ -28,28 +28,8 @@
       ...
     }@inputs:
     let
-      traits = {
-        all = {
-          base = ./traits/all/base;
-          ide = ./traits/all/ide;
-        };
-        nixos = {
-          backup = ./traits/nixos/backup;
-          base = ./traits/nixos/base;
-          blog = ./traits/nixos/blog;
-          containers = ./traits/nixos/containers;
-          dns = ./traits/nixos/dns;
-          feed = ./traits/nixos/feed;
-          keep = ./traits/nixos/keep;
-          media = ./traits/nixos/media;
-          mesh-vpn = ./traits/nixos/mesh-vpn;
-          minecraft = ./traits/nixos/minecraft;
-          monitoring = ./traits/nixos/monitoring;
-          photos = ./traits/nixos/photos;
-          proxy = ./traits/nixos/proxy;
-          sync = ./traits/nixos/sync;
-        };
-      };
+      walk = import ./lib/walk.nix nixpkgs.lib;
+      traits = walk ./traits;
       homeModules = [
         ./users/tyler
         ./modules/home-manager
