@@ -38,17 +38,21 @@
       ];
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" ];
+      imports = [
+        home-manager.flakeModules.home-manager
+
+        ./home/modules
+        ./home/users/tyler
+      ];
+
+      systems = [
+        "x86_64-linux"
+        "x86_64-darwin"
+      ];
 
       perSystem =
         { pkgs, ... }:
         {
-          legacyPackages.homeConfigurations.tyler = home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-            extraSpecialArgs = { inherit traits; };
-            modules = homeModules;
-          };
-
           formatter = pkgs.nixfmt-tree;
         };
 
