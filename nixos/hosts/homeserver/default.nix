@@ -1,4 +1,9 @@
-{ inputs, traits, ... }:
+{
+  inputs,
+  config,
+  traits,
+  ...
+}:
 {
   flake.nixosConfigurations.homeserver = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
@@ -7,7 +12,7 @@
     };
     modules = [
       ./configuration.nix
-      ./modules/nixos
-    ];
+    ]
+    ++ builtins.attrValues config.flake.nixosModules;
   };
 }

@@ -30,18 +30,12 @@
     let
       walk = import ./lib/walk.nix nixpkgs.lib;
       traits = walk ./traits;
-      homeModules = [
-        ./users/tyler
-        ./modules/home-manager
-        nixvim.homeModules.nixvim
-        stylix.homeModules.stylix
-      ];
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         home-manager.flakeModules.home-manager
         ./nixos/modules
-        (import ./nixos/hosts/homeserver { inherit inputs traits; })
+        ({ config, ... }: import ./nixos/hosts/homeserver { inherit config inputs traits; })
 
         ./home/modules
         ./home/users/tyler
