@@ -40,6 +40,8 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         home-manager.flakeModules.home-manager
+        ./nixos/modules
+        (import ./nixos/hosts/homeserver { inherit inputs traits; })
 
         ./home/modules
         ./home/users/tyler
@@ -54,34 +56,6 @@
         { pkgs, ... }:
         {
           formatter = pkgs.nixfmt-tree;
-        };
-
-      flake =
-        { ... }:
-        {
-          nixosConfigurations = {
-            homeserver = nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = {
-                inherit traits;
-              };
-              modules = [
-                ./hosts/nixos/homeserver/configuration.nix
-                ./modules/nixos
-                home-manager.nixosModules.home-manager
-                {
-                  home-manager.extraSpecialArgs = {
-                    inherit traits;
-                  };
-                  home-manager.useGlobalPkgs = true;
-                  home-manager.useUserPackages = true;
-                  home-manager.users.tyler = {
-                    imports = homeModules;
-                  };
-                }
-              ];
-            };
-          };
         };
     };
 }
