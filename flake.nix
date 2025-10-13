@@ -8,6 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,21 +24,21 @@
       nixpkgs,
       home-manager,
       flake-parts,
+      import-tree,
       nixvim,
       stylix,
       ...
     }@inputs:
-    let
-      walk = import ./lib/walk.nix nixpkgs.lib;
-      traits = walk ./traits;
-    in
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
+        (import-tree ./flake/modules)
         home-manager.flakeModules.home-manager
-        ./nixos/modules
-        ({ config, ... }: import ./nixos/hosts/homeserver { inherit config inputs traits; })
 
-        ./home/modules
+        (import-tree ./nixos/modules)
+        (import-tree ./nixos/traits)
+        ./nixos/hosts/homeserver
+
+        (import-tree ./home/modules)
         ./home/users/tyler
       ];
 
