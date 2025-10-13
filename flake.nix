@@ -8,6 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,61 +24,33 @@
       nixpkgs,
       home-manager,
       flake-parts,
+      import-tree,
       nixvim,
       stylix,
       ...
     }@inputs:
-    let
-      walk = import ./lib/walk.nix nixpkgs.lib;
-      traits = walk ./traits;
-      homeModules = [
-        ./users/tyler
-        ./modules/home-manager
-        nixvim.homeModules.nixvim
-        stylix.homeModules.stylix
-      ];
-    in
     flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" ];
+      imports = [
+        (import-tree ./flake/modules)
+        home-manager.flakeModules.home-manager
+
+        (import-tree ./nixos/modules)
+        (import-tree ./nixos/traits)
+        ./nixos/hosts/homeserver
+
+        (import-tree ./home/modules)
+        ./home/users/tyler
+      ];
+
+      systems = [
+        "x86_64-linux"
+        "x86_64-darwin"
+      ];
 
       perSystem =
         { pkgs, ... }:
         {
-          legacyPackages.homeConfigurations.tyler = home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-            extraSpecialArgs = { inherit traits; };
-            modules = homeModules;
-          };
-
           formatter = pkgs.nixfmt-tree;
-        };
-
-      flake =
-        { ... }:
-        {
-          nixosConfigurations = {
-            homeserver = nixpkgs.lib.nixosSystem {
-              system = "x86_64-linux";
-              specialArgs = {
-                inherit traits;
-              };
-              modules = [
-                ./hosts/nixos/homeserver/configuration.nix
-                ./modules/nixos
-                home-manager.nixosModules.home-manager
-                {
-                  home-manager.extraSpecialArgs = {
-                    inherit traits;
-                  };
-                  home-manager.useGlobalPkgs = true;
-                  home-manager.useUserPackages = true;
-                  home-manager.users.tyler = {
-                    imports = homeModules;
-                  };
-                }
-              ];
-            };
-          };
         };
     };
 }
