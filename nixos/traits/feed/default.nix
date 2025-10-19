@@ -14,6 +14,7 @@
             DATA_DIR = dataDir;
             DB_PASSWORD = builtins.readFile ./secrets/db-password;
             API_TOKEN = builtins.readFile ./secrets/api-key;
+            BASE_URL = builtins.readFile ./secrets/base-url;
           };
           backup = {
             enable = true;
