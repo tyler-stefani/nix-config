@@ -92,9 +92,9 @@
                   timerConfig = value.backup.timerConfig // {
                     RandomizedDelaySec = 1800;
                   };
-                  repositoryFile = builtins.toString ../../../traits/nixos/backup/secrets/repository;
-                  environmentFile = builtins.toString ../../../traits/nixos/backup/secrets/environment;
-                  passwordFile = builtins.toString ../../../traits/nixos/backup/secrets/password;
+                  repositoryFile = builtins.toString ../traits/backup/secrets/repository;
+                  environmentFile = builtins.toString ../traits/backup/secrets/environment;
+                  passwordFile = builtins.toString ../traits/backup/secrets/password;
                   extraBackupArgs = [
                     "--tag"
                     name
