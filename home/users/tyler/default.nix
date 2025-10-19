@@ -92,6 +92,7 @@
             };
             nixvim = {
               enable = true;
+              defaultEditor = true;
               plugins = {
                 telescope.enable = true;
                 oil = {
