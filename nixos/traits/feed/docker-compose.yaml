@@ -8,6 +8,7 @@ services:
       - DATABASE_URL=postgres://miniflux:${DB_PASSWORD}@db/miniflux?sslmode=disable
       - FETCH_YOUTUBE_WATCH_TIME=1
       - RUN_MIGRATIONS=1
+      - BASE_URL=${BASE_URL}
     healthcheck:
       test: ["CMD", "/usr/bin/miniflux", "-healthcheck", "auto"]
     networks:
