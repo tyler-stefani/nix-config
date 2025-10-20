@@ -3,12 +3,17 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    extras.url = "git+ssh://git@github.com/tyler-stefani/nix-extras";
     home-manager = {
       url = "github:nix-community/home-manager?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,6 +27,7 @@
   outputs =
     {
       nixpkgs,
+      extras,
       home-manager,
       flake-parts,
       import-tree,
@@ -41,6 +47,8 @@
         (import-tree ./home/modules)
         ./home/users/tyler
       ];
+
+      flake.nixosTraits.local-media = extras.nixosTraits.local-media;
 
       systems = [
         "x86_64-linux"
