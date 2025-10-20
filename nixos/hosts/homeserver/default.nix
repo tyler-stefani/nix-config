@@ -10,6 +10,7 @@
       traits = config.flake.nixosTraits;
     };
     modules = [
+      inputs.sops-nix.nixosModules.sops
       ./configuration.nix
     ]
     ++ builtins.attrValues config.flake.nixosModules;

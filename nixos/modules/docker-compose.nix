@@ -26,6 +26,11 @@
                 default = { };
                 description = "Environment variables to write to an .env file";
               };
+              envPath = mkOption {
+                type = types.str;
+                default = "";
+                description = "Path to environment files";
+              };
               backup = {
                 enable = mkEnableOption "backing up of volumes for these containers";
                 paths = mkOption {
@@ -71,6 +76,7 @@
 
               serviceConfig = {
                 Environment = mapAttrsToList (k: v: "${k}=${v}") value.env;
+                EnvironmentFile = value.envPath;
                 ExecStart = "${pkgs.docker-compose}/bin/docker-compose -f ${composeFile} -p ${name} up";
                 ExecStop = "${pkgs.docker-compose}/bin/docker-compose -f ${composeFile} -p ${name} down";
                 ProtectHome = "off";

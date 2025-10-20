@@ -1,12 +1,10 @@
 {
-  config,
   pkgs,
   traits,
   ...
 }:
 {
   imports = with traits; [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./users.nix
 
@@ -17,6 +15,7 @@
     dns
     feed
     keep
+    local-media
     media
     mesh-vpn
     minecraft
@@ -36,6 +35,10 @@
     config = "/home/tyler/apps";
     media = "/home/tyler/shared/media";
   };
+
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+  programs.ssh.startAgent = true;
 
   networking = {
     hostName = "homeserver";
