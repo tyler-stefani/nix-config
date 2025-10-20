@@ -48,7 +48,7 @@
         ./home/users/tyler
       ];
 
-      flake.nixosTraits.local-media = extras.nixosTraits.local-media;
+      flake.nixosTraits = extras.nixosTraits;
 
       systems = [
         "x86_64-linux"
