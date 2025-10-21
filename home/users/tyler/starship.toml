@@ -59,7 +59,8 @@ format = '[$user]($style)'
 
 [hostname]
 style = "bg:cyan fg:black"
-format = "[@$hostname ]($style)"
+format = "[ @ $hostname ]($style)"
+ssh_only = false
 
 [directory]
 style = "bg:blue fg:black"
