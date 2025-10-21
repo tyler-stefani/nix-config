@@ -7,6 +7,10 @@
       url = "git+ssh://git@github.com/tyler-stefani/nix-extras";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,6 +53,7 @@
         (import-tree ./nixos/modules)
         (import-tree ./nixos/traits)
         ./nixos/hosts/homeserver
+        ./nixos/hosts/bloob
 
         (import-tree ./home/modules)
         ./home/users/tyler
