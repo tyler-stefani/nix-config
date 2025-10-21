@@ -3,7 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    extras.url = "git+ssh://git@github.com/tyler-stefani/nix-extras";
+    extras = {
+      url = "git+ssh://git@github.com/tyler-stefani/nix-extras";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,23 +19,26 @@
     };
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
     };
     stylix = {
       url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
     };
   };
 
   outputs =
     {
-      nixpkgs,
       extras,
       home-manager,
       flake-parts,
       import-tree,
-      nixvim,
-      stylix,
       ...
     }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
