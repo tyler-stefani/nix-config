@@ -23,6 +23,8 @@
               bat
               zoxide
               starship
+              git-crypt
+              lazygit
             ];
           };
 

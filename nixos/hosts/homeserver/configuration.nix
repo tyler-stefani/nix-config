@@ -71,8 +71,6 @@
 
   environment.systemPackages = with pkgs; [
     git
-    git-crypt
-    lazygit
     mergerfs
     mergerfs-tools
   ];
