@@ -56,6 +56,7 @@
         ./nixos/hosts/bloob
 
         (import-tree ./home/modules)
+        (import-tree ./home/traits)
         ./home/users/tyler
       ];
 
