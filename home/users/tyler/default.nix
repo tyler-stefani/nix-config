@@ -12,29 +12,9 @@
           inputs.nixvim.homeModules.nixvim
           inputs.stylix.homeModules.stylix
 
-          (
-            { pkgs, traits, ... }:
-            {
-              imports =
-                with traits;
-                [
-                  editor
-                  git
-                  prompt
-                  shell
-                  styling
-                ]
-                ++ builtins.attrValues config.flake.homeModules;
-
-              home = {
-                username = "tyler";
-                homeDirectory = if pkgs.stdenv.isDarwin then "/Users/tyler" else "/home/tyler";
-              };
-
-              home.stateVersion = "24.11";
-            }
-          )
-        ];
+          ./configuration.nix
+        ]
+        ++ builtins.attrValues config.flake.homeModules;
       };
     }) config.systems
   );
