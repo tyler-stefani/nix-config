@@ -1,36 +1,41 @@
-{ config, inputs, ... }:
+{ inputs, config, ... }:
 {
-  flake.homeConfigurations."tyler" = inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
-    extraSpecialArgs = {
-      traits = config.flake.homeTraits;
-    };
-    modules = [
-      inputs.nixvim.homeModules.nixvim
-      inputs.stylix.homeModules.stylix
+  flake.homeConfigurations = builtins.listToAttrs (
+    builtins.map (system: {
+      name = "tyler@${system}";
+      value = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = import inputs.nixpkgs { inherit system; };
+        extraSpecialArgs = {
+          traits = config.flake.homeTraits;
+        };
+        modules = [
+          inputs.nixvim.homeModules.nixvim
+          inputs.stylix.homeModules.stylix
 
-      (
-        { pkgs, traits, ... }:
-        {
-          imports = with traits; [
-            config.flake.homeModules.fish
-            config.flake.homeModules.starship
+          (
+            { pkgs, traits, ... }:
+            {
+              imports =
+                with traits;
+                [
+                  editor
+                  git
+                  prompt
+                  shell
+                  styling
+                ]
+                ++ builtins.attrValues config.flake.homeModules;
 
-            editor
-            git
-            prompt
-            shell
-            styling
-          ];
+              home = {
+                username = "tyler";
+                homeDirectory = if pkgs.stdenv.isDarwin then "/Users/tyler" else "/home/tyler";
+              };
 
-          home = {
-            username = "tyler";
-            homeDirectory = "/home/tyler";
-          };
-
-          home.stateVersion = "24.11";
-        }
-      )
-    ];
-  };
+              home.stateVersion = "24.11";
+            }
+          )
+        ];
+      };
+    }) config.systems
+  );
 }
