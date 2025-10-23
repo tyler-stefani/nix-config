@@ -41,7 +41,7 @@
   programs.ssh.startAgent = true;
 
   networking = {
-    hostName = "homeserver";
+    hostName = "coconut";
     networkmanager.enable = true;
     firewall.allowedTCPPorts = [ 3000 ];
     oci.networks = {
