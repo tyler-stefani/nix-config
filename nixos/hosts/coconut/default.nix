@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.nixosConfigurations.homeserver = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.coconut = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {
       traits = config.flake.nixosTraits;
