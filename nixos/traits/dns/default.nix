@@ -1,7 +1,7 @@
 { ... }:
 {
   flake.nixosTraits.dns =
-    { mounts, ... }:
+    { mounts, ips, ... }:
     let
       data = "${mounts.config}/pihole/etc-pihole";
       dnsmasq = "${mounts.config}/pihole/etc-dnsmasq";
@@ -16,6 +16,7 @@
           TS_AUTHKEY = builtins.readFile ./secrets/authkey;
           DATA_DIR = data;
           DNSMASQ_DIR = dnsmasq;
+          PIHOLE_IP = ips.dns;
         };
         /*
           This does not work because the cloud backup can not be reached when pihole is down

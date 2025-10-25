@@ -5,6 +5,8 @@
     ./hardware-configuration.nix
 
     base
+    containers
+    dns
     mesh-vpn
     metrics
   ];
@@ -25,6 +27,11 @@
     ];
     homeMode = "711";
     shell = pkgs.fish;
+  };
+
+  _module.args = {
+    mounts.config = "/home/tyler/apps";
+    ips.dns = "192.168.0.201";
   };
 
   nix.settings = {
