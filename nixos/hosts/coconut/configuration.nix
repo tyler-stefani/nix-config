@@ -31,10 +31,13 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_6_1;
 
-  _module.args.mounts = {
-    data = "/home/tyler/shared/safe/data";
-    config = "/home/tyler/apps";
-    media = "/home/tyler/shared/media";
+  _module.args = {
+    mounts = {
+      data = "/home/tyler/shared/safe/data";
+      config = "/home/tyler/apps";
+      media = "/home/tyler/shared/media";
+    };
+    ips.dns = "192.168.0.200";
   };
 
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];

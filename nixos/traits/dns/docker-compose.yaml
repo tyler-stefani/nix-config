@@ -12,7 +12,7 @@ services:
       WEBPASSWORD: ${PASSWORD}
     networks:
       vlan:
-        ipv4_address: 192.168.0.200
+        ipv4_address: ${PIHOLE_IP}
 
   hole-sidecar:
     image: tailscale/tailscale:latest
@@ -34,4 +34,10 @@ services:
 
 networks:
   vlan:
-    external: true
+    driver: ipvlan
+    driver_opts:
+      parent: eno1
+    ipam:
+      config:
+        - subnet: 192.168.0.0/24
+          gateway: 192.168.0.1
