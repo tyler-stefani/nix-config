@@ -87,8 +87,7 @@
             })
           ) cfg;
 
-          services.restic = {
-            enable = true;
+          services.restic = mkIf config.services.restic.enable {
             backups = mapAttrs' (
               name: value:
               nameValuePair (name) (

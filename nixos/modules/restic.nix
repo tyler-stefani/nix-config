@@ -7,10 +7,39 @@
       pkgs,
       ...
     }:
+    let
+      cfg = config.services.restic;
+    in
     with lib;
     {
       options.services.restic = {
         enable = mkEnableOption "a scheduled backup service";
+
+        defaultRepositoryFile = mkOption {
+          type = with lib.types; nullOr path;
+          default = null;
+          description = ''
+            Default path to file containing the repository location to backup to for all backups.
+          '';
+        };
+
+        defaultEnvironmentFile = mkOption {
+          type = with lib.types; nullOr str;
+          default = null;
+          description = ''
+            Default file containing the credentials to access the repository for all backups,
+            in the format of an EnvironmentFile as described by {manpage}`systemd.exec(5)`.
+          '';
+        };
+
+        defaultPasswordFile = mkOption {
+          type = lib.types.str;
+          description = ''
+            Default file to read the repository password from for all backups.
+          '';
+          example = "/etc/nixos/restic-password";
+        };
+
         backups = mkOption {
           type = types.attrsOf (
             types.submodule (
@@ -38,6 +67,10 @@
                 };
 
                 config = {
+                  passwordFile = mkDefault cfg.defaultPasswordFile;
+                  environmentFile = mkDefault cfg.defaultEnvironmentFile;
+                  repositoryFile = mkDefault cfg.defaultRepositoryFile;
+
                   pruneOpts = [
                     "--keep-daily ${toString config.snapshotsToKeep.daily}"
                     "--keep-weekly ${toString config.snapshotsToKeep.weekly}"
@@ -51,7 +84,7 @@
         };
       };
 
-      config = mkIf config.services.restic.enable {
+      config = mkIf cfg.enable {
         environment.systemPackages = [
           pkgs.restic
         ];
