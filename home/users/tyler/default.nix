@@ -18,6 +18,7 @@ let
 in
 {
   flake.homeConfigurations = {
+    "tyler@bubblegum" = mkHomeConfig "x86_64-linux";
     "tyler@bloob" = mkHomeConfig "x86_64-linux";
     "tyler@coconut" = mkHomeConfig "x86_64-linux";
     "tyler@noodle" = mkHomeConfig "x86_64-darwin";

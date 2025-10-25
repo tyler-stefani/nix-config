@@ -53,6 +53,7 @@
         (import-tree ./nixos/modules)
         (import-tree ./nixos/traits)
         ./nixos/hosts/coconut
+        ./nixos/hosts/bubblegum
         ./nixos/hosts/bloob
 
         (import-tree ./home/modules)

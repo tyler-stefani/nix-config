@@ -18,6 +18,7 @@
     local-media
     media
     mesh-vpn
+    metrics
     minecraft
     monitoring
     photos
