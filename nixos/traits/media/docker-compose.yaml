@@ -9,6 +9,7 @@ services:
       - "${CONFIG_DIR}:/config"
       - "${MOVIE_DIR}:/data/movies"
       - "${SHOW_DIR}:/data/tvshows"
+      - "${MUSIC_DIR}:/data/music"
     networks:
       - proxy
     restart: unless-stopped

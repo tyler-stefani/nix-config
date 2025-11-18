@@ -12,6 +12,7 @@
           CONFIG_DIR = configDir;
           MOVIE_DIR = "${mounts.media}/movies";
           SHOW_DIR = "${mounts.media}/shows";
+          MUSIC_DIR = "${mounts.media}/music";
         };
         backup = {
           enable = true;
