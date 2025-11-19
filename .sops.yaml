@@ -1,0 +1,7 @@
+keys:
+  - &tyler age1mv6z5g3ksndaydrefzz9tq4k8xftwyy3x0qlfkr4k93ypxm0sfxqcedc3u
+creation_rules:
+  - path_regex: (^|/)secrets/[^/]*\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+        - *tyler
