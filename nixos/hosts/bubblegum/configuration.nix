@@ -6,6 +6,7 @@
 
     base
     containers
+    dash
     dns
     mesh-vpn
     metrics

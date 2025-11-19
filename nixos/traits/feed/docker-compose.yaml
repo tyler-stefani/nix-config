@@ -9,6 +9,7 @@ services:
       - FETCH_YOUTUBE_WATCH_TIME=1
       - RUN_MIGRATIONS=1
       - BASE_URL=${BASE_URL}
+      - COOKIE_SAMESITE=None
     healthcheck:
       test: ["CMD", "/usr/bin/miniflux", "-healthcheck", "auto"]
     networks:
