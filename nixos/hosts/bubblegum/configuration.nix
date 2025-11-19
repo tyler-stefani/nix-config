@@ -9,6 +9,7 @@
     dns
     mesh-vpn
     metrics
+    search
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -37,6 +38,8 @@
   nix.settings = {
     experimental-features = "nix-command flakes pipe-operators";
   };
+
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   nixpkgs.config.allowUnfree = true;
 
