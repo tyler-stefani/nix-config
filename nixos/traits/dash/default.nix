@@ -1,16 +1,14 @@
 { ... }:
 {
   flake.nixosTraits.dash =
-    { ... }:
+    { config, ... }:
     {
-      sops.secrets."dash/.env" = {
-        format = "dotenv";
+      sops.envs.dash = {
         sopsFile = ./secrets/.env;
-        key = "";
       };
       virtualisation.docker-compose.dash = {
         file = ./docker-compose.yaml;
-        envPath = "/run/secrets/dash/.env";
+        envPath = config.sops.envs.dash.path;
       };
     };
 }
