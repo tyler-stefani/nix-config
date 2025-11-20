@@ -1,12 +1,10 @@
 { ... }:
 {
   flake.nixosTraits.search =
-    { mounts, ... }:
+    { config, mounts, ... }:
     {
-      sops.secrets."search/.env" = {
-        format = "dotenv";
+      sops.envs.search = {
         sopsFile = ./secrets/.env;
-        key = "";
       };
       virtualisation.docker-compose.search = {
         file = ./docker-compose.yaml;
@@ -15,7 +13,7 @@
           DATA_DIR = "${mounts.config}/searxng/data";
           VALKEY_DATA_DIR = "${mounts.config}/searxng/valkey-data";
         };
-        envPath = "/run/secrets/search/.env";
+        envPath = config.sops.envs.search.path;
       };
 
       networking.firewall.allowedTCPPorts = [ 8080 ];
