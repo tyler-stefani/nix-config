@@ -1,9 +1,12 @@
 { ... }:
 {
   flake.nixosTraits.feed =
-    { mounts, ... }:
+    { config, mounts, ... }:
     {
-      config.virtualisation.docker-compose.feed =
+      sops.envs.feed = {
+        sopsFile = ./secrets/.env;
+      };
+      virtualisation.docker-compose.feed =
         let
           dataDir = "${mounts.config}/miniflux/data";
         in
@@ -12,10 +15,8 @@
           env = {
             MINIFLUX_VERSION = "2.2.11";
             DATA_DIR = dataDir;
-            DB_PASSWORD = builtins.readFile ./secrets/db-password;
-            API_TOKEN = builtins.readFile ./secrets/api-key;
-            BASE_URL = builtins.readFile ./secrets/base-url;
           };
+          envPath = config.sops.envs.feed.path;
           backup = {
             enable = true;
             paths = [ dataDir ];

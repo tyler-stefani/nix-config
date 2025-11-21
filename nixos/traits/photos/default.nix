@@ -2,6 +2,7 @@
 {
   flake.nixosTraits.photos =
     {
+      config,
       mounts,
       ...
     }:
@@ -12,7 +13,10 @@
       dbDir = "${mounts.config}/immich/postgres";
     in
     {
-      config.virtualisation.docker-compose.photos = {
+      sops.envs.photos = {
+        sopsFile = ./secrets/.env;
+      };
+      virtualisation.docker-compose.photos = {
         file = ./docker-compose.yaml;
         env = {
           UPLOAD_LOCATION = uploadDir;
@@ -24,8 +28,8 @@
           IMMICH_VERSION = "v1.138.1";
           DB_DATABASE_NAME = "immich";
           DB_USERNAME = "postgres";
-          DB_PASSWORD = builtins.readFile ./secrets/db-password;
         };
+        envPath = config.sops.envs.photos.path;
         backup = {
           enable = true;
           paths = [
