@@ -23,7 +23,6 @@
     monitoring
     photos
     proxy
-    sync
   ];
 
   # Bootloader.
@@ -52,9 +51,6 @@
       bridge = {
         enable = true;
         name = "private";
-      };
-      ipvlan = {
-        enable = true;
       };
     };
   };
