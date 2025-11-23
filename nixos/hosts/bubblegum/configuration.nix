@@ -4,6 +4,7 @@
   imports = with traits; [
     ./hardware-configuration.nix
 
+    auth
     base
     containers
     dash
