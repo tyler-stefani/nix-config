@@ -97,9 +97,9 @@
                   timerConfig = value.backup.timerConfig // {
                     RandomizedDelaySec = 1800;
                   };
-                  repositoryFile = builtins.toString ../traits/backup/secrets/repository;
-                  environmentFile = builtins.toString ../traits/backup/secrets/environment;
-                  passwordFile = builtins.toString ../traits/backup/secrets/password;
+                  repositoryFile = config.services.restic.defaultRepositoryFile;
+                  environmentFile = config.services.restic.defaultEnvironmentFile;
+                  passwordFile = config.services.restic.defaultPasswordFile;
                   extraBackupArgs = [
                     "--tag"
                     name
