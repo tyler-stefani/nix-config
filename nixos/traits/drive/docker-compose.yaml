@@ -1,0 +1,89 @@
+services:
+  drive:
+    image: ${OC_DOCKER_IMAGE:-opencloudeu/opencloud-rolling}:${OC_DOCKER_TAG:-latest}
+    entrypoint:
+      - /bin/sh
+    command: ["-c", "opencloud server"]
+    environment:
+      OC_URL: https://${DRIVE_DOMAIN}
+      OC_LOG_LEVEL: warn
+      PROXY_TLS: false
+      PROXY_CSP_CONFIG_FILE_LOCATION: /etc/opencloud/csp.yaml
+      COLLABORA_DOMAIN: ${OFFICE_DOMAIN}
+      NATS_NATS_HOST: 0.0.0.0
+      GATEWAY_GRPC_ADDR: 0.0.0.0:9142
+    volumes:
+      - ${CONFIG_DIR}:/etc/opencloud
+      - ${USER_DATA_DIR}:/var/lib/opencloud/storage/users/users
+      - ${PROJECT_DATA_DIR}:/var/lib/opencloud/storage/users/projects
+      - ${APPS_DIR}:/var/lib/opencloud/web/assets/apps
+      - ${DATA_DIR}:/var/lib/opencloud
+    networks:
+      - proxy
+      - default
+
+  wopi:
+    image: ${OC_DOCKER_IMAGE:-opencloudeu/opencloud-rolling}:${OC_DOCKER_TAG:-latest}
+    user: ${OC_CONTAINER_UID_GID:-1000:1000}
+    networks:
+      - proxy
+      - default
+    depends_on:
+      drive:
+        condition: service_started
+      office:
+        condition: service_healthy
+    entrypoint:
+      - /bin/sh
+    command: [ "-c", "opencloud collaboration server" ]
+    environment:
+      COLLABORATION_GRPC_ADDR: 0.0.0.0:9301
+      COLLABORATION_HTTP_ADDR: 0.0.0.0:9300
+      MICRO_REGISTRY: "nats-js-kv"
+      MICRO_REGISTRY_ADDRESS: "drive:9233"
+      COLLABORATION_WOPI_SRC: https://${WOPI_DOMAIN}
+      COLLABORATION_APP_PRODUCT: Collabora
+      COLLABORATION_APP_ADDR: https://${OFFICE_DOMAIN}
+      COLLABORATION_APP_ICON: https://${OFFICE_DOMAIN}/favicon.ico
+      COLLABORATION_APP_INSECURE: "${INSECURE:-true}"
+      COLLABORATION_CS3API_DATAGATEWAY_INSECURE: "${INSECURE:-true}"
+      OC_URL: https://${DRIVE_DOMAIN}
+    volumes:
+      - ${CONFIG_DIR}:/etc/opencloud
+    restart: always
+
+  office:
+    image: collabora/code:25.04.7.1.1
+    networks:
+      - proxy
+      - default
+    environment:
+      aliasgroup1: https://${WOPI_DOMAIN}
+      DONT_GEN_SSL_CERT: "YES"
+      extra_params: |
+        --o:ssl.enable=false \
+        --o:ssl.ssl_verification=${COLLABORA_SSL_VERIFICATION:-true} \
+        --o:ssl.termination=true \
+        --o:welcome.enable=false \
+        --o:net.frame_ancestors=${DRIVE_DOMAIN} \
+        --o:net.lok_allow.host[14]=${DRIVE_DOMAIN} \
+        --o:home_mode.enable=${COLLABORA_HOME_MODE:-false}
+    cap_add:
+      - MKNOD
+    volumes:
+      - /usr/share/fonts/truetype:/usr/share/fonts/truetype/more:ro
+      - /usr/share/fonts/truetype:/opt/cool/systemplate/usr/share/fonts/truetype/more:ro
+    restart: always
+    entrypoint: [ '/bin/bash', '-c' ]
+    command: [ 'coolconfig generate-proof-key && /start-collabora-online.sh' ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9980/hosting/discovery" ]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+networks:
+  default:
+  proxy:
+    name: private
+    external: true

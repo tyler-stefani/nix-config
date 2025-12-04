@@ -13,6 +13,7 @@
     blog
     containers
     dns
+    drive
     feed
     keep
     local-media
