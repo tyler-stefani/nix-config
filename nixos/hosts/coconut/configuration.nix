@@ -11,8 +11,10 @@
     backup
     base
     blog
+    cluster-manager
     containers
     dns
+    drive
     feed
     keep
     local-media
@@ -54,6 +56,8 @@
       };
     };
   };
+
+  virtualisation.docker-swarm.enable-manager = true;
 
   fileSystems."/home" = {
     fsType = "fuse.mergerfs";
