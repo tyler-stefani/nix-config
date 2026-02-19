@@ -6,6 +6,7 @@
 
     auth
     base
+    cluster-worker
     containers
     dash
     dns
