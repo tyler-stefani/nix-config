@@ -8,7 +8,6 @@
     base
     cluster-worker
     containers
-    dash
     dns
     mesh-vpn
     metrics
