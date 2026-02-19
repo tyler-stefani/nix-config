@@ -25,7 +25,7 @@
           BACKUP_LOCATION = "/home/tyler/shared/safe/apps/immich";
           DB_DATA_LOCATION = dbDir;
           TZ = "America/Chicago";
-          IMMICH_VERSION = "v1.138.1";
+          IMMICH_VERSION = "v2.4.1";
           DB_DATABASE_NAME = "immich";
           DB_USERNAME = "postgres";
         };
