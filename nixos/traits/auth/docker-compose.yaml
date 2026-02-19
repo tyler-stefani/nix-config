@@ -16,6 +16,8 @@ services:
     restart: unless-stopped
     volumes:
     - &{DATA_DIR}:/var/lib/postgresql/data
+    networks:
+    - auth
 
   auth:
     command: server
@@ -29,13 +31,15 @@ services:
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.10.2}
-    ports:
-    - ${COMPOSE_PORT_HTTP:-9000}:9000
-    - ${COMPOSE_PORT_HTTPS:-9443}:9443
+    expose:
+    - 9000
     restart: unless-stopped
     volumes:
     - &{MEDIA_DIR}:/media
     - &{TEMPLATES_DIR}:/templates
+    networks:
+    - cluster
+    - auth
 
   worker:
     command: worker
@@ -56,3 +60,10 @@ services:
     - &{MEDIA_DIR}:/media
     - &{CERTS_DIR}:/certs
     - &{TEMPLATES_DIR}:/templates
+    networks:
+    - auth
+
+networks:
+  cluster:
+    external: true
+  auth:
