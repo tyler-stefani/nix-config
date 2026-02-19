@@ -9,6 +9,8 @@ services:
       - MINIFLUX_LINKS_URL=${MINIFLUX_URL}
     volumes:
       - /home/tyler/apps/glance:/app/config
+    networks:
+      - cluster
     deploy:
       placement:
         constraints:
