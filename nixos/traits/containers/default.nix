@@ -6,7 +6,7 @@
       virtualisation = {
         docker.enable = true;
         oci-containers.backend = "docker";
-        docker-compose.containers = {
+        docker-stack.containers = {
           file = ./docker-compose.yaml;
         };
       };
