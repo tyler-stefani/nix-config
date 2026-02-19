@@ -55,12 +55,13 @@
               description = "Docker stack deployer for ${name}";
 
               serviceConfig = {
+                Type = "oneshot";
                 Environment = mapAttrsToList (k: v: "${k}=${v}") value.env;
                 EnvironmentFile = value.envPath;
-                ExecStart = "${pkgs.docker}/bin/docker stack deploy -c ${composeFile} ${name}";
-                ExecStop = "${pkgs.docker}/bin/docker stack remove -c ${composeFile} ${name}";
+                ExecStart = "${pkgs.docker}/bin/docker stack deploy -d=false -c ${composeFile} ${name}";
+                ExecStop = "${pkgs.docker}/bin/docker stack rm ${name}";
                 ProtectHome = "off";
-                Restart = "always";
+                RemainAfterExit = true;
               };
 
               restartTriggers = [ composeFile ];
