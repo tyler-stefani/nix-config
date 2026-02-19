@@ -1,8 +1,8 @@
 services:
   dash:
     image: glanceapp/glance
-    expose:
-      - 8080
+    ports:
+      - 8080:8080
     environment:
       - MINIFLUX_TOKEN=${MINIFLUX_TOKEN}
       - MINIFLUX_API_URL=${MINIFLUX_URL}
