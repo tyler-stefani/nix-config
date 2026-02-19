@@ -13,6 +13,7 @@
     blog
     cluster-manager
     containers
+    dash
     dns
     drive
     feed
