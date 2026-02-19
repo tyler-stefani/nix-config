@@ -15,9 +15,9 @@ services:
     image: docker.io/library/postgres:16-alpine
     restart: unless-stopped
     volumes:
-    - &{DATA_DIR}:/var/lib/postgresql/data
+      - ${DATA_DIR}:/var/lib/postgresql/data
     networks:
-    - auth
+      - auth
 
   auth:
     command: server
@@ -30,13 +30,14 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+      AUTHENTIK_LOG_LEVEL: debug
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.10.2}
-    expose:
-    - 9000
+    ports:
+      - 9000:9000
     restart: unless-stopped
     volumes:
-    - &{MEDIA_DIR}:/media
-    - &{TEMPLATES_DIR}:/templates
+    - ${MEDIA_DIR}:/media
+    - ${TEMPLATES_DIR}:/templates
     networks:
     - cluster
     - auth
@@ -57,9 +58,9 @@ services:
     user: root
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
-    - &{MEDIA_DIR}:/media
-    - &{CERTS_DIR}:/certs
-    - &{TEMPLATES_DIR}:/templates
+    - ${MEDIA_DIR}:/media
+    - ${CERTS_DIR}:/certs
+    - ${TEMPLATES_DIR}:/templates
     networks:
     - auth
 
