@@ -4,16 +4,13 @@
   imports = with traits; [
     ./hardware-configuration.nix
 
-    auth
     base
     call
-    chat
     cluster-worker
     containers
     dns
     mesh-vpn
     metrics
-    search
   ];
 
   boot.loader.systemd-boot.enable = true;

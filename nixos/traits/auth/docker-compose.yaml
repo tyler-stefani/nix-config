@@ -1,5 +1,11 @@
+x-deploy: &placement
+  deploy:
+    placement:
+      constraints:
+        - node.hostname == bubblegum
+
 services:
-  postgresql:
+  db:
     environment:
       POSTGRES_DB: ${PG_DB:-authentik}
       POSTGRES_PASSWORD: ${PG_PASS:?database password required}
@@ -18,14 +24,15 @@ services:
       - ${DATA_DIR}:/var/lib/postgresql/data
     networks:
       - auth
+    <<: *placement
 
-  auth:
+  server:
     command: server
     depends_on:
       postgresql:
         condition: service_healthy
     environment:
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__HOST: db
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
@@ -41,14 +48,15 @@ services:
     networks:
     - cluster
     - auth
+    <<: *placement
 
   worker:
     command: worker
     depends_on:
-      postgresql:
+      db:
         condition: service_healthy
     environment:
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__HOST: db
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
@@ -63,6 +71,7 @@ services:
     - ${TEMPLATES_DIR}:/templates
     networks:
     - auth
+    <<: *placement
 
 networks:
   cluster:

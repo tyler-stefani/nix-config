@@ -6,7 +6,7 @@
       sops.envs.chat = {
         sopsFile = ./secrets/.env;
       };
-      virtualisation.docker-compose.chat =
+      virtualisation.docker-stack.chat =
         let
           dataDir = "${mounts.data}/chat";
           configDir = "${mounts.config}/matrix";

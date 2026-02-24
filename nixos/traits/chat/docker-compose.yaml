@@ -1,7 +1,12 @@
+x-deploy: &placement
+  deploy:
+    placement:
+      constraints:
+        - node.hostname == bubblegum
+
 services:
-  chat-db:
+  db:
     image: postgres:15-alpine
-    restart: unless-stopped
     environment:
       POSTGRES_DB: synapse
       POSTGRES_USER: ${DB_USER}
@@ -16,37 +21,40 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    <<: *placement
 
-  chat-server:
+  server:
     image: matrixdotorg/synapse:latest
-    restart: unless-stopped
     environment:
       SYNAPSE_SERVER_NAME: ${BASE_DOMAIN}
       SYNAPSE_REPORT_STATS: "no"
-      POSTGRES_HOST: server-db
+      POSTGRES_HOST: db
       POSTGRES_DB: synapse
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ${CONFIG_DIR}/synapse:/data
+    expose:
+      - 8008
     ports:
-      - "8009:8008"  # HTTP listener
       - "8448:8448"  # Federation API
     networks:
+      - cluster
       - matrix-network
     depends_on:
-      auth-db:
+      db:
         condition: service_healthy
     command: run
+    <<: *placement
 
   auth:
     image: ghcr.io/element-hq/matrix-authentication-service:latest
-    restart: unless-stopped
-    ports:
-      - "8090:8080"
+    expose:
+      - 8080
     volumes:
       - ${CONFIG_DIR}/mas:/config
     networks:
+      - cluster
       - matrix-network
     depends_on:
       auth-db:
@@ -54,11 +62,10 @@ services:
     command: ["server"]
     environment:
       - MAS_CONFIG=/config/config.yaml
+    <<: *placement
 
   auth-db:
     image: postgres:latest
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_USER: auth
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -67,26 +74,29 @@ services:
       - ${DATA_DIR}/auth:/var/lib/postgresql
     networks:
       - matrix-network
-    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U auth -d auth"]
       interval: 10s
       timeout: 5s
       retries: 5
+    <<: *placement
 
-  chat:
+  client:
     image: vectorim/element-web:latest
-    restart: unless-stopped
-    ports:
-      - "8082:80"
+    expose:
+      - 80
     volumes:
       - ${CONFIG_DIR}/element/config.json:/app/config.json
     networks:
+      - cluster
       - matrix-network
     depends_on:
-      - chat-server
+      - server
+    <<: *placement
 
 networks:
+  cluster:
+    external: true
   matrix-network:
     driver: bridge
 

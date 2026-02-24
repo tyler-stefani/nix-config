@@ -8,9 +8,11 @@
     ./hardware-configuration.nix
     ./users.nix
 
+    auth
     backup
     base
     blog
+    chat
     cluster-manager
     containers
     dash
@@ -26,6 +28,7 @@
     monitoring
     photos
     proxy
+    search
   ];
 
   # Bootloader.
