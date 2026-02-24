@@ -6,6 +6,8 @@
 
     auth
     base
+    call
+    chat
     cluster-worker
     containers
     dns
@@ -33,7 +35,10 @@
   };
 
   _module.args = {
-    mounts.config = "/home/tyler/apps";
+    mounts = {
+      config = "/home/tyler/apps";
+      data = "/home/tyler/shared/safe/data";
+    };
     ips.dns = "192.168.0.201";
   };
 
