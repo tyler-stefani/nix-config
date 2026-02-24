@@ -1,0 +1,27 @@
+services:
+  auth-service:
+    image: ghcr.io/element-hq/lk-jwt-service:latest
+    container_name: element-call-jwt
+    hostname: auth-server
+    environment:
+      - LIVEKIT_JWT_BIND=:8080
+      - LIVEKIT_URL=https://matrixrtc.${BASE_DOMAIN}/livekit/sfu
+      - LIVEKIT_KEY=devkey
+      - LIVEKIT_SECRET=${LIVEKIT_SECRET}
+      - LIVEKIT_FULL_ACCESS_HOMESERVERS=${BASE_DOMAIN}
+    restart: unless-stopped
+    ports:
+      - 8070:8080
+
+  livekit:
+    image: livekit/livekit-server:latest
+    container_name: element-call-livekit
+    command: --config /etc/livekit.yaml
+    ports:
+      - 7880:7880/tcp
+      - 7881:7881/tcp
+      - 50100-50200:50100-50200/udp
+    restart: unless-stopped
+    volumes:
+      - ${CONFIG_DIR}/config.yaml:/etc/livekit.yaml:ro
+
