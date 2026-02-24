@@ -40,6 +40,13 @@
           svcName = composeName: "docker-stack-${composeName}";
         in
         {
+          assertions = [
+            {
+              assertion = config.virtualisation.docker-swarm.enable-manager;
+              message = "This host must be enabled as a manager node in a swarm to deploy a stack.";
+            }
+          ];
+
           systemd.services = mapAttrs' (
             name: value:
             let

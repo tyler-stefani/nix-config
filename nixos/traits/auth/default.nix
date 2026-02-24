@@ -13,7 +13,7 @@
         sopsFile = ./secrets/.env;
       };
 
-      virtualisation.docker-compose.auth = {
+      virtualisation.docker-stack.auth = {
         file = ./docker-compose.yaml;
         envPath = config.sops.envs.auth.path;
         env = {

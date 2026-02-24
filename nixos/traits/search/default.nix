@@ -6,7 +6,7 @@
       sops.envs.search = {
         sopsFile = ./secrets/.env;
       };
-      virtualisation.docker-compose.search = {
+      virtualisation.docker-stack.search = {
         file = ./docker-compose.yaml;
         env = {
           CONFIG_DIR = "${mounts.config}/searxng/config";

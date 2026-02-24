@@ -1,6 +1,8 @@
 services:
   app:
     image: "portainer/portainer-ce:${PORTAINER_VERSION:-lts}"
+    expose:
+      - 9000
     volumes:
       - /home/tyler/apps/portainer/data:/data
       - /var/run/docker.sock:/var/run/docker.sock
