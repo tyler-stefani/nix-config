@@ -35,6 +35,10 @@
         flake-parts.follows = "flake-parts";
       };
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -55,6 +59,7 @@
         ./nixos/hosts/coconut
         ./nixos/hosts/bubblegum
         ./nixos/hosts/bloob
+        ./nixos/hosts/cookies-and-cream
 
         (import-tree ./home/modules)
         (import-tree ./home/traits)
