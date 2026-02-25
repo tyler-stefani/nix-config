@@ -6,6 +6,10 @@
 {
   imports = with traits; [
     ./hardware-configuration.nix
+
+    base
+    containers
+    mesh-vpn-manager
   ];
 
   boot.loader.grub.enable = true;
@@ -15,6 +19,12 @@
     useDHCP = true;
     firewall.enable = true;
     firewall.allowedTCPPorts = [ 22 ];
+  };
+
+  _module.args = {
+    mounts = {
+      config = "/home/tyler/apps";
+    };
   };
 
   environment.systemPackages = with pkgs; [
