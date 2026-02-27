@@ -10,34 +10,4 @@ services:
     environment:
       TZ: ${TIMEZONE}
       WEBPASSWORD: ${PASSWORD}
-    networks:
-      vlan:
-        ipv4_address: ${PIHOLE_IP}
-
-  hole-sidecar:
-    image: tailscale/tailscale:latest
-    depends_on:
-      - hole
-    volumes:
-      - /home/tyler/apps/tailscale/state:/var/lib/tailscale
-      - /dev/net/tun:/dev/net/tun
-    environment:
-      TS_AUTHKEY: "${TS_AUTHKEY}?ephemeral=false"
-      TS_EXTRA_ARGS: "--advertise-tags=tag:container"
-      TS_STATE_DIR: "/var/lib/tailscale"
-      TS_USERSPACE: false
-    network_mode: "service:hole"
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    privileged: true
-
-networks:
-  vlan:
-    driver: ipvlan
-    driver_opts:
-      parent: eno1
-    ipam:
-      config:
-        - subnet: 192.168.0.0/24
-          gateway: 192.168.0.1
+    network_mode: host
