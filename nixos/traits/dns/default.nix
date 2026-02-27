@@ -4,7 +4,6 @@
     {
       config,
       mounts,
-      ips,
       ...
     }:
     let
@@ -18,11 +17,10 @@
       virtualisation.docker-compose.dns = {
         file = ./docker-compose.yaml;
         env = {
-          PIHOLE_VERSION = "2025.08.0";
+          PIHOLE_VERSION = "2026.02.0";
           TIMEZONE = "America/Chicago";
           DATA_DIR = data;
           DNSMASQ_DIR = dnsmasq;
-          PIHOLE_IP = ips.dns;
         };
         envPath = config.sops.envs.dns.path;
         /*
