@@ -35,5 +35,9 @@
           };
         */
       };
+      networking.firewall = {
+        allowedTCPPorts = [ 53 8888 ];
+        allowedUDPPorts = [ 53 ];
+      };
     };
 }
