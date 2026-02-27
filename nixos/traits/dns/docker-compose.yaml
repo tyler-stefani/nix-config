@@ -10,4 +10,5 @@ services:
     environment:
       TZ: ${TIMEZONE}
       WEBPASSWORD: ${PASSWORD}
+      WEBPORT: 8888
     network_mode: host
