@@ -10,5 +10,5 @@ services:
     environment:
       TZ: ${TIMEZONE}
       WEBPASSWORD: ${PASSWORD}
-      WEBPORT: 8888
+      FTLCONF_webserver_port: '8888o,[::]:8888o'
     network_mode: host
