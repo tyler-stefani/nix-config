@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.photos =
+  flake.nixosTraits.hosts.photos =
     {
       config,
       mounts,

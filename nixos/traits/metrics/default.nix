@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.metrics =
+  flake.nixosTraits.has.metrics =
     {
       config,
       lib,

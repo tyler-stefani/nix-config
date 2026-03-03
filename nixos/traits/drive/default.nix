@@ -1,7 +1,7 @@
 { ... }:
 {
 
-  flake.nixosTraits.drive =
+  flake.nixosTraits.hosts.drive =
     { config, mounts, ... }:
     {
       sops.envs.drive = {

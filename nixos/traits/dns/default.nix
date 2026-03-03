@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.dns =
+  flake.nixosTraits.hosts.dns =
     {
       config,
       mounts,
@@ -36,7 +36,10 @@
         */
       };
       networking.firewall = {
-        allowedTCPPorts = [ 53 8888 ];
+        allowedTCPPorts = [
+          53
+          8888
+        ];
         allowedUDPPorts = [ 53 ];
       };
     };

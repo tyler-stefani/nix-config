@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.base =
+  flake.nixosTraits.is.nixos =
     { ... }:
     {
       time.timeZone = "America/Chicago";

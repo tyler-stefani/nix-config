@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.minecraft =
+  flake.nixosTraits.hosts.minecraft =
     { mounts, ... }:
     let
       minecraftDir = "${mounts.config}/minecraft/data";

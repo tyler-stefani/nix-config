@@ -1,7 +1,7 @@
 { traits, pkgs, ... }:
 {
   imports = with traits; [
-    base
+    is.nixos
   ];
 
   wsl.enable = true;

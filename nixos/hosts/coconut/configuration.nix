@@ -8,27 +8,28 @@
     ./hardware-configuration.nix
     ./users.nix
 
-    auth
-    backup
-    base
-    blog
-    chat
-    cluster-manager
-    containers
-    dash
-    dns
-    drive
-    feed
-    keep
-    local-media
-    media
-    mesh-vpn
-    metrics
-    minecraft
-    monitoring
-    photos
-    proxy
-    search
+    is.nixos
+    is.container-host
+    is.mesh-node
+    is.cluster-manager
+
+    has.backups
+    has.metrics
+
+    hosts.dns
+    hosts.drive
+    hosts.feed
+    hosts.keep
+    hosts.local-media
+    hosts.media
+    hosts.minecraft
+    hosts.monitoring
+    hosts.photos
+    hosts.proxy
+    hosts.search
+
+    manages.auth
+    manages.dash
   ];
 
   # Bootloader.

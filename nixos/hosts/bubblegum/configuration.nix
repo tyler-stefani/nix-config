@@ -4,13 +4,14 @@
   imports = with traits; [
     ./hardware-configuration.nix
 
-    base
-    call
-    cluster-worker
-    containers
-    dns
-    mesh-vpn
-    metrics
+    is.nixos
+    is.container-host
+    is.mesh-node
+    is.cluster-worker
+
+    has.metrics
+
+    hosts.dns
   ];
 
   boot.loader.systemd-boot.enable = true;

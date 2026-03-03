@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.feed =
+  flake.nixosTraits.hosts.feed =
     { config, mounts, ... }:
     {
       sops.envs.feed = {

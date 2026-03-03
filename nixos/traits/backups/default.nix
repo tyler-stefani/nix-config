@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.backup =
+  flake.nixosTraits.has.backups =
     { config, mounts, ... }:
     let
       mkBackup =

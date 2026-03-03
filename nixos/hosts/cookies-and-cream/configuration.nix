@@ -7,9 +7,10 @@
   imports = with traits; [
     ./hardware-configuration.nix
 
-    base
-    containers
-    mesh-vpn-manager
+    is.nixos
+    is.container-host
+
+    hosts.mesh-vpn
   ];
 
   boot.loader.grub.enable = true;

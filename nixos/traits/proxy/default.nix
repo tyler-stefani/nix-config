@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.proxy =
+  flake.nixosTraits.hosts.proxy =
     { mounts, ... }:
     {
       networking.firewall.allowedTCPPorts = [
