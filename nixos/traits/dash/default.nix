@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.dash =
+  flake.nixosTraits.manages.dash =
     { config, ... }:
     {
       sops.envs.dash = {

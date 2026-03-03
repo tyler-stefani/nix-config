@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.cluster-worker =
+  flake.nixosTraits.is.cluster-worker =
     { ... }:
     {
       virtualisation.docker-swarm.enable-worker = true;

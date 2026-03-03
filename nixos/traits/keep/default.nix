@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.keep =
+  flake.nixosTraits.hosts.keep =
     { config, mounts, ... }:
     {
       sops.envs.keep = {

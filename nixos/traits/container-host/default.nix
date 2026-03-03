@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.containers =
+  flake.nixosTraits.is.container-host =
     { lib, config, ... }:
     {
       virtualisation = {

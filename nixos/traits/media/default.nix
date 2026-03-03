@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.media =
+  flake.nixosTraits.hosts.media =
     { mounts, ... }:
     let
       configDir = "${mounts.config}/jellyfin/config";

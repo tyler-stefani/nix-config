@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.search =
+  flake.nixosTraits.hosts.search =
     { config, mounts, ... }:
     {
       sops.envs.search = {

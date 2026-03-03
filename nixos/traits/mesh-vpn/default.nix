@@ -1,24 +1,27 @@
 { ... }:
 {
-  flake.nixosTraits.mesh-vpn =
-    { config, ... }:
+  flake.nixosTraits.hosts.mesh-vpn =
+    { config, mounts, ... }:
     {
-      services.tailscale.enable = true;
-
-      sops.secrets.mesh-vpn = {
-        sopsFile = ./secrets/key.yaml;
-        key = "key";
+      sops.envs = {
+        mesh-vpn-dash = {
+          sopsFile = ./secrets/dashboard.env;
+        };
+        mesh-vpn-proxy = {
+          sopsFile = ./secrets/proxy.env;
+        };
       };
-
-      services.netbird.clients.wt0 = {
-        port = 51820;
-        # login is not working on this version
-        # - there is currently no way to set the management url
-        # - the docker sock opened does not line up with the default for netbird up
-        # login = {
-        #   enable = true;
-        #   setupKeyFile = "${config.sops.secrets.mesh-vpn.path}";
-        # };
+      virtualisation.docker-compose.mesh-vpn = {
+        file = ./docker-compose.yml;
+        env = {
+          DASHBOARD_ENV_PATH = config.sops.envs.mesh-vpn-dash.path;
+          PROXY_ENV_PATH = config.sops.envs.mesh-vpn-proxy.path;
+          CONFIG_PATH = "${mounts.config}/netbird";
+        };
       };
+      networking.firewall.allowedTCPPorts = [
+        80
+        443
+      ];
     };
 }

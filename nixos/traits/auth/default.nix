@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.auth =
+  flake.nixosTraits.manages.auth =
     { config, mounts, ... }:
     let
       dataDir = "${mounts.config}/authentik/data";
