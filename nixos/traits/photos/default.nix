@@ -30,15 +30,14 @@
           DB_USERNAME = "postgres";
         };
         envPath = config.sops.envs.photos.path;
-        backup = {
-          enable = true;
-          paths = [
-            uploadDir
-            libDir
-            extLibDir
-            dbDir
-          ];
-        };
+      };
+      services.restic.stack-backup.photos = {
+        paths = [
+          uploadDir
+          libDir
+          extLibDir
+          dbDir
+        ];
       };
     };
 }

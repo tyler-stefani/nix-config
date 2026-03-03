@@ -6,7 +6,7 @@
       configDir = "${mounts.config}/jellyfin/config";
     in
     {
-      config.virtualisation.docker-compose.media = {
+      virtualisation.docker-compose.media = {
         file = ./docker-compose.yaml;
         env = {
           CONFIG_DIR = configDir;
@@ -14,15 +14,14 @@
           SHOW_DIR = "${mounts.media}/shows";
           MUSIC_DIR = "${mounts.media}/music";
         };
-        backup = {
-          enable = true;
-          paths = [
-            configDir
-          ];
-          timerConfig = {
-            OnCalendar = "Mon *-*-* 01:00";
-            Persistent = true;
-          };
+      };
+      services.restic.stack-backup.media = {
+        paths = [
+          configDir
+        ];
+        timerConfig = {
+          OnCalendar = "Mon *-*-* 01:00";
+          Persistent = true;
         };
       };
     };
