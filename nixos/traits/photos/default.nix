@@ -31,7 +31,7 @@
         };
         envPath = config.sops.envs.photos.path;
       };
-      services.restic.stack-backup.photos = {
+      services.restic.stack-backups.photos = {
         paths = [
           uploadDir
           libDir

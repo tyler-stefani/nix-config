@@ -27,7 +27,7 @@
         };
         envPath = config.sops.envs.drive.path;
       };
-      services.restic.stack-backup.drive = {
+      services.restic.stack-backups.drive = {
         paths = [
           configDir
           appsDir

@@ -14,7 +14,7 @@
           NETBIRD_DIR = netbirdDir;
         };
       };
-      services.restic.stack-backup.minecraft = {
+      services.restic.stack-backups.minecraft = {
         paths = [
           minecraftDir
           netbirdDir
