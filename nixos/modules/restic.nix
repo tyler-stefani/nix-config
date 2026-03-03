@@ -5,6 +5,7 @@
       lib,
       config,
       pkgs,
+      utils,
       ...
     }:
     let
@@ -84,12 +85,12 @@
         };
         stack-backup =
           let
-            svcName = composeName: "docker-compose-${composeName}";
+            inherit (utils.systemdUtils.unitOptions) unitOption;
           in
           mkOption {
             type = types.attrsOf (
               types.submodule (
-                { name, config, ... }:
+                { ... }:
                 {
                   options = {
                     paths = mkOption {
@@ -106,39 +107,39 @@
                       description = "Timer config to be passed directly to the restic timer";
                     };
                   };
-                  config = {
-                    services.restic = {
-                      backups = mapAttrs' (
-                        name: value:
-                        nameValuePair (name) ({
-                          initialize = true;
-                          paths = value.paths;
-                          timerConfig = value.timerConfig // {
-                            RandomizedDelaySec = 1800;
-                          };
-                          repositoryFile = config.services.restic.defaultRepositoryFile;
-                          environmentFile = config.services.restic.defaultEnvironmentFile;
-                          passwordFile = config.services.restic.defaultPasswordFile;
-                          extraBackupArgs = [
-                            "--tag"
-                            name
-                          ];
-                          backupPrepareCommand = "systemctl stop ${svcName name}.service";
-                          backupCleanupCommand = "systemctl start ${svcName name}.service";
-                        })
-                      ) config.restic.stack-backup;
-                    };
-                  };
                 }
               )
             );
           };
       };
 
-      config = mkIf cfg.enable {
-        environment.systemPackages = [
+      config = {
+        environment.systemPackages = mkIf cfg.enable [
           pkgs.restic
         ];
+        services.restic.backups =
+          let
+            svcName = composeName: "docker-compose-${composeName}";
+          in
+          mapAttrs' (
+            name: value:
+            nameValuePair (name) ({
+              initialize = true;
+              paths = value.paths;
+              timerConfig = value.timerConfig // {
+                RandomizedDelaySec = 1800;
+              };
+              repositoryFile = cfg.defaultRepositoryFile;
+              environmentFile = cfg.defaultEnvironmentFile;
+              passwordFile = cfg.defaultPasswordFile;
+              extraBackupArgs = [
+                "--tag"
+                name
+              ];
+              backupPrepareCommand = "systemctl stop ${svcName name}.service";
+              backupCleanupCommand = "systemctl start ${svcName name}.service";
+            })
+          ) cfg.stack-backup;
       };
     };
 }
