@@ -13,12 +13,12 @@
           KEYS_DIR = "${appDir}/keys";
           DB_FILE = "${appDir}/writefreely.db";
         };
-        backup = {
-          enable = true;
-          paths = [
-            appDir
-          ];
-        };
+        # backup = {
+        #   enable = true;
+        #   paths = [
+        #     appDir
+        #   ];
+        # };
       };
     };
 }

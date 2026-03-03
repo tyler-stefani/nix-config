@@ -1,6 +1,5 @@
 { ... }:
 {
-  flake.nixosTraits.monitoring =
   flake.nixosTraits.hosts.monitoring =
     {
       config,

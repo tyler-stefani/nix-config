@@ -31,22 +31,6 @@
                 default = "";
                 description = "Path to environment files";
               };
-              backup = {
-                enable = mkEnableOption "backing up of volumes for these containers";
-                paths = mkOption {
-                  type = types.listOf types.str;
-                  default = [ ];
-                  description = "Host paths of the volumes to back up";
-                };
-                timerConfig = mkOption {
-                  type = types.nullOr (types.attrsOf unitOption);
-                  default = {
-                    OnCalendar = "01:00";
-                    Persistent = true;
-                  };
-                  description = "Timer config to be passed directly to the restic timer";
-                };
-              };
             };
           }
         );
@@ -86,30 +70,6 @@
               restartTriggers = [ composeFile ];
             })
           ) cfg;
-
-          services.restic = mkIf config.services.restic.enable {
-            backups = mapAttrs' (
-              name: value:
-              nameValuePair (name) (
-                mkIf value.backup.enable {
-                  initialize = true;
-                  paths = value.backup.paths;
-                  timerConfig = value.backup.timerConfig // {
-                    RandomizedDelaySec = 1800;
-                  };
-                  repositoryFile = config.services.restic.defaultRepositoryFile;
-                  environmentFile = config.services.restic.defaultEnvironmentFile;
-                  passwordFile = config.services.restic.defaultPasswordFile;
-                  extraBackupArgs = [
-                    "--tag"
-                    name
-                  ];
-                  backupPrepareCommand = "systemctl stop ${svcName name}.service";
-                  backupCleanupCommand = "systemctl start ${svcName name}.service";
-                }
-              )
-            ) cfg;
-          };
         };
     };
 }
