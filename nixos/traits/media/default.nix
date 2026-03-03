@@ -15,7 +15,7 @@
           MUSIC_DIR = "${mounts.media}/music";
         };
       };
-      services.restic.stack-backup.media = {
+      services.restic.stack-backups.media = {
         paths = [
           configDir
         ];

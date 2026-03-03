@@ -20,7 +20,7 @@
           LETSENCRYPT_DIR = letsencryptDir;
         };
       };
-      services.restic.stack-backup.proxy = {
+      services.restic.stack-backups.proxy = {
         paths = [
           dataDir
           letsencryptDir

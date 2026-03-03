@@ -17,7 +17,7 @@
         };
         envPath = config.sops.envs.feed.path;
       };
-      services.restic.stack-backup.feed = {
+      services.restic.stack-backups.feed = {
         paths = [ dataDir ];
         timerConfig = {
           OnCalendar = "Mon *-*-* 01:00";

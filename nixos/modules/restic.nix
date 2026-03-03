@@ -83,7 +83,7 @@
             )
           );
         };
-        stack-backup =
+        stack-backups =
           let
             inherit (utils.systemdUtils.unitOptions) unitOption;
           in
@@ -110,6 +110,7 @@
                 }
               )
             );
+            default = { };
           };
       };
 
@@ -139,7 +140,7 @@
               backupPrepareCommand = "systemctl stop ${svcName name}.service";
               backupCleanupCommand = "systemctl start ${svcName name}.service";
             })
-          ) cfg.stack-backup;
+          ) cfg.stack-backups;
       };
     };
 }
