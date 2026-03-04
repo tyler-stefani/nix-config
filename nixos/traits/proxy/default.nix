@@ -1,7 +1,7 @@
 { ... }:
 {
   flake.nixosTraits.hosts.proxy =
-    { mounts, ... }:
+    { config, mounts, ... }:
     let
       dataDir = "${mounts.config}/nginx/data";
       letsencryptDir = "${mounts.config}/nginx/letsencrypt";
@@ -20,13 +20,14 @@
           LETSENCRYPT_DIR = letsencryptDir;
         };
       };
-      services.restic.stack-backups.proxy = {
+      services.restic.serviceBackups.proxy = {
+        serviceName = config.virtualisation.docker-compose.proxy.serviceName;
         paths = [
           dataDir
           letsencryptDir
         ];
         timerConfig = {
-          OnCalendar = "Mon *-*-* 01:00";
+          OnCalendar = "Mon *-*-* 03:00";
           Persistent = true;
         };
       };
