@@ -83,16 +83,20 @@
             )
           );
         };
-        stack-backups =
+        serviceBackups =
           let
             inherit (utils.systemdUtils.unitOptions) unitOption;
           in
           mkOption {
             type = types.attrsOf (
               types.submodule (
-                { ... }:
+                { name, ... }:
                 {
                   options = {
+                    serviceName = mkOption {
+                      type = types.str;
+                      description = "Name of the systemd service to stop and restart before and after backing up";
+                    };
                     paths = mkOption {
                       type = types.listOf types.str;
                       default = [ ];
@@ -118,29 +122,25 @@
         environment.systemPackages = mkIf cfg.enable [
           pkgs.restic
         ];
-        services.restic.backups =
-          let
-            svcName = composeName: "docker-compose-${composeName}";
-          in
-          mapAttrs' (
-            name: value:
-            nameValuePair (name) ({
-              initialize = true;
-              paths = value.paths;
-              timerConfig = value.timerConfig // {
-                RandomizedDelaySec = 1800;
-              };
-              repositoryFile = cfg.defaultRepositoryFile;
-              environmentFile = cfg.defaultEnvironmentFile;
-              passwordFile = cfg.defaultPasswordFile;
-              extraBackupArgs = [
-                "--tag"
-                name
-              ];
-              backupPrepareCommand = "systemctl stop ${svcName name}.service";
-              backupCleanupCommand = "systemctl start ${svcName name}.service";
-            })
-          ) cfg.stack-backups;
+        services.restic.backups = mapAttrs' (
+          name: value:
+          nameValuePair (name) ({
+            initialize = true;
+            paths = value.paths;
+            timerConfig = value.timerConfig // {
+              RandomizedDelaySec = 1800;
+            };
+            repositoryFile = cfg.defaultRepositoryFile;
+            environmentFile = cfg.defaultEnvironmentFile;
+            passwordFile = cfg.defaultPasswordFile;
+            extraBackupArgs = [
+              "--tag"
+              name
+            ];
+            backupPrepareCommand = "systemctl stop ${value.serviceName}.service";
+            backupCleanupCommand = "systemctl start ${value.serviceName}.service";
+          })
+        ) cfg.serviceBackups;
       };
     };
 }

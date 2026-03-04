@@ -27,7 +27,8 @@
         };
         envPath = config.sops.envs.drive.path;
       };
-      services.restic.stack-backups.drive = {
+      services.restic.serviceBackups.drive = {
+        serviceName = config.virtualisation.docker-compose.drive.serviceName;
         paths = [
           configDir
           appsDir

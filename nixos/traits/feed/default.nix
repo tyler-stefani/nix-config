@@ -17,10 +17,11 @@
         };
         envPath = config.sops.envs.feed.path;
       };
-      services.restic.stack-backups.feed = {
+      services.restic.serviceBackups.feed = {
+        serviceName = config.virtualisation.docker-compose.feed.serviceName;
         paths = [ dataDir ];
         timerConfig = {
-          OnCalendar = "Mon *-*-* 01:00";
+          OnCalendar = "Mon *-*-* 03:00";
           Persistent = true;
         };
       };

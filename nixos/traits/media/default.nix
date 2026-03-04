@@ -1,7 +1,7 @@
 { ... }:
 {
   flake.nixosTraits.hosts.media =
-    { mounts, ... }:
+    { config, mounts, ... }:
     let
       configDir = "${mounts.config}/jellyfin/config";
     in
@@ -15,12 +15,13 @@
           MUSIC_DIR = "${mounts.media}/music";
         };
       };
-      services.restic.stack-backups.media = {
+      services.restic.serviceBackups.media = {
+        serviceName = config.virtualisation.docker-compose.media.serviceName;
         paths = [
           configDir
         ];
         timerConfig = {
-          OnCalendar = "Mon *-*-* 01:00";
+          OnCalendar = "Mon *-*-* 03:00";
           Persistent = true;
         };
       };

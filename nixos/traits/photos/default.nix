@@ -1,11 +1,7 @@
 { ... }:
 {
   flake.nixosTraits.hosts.photos =
-    {
-      config,
-      mounts,
-      ...
-    }:
+    { config, mounts, ... }:
     let
       uploadDir = "${mounts.config}/immich/upload";
       libDir = "${mounts.data}/photos/library";
@@ -31,7 +27,8 @@
         };
         envPath = config.sops.envs.photos.path;
       };
-      services.restic.stack-backups.photos = {
+      services.restic.serviceBackups.photos = {
+        serviceName = config.virtualisation.docker-compose.photos.serviceName;
         paths = [
           uploadDir
           libDir
