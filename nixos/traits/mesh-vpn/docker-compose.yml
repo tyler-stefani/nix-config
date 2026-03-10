@@ -41,6 +41,25 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - netbird_traefik_letsencrypt:/letsencrypt
       - ${CONFIG_PATH}/traefik-dynamic.yaml:/etc/traefik/dynamic.yaml:ro
+      - traefik_logs:/var/log/traefik          # <-- shared with crowdsec
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+        max-file: "2"
+
+  crowdsec:
+    image: crowdsecurity/crowdsec:latest
+    container_name: crowdsec
+    restart: unless-stopped
+    networks: [netbird]
+    environment:
+      COLLECTIONS: "crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/base-http-scenarios"
+      GID: "1000"
+    volumes:
+      - crowdsec_data:/var/lib/crowdsec/data
+      - crowdsec_config:/etc/crowdsec
+      - traefik_logs:/var/log/traefik:ro        # <-- reads Traefik access logs
     logging:
       driver: "json-file"
       options:
@@ -142,6 +161,9 @@ volumes:
   netbird_data:
   netbird_traefik_letsencrypt:
   netbird_proxy_certs:
+  crowdsec_data:
+  crowdsec_config:
+  traefik_logs:
 
 networks:
   netbird:
