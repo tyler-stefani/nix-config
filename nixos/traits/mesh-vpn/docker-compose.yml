@@ -58,7 +58,7 @@ services:
     restart: unless-stopped
     networks: [netbird]
     ports:
-      - 172.0.0.1:8080:8080
+      - 127.0.0.1:8080:8080
     environment:
       COLLECTIONS: "crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/base-http-scenarios"
       GID: "1000"
