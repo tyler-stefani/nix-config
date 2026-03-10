@@ -11,6 +11,7 @@ services:
       # Logging
       - "--log.level=INFO"
       - "--accesslog=true"
+      - "--accesslog.filepath=/var/log/traefik/access.log"
       # Docker provider
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
@@ -34,6 +35,9 @@ services:
       - "--serverstransport.forwardingtimeouts.responseheadertimeout=0s"
       - "--serverstransport.forwardingtimeouts.idleconntimeout=0s"
       - "--providers.file.filename=/etc/traefik/dynamic.yaml"
+      # CrowdSec bouncer plugin
+      - "--experimental.plugins.crowdsec-bouncer.modulename=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
+      - "--experimental.plugins.crowdsec-bouncer.version=v1.3.5"
     ports:
       - '443:443'
       - '80:80'
