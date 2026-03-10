@@ -9,6 +9,7 @@
 
     is.nixos
     is.container-host
+    is.public-facing
 
     hosts.mesh-vpn
   ];
