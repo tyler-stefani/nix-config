@@ -9,6 +9,7 @@
       virtualisation.docker-compose.media = {
         file = ./docker-compose.yaml;
         env = {
+          JELLYFIN_VERSION = "10.11.6";
           CONFIG_DIR = configDir;
           MOVIE_DIR = "${mounts.media}/movies";
           SHOW_DIR = "${mounts.media}/shows";
