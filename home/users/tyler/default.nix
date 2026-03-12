@@ -10,6 +10,7 @@ let
       modules = [
         inputs.nixvim.homeModules.nixvim
         inputs.stylix.homeModules.stylix
+        inputs.nix-index-database.homeModules.default
 
         ./configuration.nix
       ]
