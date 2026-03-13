@@ -1,6 +1,6 @@
 services:
-  app:
-    image: glanceapp/glance
+  dash-app:
+    image: glanceapp/glance:${GLANCE_VERSION}
     expose:
       - 8080
     environment:
@@ -8,13 +8,9 @@ services:
       - MINIFLUX_API_URL=${MINIFLUX_URL}
       - MINIFLUX_LINKS_URL=${MINIFLUX_URL}
     volumes:
-      - /home/tyler/apps/glance:/app/config
+      - ${CONFIG_DIR}:/app/config
     networks:
       - cluster
-    deploy:
-      placement:
-        constraints:
-          - node.hostname == bubblegum
 
 networks:
   cluster:

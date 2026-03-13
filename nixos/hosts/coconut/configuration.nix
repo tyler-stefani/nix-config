@@ -29,8 +29,6 @@
     hosts.proxy
     hosts.records
     hosts.search
-
-    manages.dash
   ];
 
   # Bootloader.

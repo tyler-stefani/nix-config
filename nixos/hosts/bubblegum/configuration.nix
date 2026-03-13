@@ -13,6 +13,7 @@
     has.metrics
 
     hosts.auth
+    hosts.dash
     hosts.dns
   ];
 
