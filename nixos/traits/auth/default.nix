@@ -16,7 +16,7 @@
         file = ./docker-compose.yaml;
         envPath = config.sops.envs.auth.path;
         env = {
-          AUTHENTIK_TAG = "2025.10.2";
+          AUTHENTIK_TAG = "2026.2";
           DATA_DIR = dataDir;
           MEDIA_DIR = mediaDir;
           TEMPLATES_DIR = templatesDir;

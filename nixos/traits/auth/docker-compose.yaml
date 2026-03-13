@@ -18,9 +18,8 @@ services:
       - ${DATA_DIR}:/var/lib/postgresql/data
     networks:
       - auth
-    <<: *placement
 
-  server:
+  auth-server:
     command: server
     depends_on:
       db:
