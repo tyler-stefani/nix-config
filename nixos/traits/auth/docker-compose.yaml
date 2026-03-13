@@ -1,9 +1,3 @@
-x-deploy: &placement
-  deploy:
-    placement:
-      constraints:
-        - node.hostname == bubblegum
-
 services:
   db:
     environment:
@@ -29,7 +23,7 @@ services:
   server:
     command: server
     depends_on:
-      postgresql:
+      db:
         condition: service_healthy
     environment:
       AUTHENTIK_POSTGRESQL__HOST: db
@@ -48,7 +42,6 @@ services:
     networks:
     - cluster
     - auth
-    <<: *placement
 
   worker:
     command: worker
@@ -71,7 +64,6 @@ services:
     - ${TEMPLATES_DIR}:/templates
     networks:
     - auth
-    <<: *placement
 
 networks:
   cluster:
