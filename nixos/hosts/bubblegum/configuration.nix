@@ -9,6 +9,7 @@
     is.mesh-node
     is.cluster-worker
 
+    has.backups
     has.metrics
 
     hosts.dns
