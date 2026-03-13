@@ -30,7 +30,6 @@
     hosts.records
     hosts.search
 
-    manages.auth
     manages.dash
   ];
 

@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosTraits.manages.auth =
+  flake.nixosTraits.hosts.auth =
     { config, mounts, ... }:
     let
       dataDir = "${mounts.config}/authentik/data";
@@ -12,7 +12,7 @@
       sops.envs.auth = {
         sopsFile = ./secrets/.env;
       };
-      virtualisation.docker-stack.auth = {
+      virtualisation.docker-compose.auth = {
         file = ./docker-compose.yaml;
         envPath = config.sops.envs.auth.path;
         env = {
@@ -24,7 +24,7 @@
         };
       };
       services.restic.serviceBackups.auth = {
-        serviceName = config.virtualisation.docker-stack.auth.serviceName;
+        serviceName = config.virtualisation.docker-compose.auth.serviceName;
         paths = [
           dataDir
           mediaDir

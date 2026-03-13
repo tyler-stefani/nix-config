@@ -12,6 +12,7 @@
     has.backups
     has.metrics
 
+    hosts.auth
     hosts.dns
   ];
 
