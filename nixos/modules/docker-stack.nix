@@ -11,24 +11,32 @@
     {
       options.virtualisation.docker-stack = mkOption {
         type = types.attrsOf (
-          types.submodule {
-            options = {
-              file = mkOption {
-                type = types.path;
-                description = "Path to the docker-compose yaml file";
+          types.submodule (
+            { name, ... }:
+            {
+              options = {
+                serviceName = mkOption {
+                  type = types.str;
+                  description = "Name of the systemd service to manage the deployment of the docker stack";
+                  default = "docker-stack-${name}";
+                };
+                file = mkOption {
+                  type = types.path;
+                  description = "Path to the docker-compose yaml file";
+                };
+                env = mkOption {
+                  type = types.attrsOf types.str;
+                  default = { };
+                  description = "Environment variables to write to an .env file";
+                };
+                envPath = mkOption {
+                  type = types.str;
+                  default = "";
+                  description = "Path to environment files";
+                };
               };
-              env = mkOption {
-                type = types.attrsOf types.str;
-                default = { };
-                description = "Environment variables to write to an .env file";
-              };
-              envPath = mkOption {
-                type = types.str;
-                default = "";
-                description = "Path to environment files";
-              };
-            };
-          }
+            }
+          )
         );
         default = { };
         description = "Container stacks to be deployed to a docker swarm";
@@ -37,18 +45,17 @@
       config =
         let
           cfg = config.virtualisation.docker-stack;
-          svcName = composeName: "docker-stack-${composeName}";
         in
         {
           systemd.services = mapAttrs' (
             name: value:
             let
               composeFile = pkgs.writeTextFile {
-                name = "${svcName name}.yaml";
+                name = "${value.serviceName}.yaml";
                 text = builtins.readFile value.file;
               };
             in
-            nameValuePair (svcName name) ({
+            nameValuePair (value.serviceName) ({
               wantedBy = [ "multi-user.target" ];
               requires = [ "docker.service" ];
               after = [ "docker.service" ];

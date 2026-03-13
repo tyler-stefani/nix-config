@@ -12,7 +12,6 @@
       sops.envs.auth = {
         sopsFile = ./secrets/.env;
       };
-
       virtualisation.docker-stack.auth = {
         file = ./docker-compose.yaml;
         envPath = config.sops.envs.auth.path;
@@ -23,6 +22,15 @@
           TEMPLATES_DIR = templatesDir;
           CERTS_DIR = certsDir;
         };
+      };
+      services.restic.serviceBackups.auth = {
+        serviceName = config.virtualisation.docker-stack.auth.serviceName;
+        paths = [
+          dataDir
+          mediaDir
+          templatesDir
+          certsDir
+        ];
       };
     };
 }

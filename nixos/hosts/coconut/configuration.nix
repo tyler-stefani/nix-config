@@ -24,8 +24,10 @@
     hosts.media
     hosts.minecraft
     hosts.monitoring
+    hosts.notes
     hosts.photos
     hosts.proxy
+    hosts.records
     hosts.search
 
     manages.auth
