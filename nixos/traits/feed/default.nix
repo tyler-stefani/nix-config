@@ -14,6 +14,8 @@
         env = {
           MINIFLUX_VERSION = "2.2.11";
           DATA_DIR = dataDir;
+          OAUTH2_PROVIDER = "oidc";
+          ENV_FILE_PATH = config.sops.envs.feed.path;
         };
         envPath = config.sops.envs.feed.path;
       };

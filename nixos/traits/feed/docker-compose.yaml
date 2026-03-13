@@ -10,6 +10,9 @@ services:
       - RUN_MIGRATIONS=1
       - BASE_URL=${BASE_URL}
       - COOKIE_SAMESITE=None
+      - OAUTH2_PROVIDER=${OAUTH2_PROVIDER}
+    env_file:
+      - ${ENV_FILE_PATH}
     healthcheck:
       test: ["CMD", "/usr/bin/miniflux", "-healthcheck", "auto"]
     networks:
