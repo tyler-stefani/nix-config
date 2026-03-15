@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
     extras = {
       url = "git+ssh://git@github.com/tyler-stefani/nix-extras";
       inputs.nixpkgs.follows = "nixpkgs";
