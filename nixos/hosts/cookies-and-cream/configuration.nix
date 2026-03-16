@@ -21,7 +21,6 @@
     hostName = "cookies-and-cream";
     useDHCP = true;
     firewall.enable = true;
-    firewall.allowedTCPPorts = [ 22 ];
   };
 
   _module.args = {
