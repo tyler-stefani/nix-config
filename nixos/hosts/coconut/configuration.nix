@@ -12,6 +12,7 @@
     is.container-host
     is.mesh-node
     is.cluster-manager
+    is.ssh-server
 
     has.backups
     has.metrics
