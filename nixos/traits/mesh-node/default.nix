@@ -3,17 +3,13 @@
   flake.nixosTraits.is.mesh-node =
     { nixpkgs-unstable, config, ... }:
     {
-      services.tailscale.enable = true;
-
       sops.secrets.mesh-node = {
         sopsFile = ./secrets/key.yaml;
         key = "key";
       };
-
       services.netbird = {
         package = nixpkgs-unstable.netbird;
         clients.wt0 = {
-          openFirewall = true;
           port = 51820;
           # login is not working on this version
           # - there is currently no way to set the management url
