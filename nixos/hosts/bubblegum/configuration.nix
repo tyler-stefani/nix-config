@@ -8,6 +8,7 @@
     is.container-host
     is.mesh-node
     is.cluster-worker
+    is.ssh-server
 
     has.backups
     has.metrics

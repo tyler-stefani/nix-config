@@ -10,6 +10,7 @@
     is.nixos
     is.container-host
     is.public-facing
+    is.ssh-server
 
     hosts.mesh-vpn
   ];
@@ -33,18 +34,9 @@
     git
   ];
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "prohibit-password";
-      PasswordAuthentication = false;
-    };
-  };
-
   users.users.tyler = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keys = [ ];
   };
 
   disko.devices = {
