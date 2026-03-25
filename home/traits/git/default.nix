@@ -24,5 +24,9 @@
           };
         };
       };
+
+      stylix.targets = {
+        lazygit.enable = true;
+      };
     };
 }

@@ -1,7 +1,13 @@
-{ inputs, config, ... }:
+{
+  self,
+  lib,
+  inputs,
+  config,
+  ...
+}:
 let
   mkHomeConfig =
-    system:
+    system: headless:
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = import inputs.nixpkgs { inherit system; };
       extraSpecialArgs = {
@@ -12,16 +18,17 @@ let
         inputs.stylix.homeModules.stylix
         inputs.nix-index-database.homeModules.default
 
-        ./configuration.nix
+        self.homeTraits.user-headless
       ]
-      ++ builtins.attrValues config.flake.homeModules;
+      ++ builtins.attrValues config.flake.homeModules
+      ++ lib.optional (!headless) self.homeTraits.user-graphical;
     };
 in
 {
   flake.homeConfigurations = {
-    "tyler@bubblegum" = mkHomeConfig "x86_64-linux";
-    "tyler@bloob" = mkHomeConfig "x86_64-linux";
-    "tyler@coconut" = mkHomeConfig "x86_64-linux";
-    "tyler@noodle" = mkHomeConfig "x86_64-darwin";
+    "tyler@bubblegum" = mkHomeConfig "x86_64-linux" true;
+    "tyler@bloob" = mkHomeConfig "x86_64-linux" false;
+    "tyler@coconut" = mkHomeConfig "x86_64-linux" true;
+    "tyler@noodle" = mkHomeConfig "x86_64-darwin" true;
   };
 }
