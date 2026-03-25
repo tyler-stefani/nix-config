@@ -39,5 +39,9 @@
           };
         };
       };
+
+      stylix.targets = {
+        nixvim.enable = true;
+      };
     };
 }

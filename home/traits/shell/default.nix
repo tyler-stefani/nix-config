@@ -53,5 +53,10 @@
           }
         ];
       };
+
+      stylix.targets = {
+        bat.enable = true;
+        fish.enable = true;
+      };
     };
 }
