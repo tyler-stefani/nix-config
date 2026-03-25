@@ -1,21 +1,47 @@
 { traits, pkgs, ... }:
 {
   imports = with traits; [
+    ./hardware-configuration.nix
+
     is.nixos
+    is.ssh-server
+
+    has.desktop-environment
+    has.games
   ];
 
-  wsl.enable = true;
-  wsl.defaultUser = "tyler";
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "bloob";
+  networking.networkmanager.enable = true;
+
+  services.printing.enable = true;
+
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+
+  users.users.tyler = {
+    isNormalUser = true;
+    description = "tyler";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    shell = pkgs.fish;
+  };
+
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   environment.systemPackages = with pkgs; [
     wget
   ];
 
-  programs.nix-ld.enable = true;
-
-  users.users.tyler.shell = pkgs.fish;
-
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }
