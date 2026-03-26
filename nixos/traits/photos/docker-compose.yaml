@@ -1,5 +1,5 @@
 services:
-  photos:
+  photo-server:
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
     # extends:
@@ -23,6 +23,7 @@ services:
     networks:
       - private
       - default
+      - cluster
 
   immich-machine-learning:
     container_name: immich_machine_learning
@@ -85,6 +86,8 @@ services:
 networks:
   default:
   private:
+    external: true
+  cluster:
     external: true
 
 volumes:
