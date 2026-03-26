@@ -160,7 +160,6 @@ services:
       - traefik.tcp.routers.proxy-passthrough.service=proxy-tls
       - traefik.tcp.routers.proxy-passthrough.priority=1
       - traefik.tcp.services.proxy-tls.loadbalancer.server.port=8443
-      - traefik.tcp.services.proxy-tls.loadbalancer.serverstransport=pp-v2@file
     logging:
       driver: "json-file"
       options:
