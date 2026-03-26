@@ -22,6 +22,7 @@
           };
           "auth.generic_oauth" = {
             enabled = true;
+            scopes = "openid email profile";
           };
         };
       };
