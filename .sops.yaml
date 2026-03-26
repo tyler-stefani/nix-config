@@ -1,5 +1,6 @@
 keys:
   - &tyler age1mv6z5g3ksndaydrefzz9tq4k8xftwyy3x0qlfkr4k93ypxm0sfxqcedc3u
+  - &bloob age1en3cafnjcxqt6nps382a5kaygdnt5lzs6jyf63xvva6ncs6lwcfsf7dn3a
   - &bubblegum age17pcp20lu03cx7xe93lkud4tmd9u952f867zg68wkdjh0sp7hspvqa2xm27
   - &coconut age1ut47xkln08l23sdjtl6h6uujwc7tp0fk84hw6gv8qllm7lcuhy7qv8zafw
   - &cookies-and-cream age1z75wvj5jzj8s3ulhs05qenmru5prjav3w47rvg3sml8827gukq4sh8yyky
@@ -8,6 +9,7 @@ creation_rules:
     key_groups:
       - age:
         - *tyler
+        - *bloob
         - *bubblegum
         - *coconut
         - *cookies-and-cream
