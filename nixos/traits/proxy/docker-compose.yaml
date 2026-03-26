@@ -9,8 +9,10 @@ services:
       - ${LETSENCRYPT_DIR}:/etc/letsencrypt
     networks:
       - private
+      - cluster
 
 networks:
   private:
     external: true
-
+  cluster:
+    external: true
