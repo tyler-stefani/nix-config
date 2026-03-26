@@ -149,8 +149,10 @@ services:
       - netbird-server
     env_file:
       - ${PROXY_ENV_PATH}
+    environment:
+      - NB_PROXY_CERTIFICATE_DIRECTORY=/certs
     volumes:
-      - netbird_proxy_certs:/certs
+      - ${CONFIG_PATH}/certs:/certs
     labels:
       # TCP passthrough for any unmatched domain (proxy handles its own TLS)
       - traefik.enable=true
@@ -169,7 +171,6 @@ services:
 volumes:
   netbird_data:
   netbird_traefik_letsencrypt:
-  netbird_proxy_certs:
   crowdsec_data:
   crowdsec_config:
   traefik_logs:
