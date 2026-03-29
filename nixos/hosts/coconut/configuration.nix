@@ -6,7 +6,6 @@
 {
   imports = with traits; [
     ./hardware-configuration.nix
-    ./users.nix
 
     is.nixos
     is.container-host
@@ -14,6 +13,7 @@
     is.cluster-manager
     is.ssh-server
 
+    has.user-tyler
     has.backups
     has.metrics
 

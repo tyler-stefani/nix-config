@@ -6,6 +6,7 @@
     is.nixos
     is.ssh-server
 
+    has.user-tyler
     has.desktop-environment
     has.games
   ];
@@ -25,16 +26,6 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-  };
-
-  users.users.tyler = {
-    isNormalUser = true;
-    description = "tyler";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    shell = pkgs.fish;
   };
 
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
