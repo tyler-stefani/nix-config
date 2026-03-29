@@ -12,6 +12,8 @@
     is.public-facing
     is.ssh-server
 
+    has.user-tyler
+
     hosts.mesh-vpn
   ];
 
@@ -32,11 +34,6 @@
   environment.systemPackages = with pkgs; [
     git
   ];
-
-  users.users.tyler = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-  };
 
   disko.devices = {
     disk = {

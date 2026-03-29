@@ -10,6 +10,7 @@
     is.cluster-worker
     is.ssh-server
 
+    has.user-tyler
     has.backups
     has.metrics
 
@@ -24,17 +25,6 @@
 
   networking.hostName = "bubblegum";
   networking.networkmanager.enable = true;
-
-  users.users.tyler = {
-    isNormalUser = true;
-    description = "tyler";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    homeMode = "711";
-    shell = pkgs.fish;
-  };
 
   _module.args = {
     mounts = {
