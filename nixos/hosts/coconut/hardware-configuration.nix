@@ -57,6 +57,13 @@
     ];
   };
 
+  fileSystems."/home/tyler/fast" = {
+    device = "/mnt/merge/01/.fast";
+    fsType = "none";
+    options = [ "bind" ];
+    depends = [ "/mnt/merge/01" ];
+  };
+
   swapDevices = [
     { device = "/dev/disk/by-uuid/2b93f64b-02d2-4ce6-aa08-948798aa953a"; }
   ];
