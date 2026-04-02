@@ -42,6 +42,7 @@
       data = "/home/tyler/shared/safe/data";
       config = "/home/tyler/apps";
       media = "/home/tyler/shared/media";
+      fast = "/home/tyler/fast";
     };
     ips.dns = "192.168.0.200";
   };
