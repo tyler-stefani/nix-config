@@ -73,6 +73,7 @@
       "cache.files=partial"
       "dropcacheonclose=true"
       "category.create=mfs"
+      "exclude_path=/.fast"
     ];
   };
 
