@@ -65,7 +65,6 @@ services:
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
     restart: unless-stopped
-    user: root
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - ${MEDIA_DIR}:/media
