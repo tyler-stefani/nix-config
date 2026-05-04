@@ -7,6 +7,7 @@
 
       nix.settings = {
         experimental-features = "nix-command flakes pipe-operators";
+        trusted-users = [ "tyler" ];
       };
 
       nixpkgs.config.allowUnfree = true;
