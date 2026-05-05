@@ -66,16 +66,20 @@
   virtualisation.docker-swarm.enable-manager = true;
 
   fileSystems."/home" = {
-    fsType = "fuse.mergerfs";
+    fsType = "mergerfs";
     device = "/mnt/merge/*";
+    depends = [
+      "/mnt/merge/01"
+      "/mnt/merge/01"
+    ];
     options = [
       "allow_other"
       "use_ino"
       "cache.files=partial"
       "dropcacheonclose=true"
       "category.create=mfs"
-      "exclude_path=/.fast"
     ];
+    noCheck = true;
   };
 
   programs.fuse.userAllowOther = true;
