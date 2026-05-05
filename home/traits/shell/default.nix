@@ -23,6 +23,9 @@
           fish_greeting = {
             body = "";
           };
+          nixdeploy = {
+            body = builtins.readFile ./nixdeploy.fish;
+          };
         };
         plugins = [
           {
