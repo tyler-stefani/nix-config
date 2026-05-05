@@ -29,6 +29,7 @@ in
     "tyler@bubblegum" = mkHomeConfig "x86_64-linux" true;
     "tyler@bloob" = mkHomeConfig "x86_64-linux" false;
     "tyler@coconut" = mkHomeConfig "x86_64-linux" true;
+    "tyler@cookies-and-cream" = mkHomeConfig "x86_64-linux" true;
     "tyler@noodle" = mkHomeConfig "x86_64-darwin" true;
   };
 }
