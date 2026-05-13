@@ -8,7 +8,6 @@
         env = {
           DATA_DIR = "${mounts.config}/degoog";
         };
-        envPath = config.sops.envs.search.path;
       };
     };
 }
