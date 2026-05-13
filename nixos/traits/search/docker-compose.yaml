@@ -3,7 +3,8 @@ services:
     image: ghcr.io/fccview/degoog:latest
     volumes:
       - ${DATA_DIR}:/app/data
-    expose: 4444
+    expose:
+      - 4444
     restart: unless-stopped
     networks:
       - cluster
