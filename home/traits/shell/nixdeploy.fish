@@ -1,7 +1,4 @@
-set -l hosts \
-    "bubblegum=bubblegum" \
-    "coconut=coconut" \
-    "cookies-and-cream=23.95.220.100"
+set -l hosts @hosts@
 
 set FLAKE_HOST $argv[1]
 set rest_args $argv[2..]
