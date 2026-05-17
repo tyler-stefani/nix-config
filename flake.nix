@@ -52,22 +52,25 @@
     }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
+        ./lab
+
         (import-tree ./flake/modules)
         home-manager.flakeModules.home-manager
 
         (import-tree ./nixos/modules)
-        (import-tree ./nixos/traits)
-        ./nixos/hosts/coconut
-        ./nixos/hosts/bubblegum
-        ./nixos/hosts/bloob
-        ./nixos/hosts/cookies-and-cream
+        (import-tree ./traits)
+        # TODO: structure so that import-tree can be used
+        ./entities/hosts/bloob
+        ./entities/hosts/bubblegum
+        ./entities/hosts/coconut
+        ./entities/hosts/cookies-and-cream
 
         (import-tree ./home/modules)
         (import-tree ./home/traits)
         ./home/users/tyler
       ];
 
-      flake.nixosTraits = extras.nixosTraits;
+      lab.traits = extras.nixosTraits;
 
       systems = [
         "x86_64-linux"
