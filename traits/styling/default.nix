@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.homeTraits.styling =
+  lab.traits.has.styling.home =
     { pkgs, config, ... }:
     {
       stylix = {

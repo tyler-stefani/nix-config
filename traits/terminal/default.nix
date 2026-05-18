@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.homeTraits.terminal =
+  lab.traits.has.terminal.home =
     { ... }:
     {
       programs.ghostty = {

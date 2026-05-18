@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.homeTraits.shell =
+  lab.traits.has.shell.home =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [

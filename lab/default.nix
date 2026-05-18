@@ -20,7 +20,7 @@ with lib;
               traits = mkOption {
                 type = lib.types.functionTo (lib.types.listOf lib.types.raw);
                 default = _: [ ];
-                description = "Traits this entity has";
+                description = "Traits this host has";
               };
               mounts = mkOption {
                 type = types.attrsOf types.str;
@@ -41,7 +41,29 @@ with lib;
           }
         );
       };
-      homes = mkOption { };
+      homes = mkOption {
+        type = types.attrsOf (
+          types.submodule {
+            options = {
+              system = mkOption {
+                type = types.str;
+                default = "x86_64-linux";
+                description = "The system architecture for the host which this home will live";
+              };
+              traits = mkOption {
+                type = lib.types.functionTo (lib.types.listOf lib.types.raw);
+                default = _: [ ];
+                description = "Traits this home has";
+              };
+              config = mkOption {
+                type = types.deferredModule;
+                default = { };
+                description = "The base configuration module for this home";
+              };
+            };
+          }
+        );
+      };
     };
     traits =
       let
@@ -50,15 +72,15 @@ with lib;
             options = {
               nixos = mkOption {
                 type = types.deferredModule;
-                default = { };
+                default = null;
               };
               darwin = mkOption {
                 type = types.deferredModule;
-                default = { };
+                default = null;
               };
               home = mkOption {
                 type = types.deferredModule;
-                default = { };
+                default = null;
               };
             };
           }
@@ -146,7 +168,21 @@ with lib;
             ++ collectModules "nixos" value.traits;
           }
         ) cfg.entities.hosts;
-        homeConfigurations = mapAttrs' (name: value: nameValuePair (name) ({ })) cfg.entities.homes;
+        homeConfigurations = mapAttrs (
+          name: value:
+          inputs.home-manager.lib.homeManagerConfiguration {
+            pkgs = import inputs.nixpkgs { inherit (value) system; };
+            modules = [
+              inputs.nixvim.homeModules.nixvim
+              inputs.stylix.homeModules.stylix
+              inputs.nix-index-database.homeModules.default
+
+              value.config
+            ]
+            ++ builtins.attrValues config.flake.homeModules
+            ++ collectModules "home" value.traits;
+          }
+        ) cfg.entities.homes;
       };
     };
 }

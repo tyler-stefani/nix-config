@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.homeTraits.editor =
+  lab.traits.has.editor.home =
     { pkgs, ... }:
     {
       programs.nixvim = {

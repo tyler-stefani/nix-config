@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.homeTraits.prompt =
+  lab.traits.has.prompt.home =
     { pkgs, ... }:
     {
       programs.starship = {
