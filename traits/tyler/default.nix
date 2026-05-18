@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.has.user-tyler =
+  lab.traits.has.user-tyler.nixos =
     {
       lib,
       pkgs,

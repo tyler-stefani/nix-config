@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.is.ssh-server =
+  lab.traits.is.ssh-server.nixos =
     { ... }:
     {
       services.openssh = {

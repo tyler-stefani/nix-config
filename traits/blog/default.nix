@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.blog =
+  lab.traits.hosts.blog.nixos =
     { mounts, ... }:
     let
       appDir = "${mounts.config}/blog";

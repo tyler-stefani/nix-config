@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.keep =
+  lab.traits.hosts.keep.nixos =
     { config, mounts, ... }:
     {
       sops.envs.keep = {

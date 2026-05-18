@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.records =
+  lab.traits.hosts.records.nixos =
     { config, mounts, ... }:
     {
       services.restic.backups.records =

@@ -1,7 +1,7 @@
 { ... }:
 {
 
-  lab.traits.hosts.drive =
+  lab.traits.hosts.drive.nixos =
     { config, mounts, ... }:
     let
       configDir = "${mounts.config}/opencloud/config";

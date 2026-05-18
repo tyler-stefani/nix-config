@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.has.desktop-environment =
+  lab.traits.has.desktop-environment.nixos =
     { nixpkgs-unstable, ... }:
     {
       nixpkgs.overlays = [

@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.minecraft =
+  lab.traits.hosts.minecraft.nixos =
     { config, mounts, ... }:
     let
       minecraftDir = "${mounts.config}/minecraft/data";

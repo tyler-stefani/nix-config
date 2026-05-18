@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.feed =
+  lab.traits.hosts.feed.nixos =
     { config, mounts, ... }:
     let
       dataDir = "${mounts.config}/miniflux/data";

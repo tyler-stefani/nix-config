@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.is.mesh-node =
+  lab.traits.is.mesh-node.nixos =
     { nixpkgs-unstable, config, ... }:
     {
       sops.secrets.mesh-node = {

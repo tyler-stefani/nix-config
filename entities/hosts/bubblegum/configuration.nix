@@ -1,23 +1,7 @@
-{ pkgs, traits, ... }:
+{ pkgs, ... }:
 
 {
-  imports = with traits; [
-    ./hardware-configuration.nix
-
-    is.nixos
-    is.container-host
-    is.mesh-node
-    is.cluster-worker
-    is.ssh-server
-
-    has.user-tyler
-    has.backups
-    has.metrics
-
-    hosts.auth
-    hosts.dash
-    hosts.dns
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -25,14 +9,6 @@
 
   networking.hostName = "bubblegum";
   networking.networkmanager.enable = true;
-
-  _module.args = {
-    mounts = {
-      config = "/home/tyler/apps";
-      data = "/home/tyler/shared/safe/data";
-    };
-    ips.dns = "192.168.0.201";
-  };
 
   nix.settings = {
     experimental-features = "nix-command flakes pipe-operators";

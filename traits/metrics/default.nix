@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.has.metrics =
+  lab.traits.has.metrics.nixos =
     {
       config,
       lib,

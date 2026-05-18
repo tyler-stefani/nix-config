@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.chat =
+  lab.traits.hosts.chat.nixos =
     { config, mounts, ... }:
     {
       sops.envs.chat = {

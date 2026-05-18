@@ -1,15 +1,6 @@
 { traits, pkgs, ... }:
 {
-  imports = with traits; [
-    ./hardware-configuration.nix
-
-    is.nixos
-    is.ssh-server
-
-    has.user-tyler
-    has.desktop-environment
-    has.games
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

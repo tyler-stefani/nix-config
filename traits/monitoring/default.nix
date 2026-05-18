@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.monitoring =
+  lab.traits.hosts.monitoring.nixos =
     {
       config,
       lib,

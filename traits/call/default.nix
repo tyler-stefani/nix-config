@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.call =
+  lab.traits.hosts.call.nixos =
     { config, mounts, ... }:
     {
       sops.envs.call = {

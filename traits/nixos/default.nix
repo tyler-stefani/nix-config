@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.is.nixos =
+  lab.traits.is.nixos.nixos =
     { ... }:
     {
       time.timeZone = "America/Chicago";

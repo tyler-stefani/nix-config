@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.is.cluster-worker =
+  lab.traits.is.cluster-worker.nixos =
     { ... }:
     {
       virtualisation.docker-swarm.enable-worker = true;

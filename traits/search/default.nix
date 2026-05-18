@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.search =
+  lab.traits.hosts.search.nixos =
     { config, mounts, ... }:
     {
       virtualisation.docker-stack.search = {

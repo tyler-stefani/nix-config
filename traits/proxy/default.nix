@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.proxy =
+  lab.traits.hosts.proxy.nixos =
     { config, mounts, ... }:
     let
       dataDir = "${mounts.config}/nginx/data";
