@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.homeTraits.git =
+  lab.traits.has.git.home =
     { pkgs, ... }:
     {
       home.packages = with pkgs; [

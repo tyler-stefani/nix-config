@@ -66,8 +66,7 @@
         ./entities/hosts/cookies-and-cream
 
         (import-tree ./home/modules)
-        (import-tree ./home/traits)
-        ./home/users/tyler
+        ./entities/homes/tyler
       ];
 
       lab.traits = extras.nixosTraits;

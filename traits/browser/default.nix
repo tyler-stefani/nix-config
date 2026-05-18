@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.homeTraits.browser =
+  lab.traits.has.browser.home =
     { ... }:
     {
       programs.firefox = {
