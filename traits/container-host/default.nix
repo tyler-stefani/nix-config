@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.is.container-host =
+  lab.traits.is.container-host.nixos =
     { lib, config, ... }:
     {
       virtualisation = {

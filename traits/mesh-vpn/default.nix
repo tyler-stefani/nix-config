@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.mesh-vpn =
+  lab.traits.hosts.mesh-vpn.nixos =
     { config, mounts, ... }:
     {
       sops.envs = {

@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.dns =
+  lab.traits.hosts.dns.nixos =
     {
       config,
       mounts,

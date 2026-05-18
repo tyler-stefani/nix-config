@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.is.public-facing =
+  lab.traits.is.public-facing.nixos =
     { config, ... }:
     {
       sops.secrets.public-facing = {

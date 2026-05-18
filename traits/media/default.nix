@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.media =
+  lab.traits.hosts.media.nixos =
     { config, mounts, ... }:
     let
       configDir = "${mounts.config}/jellyfin/config";

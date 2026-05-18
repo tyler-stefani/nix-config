@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.auth =
+  lab.traits.hosts.auth.nixos =
     { config, mounts, ... }:
     let
       dataDir = "${mounts.config}/authentik/data";

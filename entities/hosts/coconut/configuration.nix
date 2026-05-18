@@ -4,48 +4,12 @@
   ...
 }:
 {
-  imports = with traits; [
-    ./hardware-configuration.nix
-
-    is.nixos
-    is.container-host
-    is.mesh-node
-    is.cluster-manager
-    is.ssh-server
-
-    has.user-tyler
-    has.backups
-    has.metrics
-
-    hosts.dns
-    hosts.drive
-    hosts.feed
-    hosts.keep
-    hosts.local-media
-    hosts.media
-    hosts.minecraft
-    hosts.monitoring
-    hosts.notes
-    hosts.photos
-    hosts.proxy
-    hosts.records
-    hosts.search
-  ];
+  imports = with traits; [ ./hardware-configuration.nix ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_6_1;
-
-  _module.args = {
-    mounts = {
-      data = "/home/tyler/shared/safe/data";
-      config = "/home/tyler/apps";
-      media = "/home/tyler/shared/media";
-      fast = "/home/tyler/fast";
-    };
-    ips.dns = "192.168.0.200";
-  };
 
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 

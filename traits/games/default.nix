@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.has.games =
+  lab.traits.has.games.nixos =
     { pkgs, ... }:
     {
       programs.steam = {

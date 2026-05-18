@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.photos =
+  lab.traits.hosts.photos.nixos =
     { config, mounts, ... }:
     let
       uploadDir = "${mounts.config}/immich/upload";

@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.hosts.dash =
+  lab.traits.hosts.dash.nixos =
     { config, mounts, ... }:
     let
       configDir = "${mounts.config}/glance";

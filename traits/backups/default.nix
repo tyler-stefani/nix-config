@@ -1,6 +1,6 @@
 { ... }:
 {
-  lab.traits.has.backups =
+  lab.traits.has.backups.nixos =
     { config, mounts, ... }:
     {
       sops = {

@@ -4,18 +4,7 @@
   ...
 }:
 {
-  imports = with traits; [
-    ./hardware-configuration.nix
-
-    is.nixos
-    is.container-host
-    is.public-facing
-    is.ssh-server
-
-    has.user-tyler
-
-    hosts.mesh-vpn
-  ];
+  imports = with traits; [ ./hardware-configuration.nix ];
 
   boot.loader.grub.enable = true;
 
@@ -23,12 +12,6 @@
     hostName = "cookies-and-cream";
     useDHCP = true;
     firewall.enable = true;
-  };
-
-  _module.args = {
-    mounts = {
-      config = "/home/tyler/apps";
-    };
   };
 
   environment.systemPackages = with pkgs; [
