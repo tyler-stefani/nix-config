@@ -52,20 +52,18 @@
     }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
-        ./lab
-
-        (import-tree ./flake/modules)
         home-manager.flakeModules.home-manager
 
-        (import-tree ./nixos/modules)
+        ./lab
+
+        (import-tree ./modules)
         (import-tree ./traits)
+
         # TODO: structure so that import-tree can be used
         ./entities/hosts/bloob
         ./entities/hosts/bubblegum
         ./entities/hosts/coconut
         ./entities/hosts/cookies-and-cream
-
-        (import-tree ./home/modules)
         ./entities/homes/tyler
       ];
 
