@@ -67,7 +67,7 @@
         ./entities/homes/tyler
       ];
 
-      lab.traits = extras.nixosTraits;
+      lab.traits = extras.traits;
 
       systems = [
         "x86_64-linux"
