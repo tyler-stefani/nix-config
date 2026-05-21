@@ -34,7 +34,7 @@
     device = "/mnt/merge/*";
     depends = [
       "/mnt/merge/01"
-      "/mnt/merge/01"
+      "/mnt/merge/02"
     ];
     options = [
       "allow_other"
