@@ -10,18 +10,18 @@ This repository uses the [dendritic pattern](https://www.youtube.com/watch?v=-TR
 
 Entities are top level configurations for hosts or homes which are output by the base project flake. Currently supported entities are:
 
-Nixos hosts -> flake.nixosConfigurations
-Macos hosts -> flake.darwinConfigurations
-Home-manager users -> flake.homeConfigurations
+- Nixos hosts -> lab.entities.hosts -> flake.nixosConfigurations
+- Macos hosts -> lab.entities.hosts -> flake.darwinConfigurations
+- Home-manager users -> lab.entities.homes -> flake.homeConfigurations
 
 ## Modules
 
 Modules add new options and configurations to existing module systems. Examples include:
 
-Nixos modules -> flake.nixosModules
-Macos modules -> flake.darwinModules
-Home-manager modules -> flake.homeModules
-Flake-parts modules -> flake.flakeModules
+- Nixos modules -> flake.nixosModules
+- Macos modules -> flake.darwinModules
+- Home-manager modules -> flake.homeModules
+- Flake-parts modules -> flake.flakeModules
 
 ## Traits
 
