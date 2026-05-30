@@ -24,6 +24,7 @@
         hosts.auth
         hosts.dash
         hosts.dns
+        hosts.wiki
       ];
     mounts = {
       config = "/home/tyler/apps";

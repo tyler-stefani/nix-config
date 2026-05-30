@@ -1,0 +1,17 @@
+services:
+  wiki:
+    image: ghcr.io/perber/leafwiki:latest
+    user: 1000:1000
+    expose:
+      - 8080
+    environment:
+      - LEAFWIKI_ALLOW_INSECURE=true
+    volumes:
+      - ${CONFIG_DIR}/leafwiki:/app/data
+    networks:
+      - cluster
+    restart: unless-stopped
+
+networks:
+  cluster:
+    external: true;
