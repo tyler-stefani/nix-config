@@ -37,7 +37,6 @@
         hosts.photos
         hosts.proxy
         hosts.records
-        hosts.search
       ];
     mounts = {
       data = "/home/tyler/shared/safe/data";
