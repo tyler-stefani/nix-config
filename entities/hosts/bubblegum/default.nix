@@ -24,6 +24,7 @@
         hosts.auth
         hosts.dash
         hosts.dns
+        hosts.search
         hosts.wiki
       ];
     mounts = {
