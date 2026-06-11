@@ -31,7 +31,6 @@
         hosts.keep
         hosts.local-media
         hosts.media
-        hosts.minecraft
         hosts.monitoring
         hosts.notes
         hosts.photos
