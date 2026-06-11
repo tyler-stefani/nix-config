@@ -7,7 +7,6 @@ let
     with has;
     [
       editor
-      git
       prompt
       shell
       styling
@@ -53,6 +52,7 @@ with lib;
         [
           has.browser
           has.terminal
+          has.git
         ];
       config =
         { pkgs, ... }:
@@ -77,13 +77,30 @@ with lib;
           ];
         };
     };
-    "${username}@bubblegum" = mkHome { system = "x86_64-linux"; };
-    "${username}@coconut" = mkHome { system = "x86_64-linux"; };
-    "${username}@cookies-and-cream" = mkHome { system = "x86_64-linux"; };
+    "${username}@bubblegum" = mkHome {
+      system = "x86_64-linux";
+      traits = { has, ... }: [ has.git ];
+    };
+    "${username}@coconut" = mkHome {
+      system = "x86_64-linux";
+      traits = { has, ... }: [ has.git ];
+    };
+    "${username}@cookies-and-cream" = mkHome {
+      system = "x86_64-linux";
+      traits = { has, ... }: [ has.git ];
+    };
     "${username}@noodle" = mkHome {
       system = "x86_64-darwin";
+      traits = { has, ... }: [ has.git ];
       config = {
         home.homeDirectory = mkForce "/Users/tyler";
+      };
+    };
+    "${username}@peppermint" = mkHome {
+      system = "x86_64-darwin";
+      traits = { has, ... }: [ has.git-work ];
+      config = {
+        home.homeDirectory = mkForce "/Users/tylerstefani";
       };
     };
   };
