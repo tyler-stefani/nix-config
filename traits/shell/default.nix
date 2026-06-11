@@ -58,8 +58,8 @@
             src = pkgs.fetchFromGitHub {
               owner = "tyler-stefani";
               repo = "starship";
-              rev = "fff9bc53ef9997775d31d860246af88cd7721ec8";
-              hash = "sha256-S/Vt/jfYTCrMXXfu6YUIv+d0RoT7GYG1isayhtHc7DA=";
+              rev = "01a3b811f1f8e9c7196b77ef779d670e2cd5f3ff";
+              hash = "sha256-7axiFSyfv8DiAM2ONQ/CkEu0AVWHnndlVW+4QMyEt60=";
             };
           }
         ];
