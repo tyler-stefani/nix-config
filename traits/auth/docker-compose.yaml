@@ -73,6 +73,28 @@ services:
     networks:
     - auth
 
+  proxy-outpost:
+    image: ghcr.io/goauthentik/proxy:${AUTHENTIK_TAG}
+    networks:
+      - auth
+      - cluster
+    environment:
+      AUTHENTIK_HOST: ${AUTHENTIK_HOST}
+      AUTHENTIK_INSECURE: true
+      AUTHENTIK_TOKEN: ${AUTHENTIK_PROXY_TOKEN}
+
+  ldap-outpost:
+    image: ghcr.io/goauthentik/ldap:${AUTHENTIK_TAG}
+    networks:
+      - auth
+    ports:
+      - 389:3389
+      - 636:6636
+    environment:
+      AUTHENTIK_HOST: ${AUTHENTIK_HOST}
+      AUTHENTIK_INSECURE: true
+      AUTHENTIK_TOKEN: ${AUTHENTIK_LDAP_TOKEN}
+
 networks:
   cluster:
     external: true
