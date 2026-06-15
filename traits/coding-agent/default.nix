@@ -39,11 +39,5 @@
       };
 
       stylix.targets.opencode.enable = lib.mkIf config.stylix.enable true;
-
-      # can probably be removed with stylix 26.05
-      xdg.configFile."opencode/tui.json".text = builtins.toJSON {
-        "$schema" = "https://opencode.ai/tui.json";
-        theme = "stylix";
-      };
     };
 }

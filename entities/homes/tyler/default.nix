@@ -72,7 +72,7 @@ with lib;
 
           home.packages = with pkgs; [
             beeper
-            bitwarden-desktop
+            # bitwarden-desktop
             ente-auth
             obsidian
           ];
