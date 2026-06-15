@@ -51,6 +51,7 @@ with lib;
         { has, ... }:
         [
           has.browser
+          has.coding-agent
           has.terminal
           has.git
         ];
