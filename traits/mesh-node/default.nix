@@ -7,6 +7,7 @@
         sopsFile = ./secrets/key.yaml;
         key = "key";
       };
+      services.resolved.enable = true;
       services.netbird = {
         package = nixpkgs-unstable.netbird;
         clients.wt0 = {
