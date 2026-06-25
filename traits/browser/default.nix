@@ -9,7 +9,7 @@
           isDefault = true;
           search = {
             force = true;
-            default = "DuckDuckGo";
+            default = "ddg";
           };
           settings = {
             "sidebar.revamp" = true;
