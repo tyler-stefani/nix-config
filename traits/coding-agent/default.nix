@@ -10,6 +10,8 @@
     {
       services.podman.enable = true;
 
+      programs.pi.enable = true;
+
       programs.opencode = {
         enable = true;
         package = pkgs.writeShellScriptBin "occ" ''
