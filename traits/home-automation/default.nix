@@ -19,5 +19,12 @@
         8123
         5580
       ];
+      services.restic.serviceBackups.home-automation = {
+        serviceName = config.virtualisation.docker-compose.home-automation.serviceName;
+        paths = [
+          configDir
+          matterDataDir
+        ];
+      };
     };
 }
