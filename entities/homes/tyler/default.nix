@@ -49,25 +49,19 @@ with lib;
       system = "x86_64-linux";
       traits =
         { has, ... }:
+        with has;
         [
-          has.browser
-          has.coding-agent
-          has.terminal
-          has.git
+          browser
+          coding-agent
+          graphical-editor
+          terminal
+          git
         ];
       config =
         { pkgs, ... }:
         {
           programs = {
             discord.enable = true;
-            vscode = {
-              enable = true;
-              package = pkgs.vscodium;
-            };
-          };
-
-          stylix.targets = {
-            vscode.enable = true;
           };
 
           home.packages = with pkgs; [
