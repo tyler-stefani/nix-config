@@ -2,14 +2,14 @@
   description = "tyler's nix config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
     extras = {
       url = "git+ssh://git@github.com/tyler-stefani/nix-extras";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager?ref=release-25.11";
+      url = "github:nix-community/home-manager?ref=release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -19,14 +19,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
-      url = "github:nix-community/nixvim?ref=nixos-25.11";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-      };
+      url = "github:nix-community/nixvim?ref=nixos-26.05";
+      inputs.flake-parts.follows = "flake-parts";
     };
     stylix = {
-      url = "github:danth/stylix?ref=release-25.11";
+      url = "github:danth/stylix?ref=release-26.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";

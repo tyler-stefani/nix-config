@@ -6,6 +6,7 @@
       programs.nixvim = {
         enable = true;
         defaultEditor = true;
+        nixpkgs.source = pkgs.path;
         plugins = {
           telescope.enable = true;
           oil = {
