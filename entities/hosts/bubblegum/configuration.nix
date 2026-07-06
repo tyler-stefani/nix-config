@@ -13,6 +13,12 @@
   networking.hostName = "bubblegum";
   networking.networkmanager.enable = true;
 
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
   nix.settings = {
     experimental-features = "nix-command flakes pipe-operators";
   };

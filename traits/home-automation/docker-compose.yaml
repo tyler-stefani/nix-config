@@ -1,0 +1,21 @@
+services:
+  home-assistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: home-assistant
+    volumes:
+      - ${CONFIG_DIR}:/config
+    environment:
+      TZ: ${TZ}
+    network_mode: host
+    restart: unless-stopped
+
+  matter-server:
+    image: ghcr.io/matter-js/python-matter-server:stable
+    container_name: matter-server
+    volumes:
+      - ${MATTER_DATA_DIR}:/data
+    environment:
+      CHIP_LOG_LEVEL: error
+      CHIP_LOGGING: error
+    network_mode: host
+    restart: unless-stopped
