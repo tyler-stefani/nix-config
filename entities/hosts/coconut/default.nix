@@ -12,6 +12,7 @@
         is,
         has,
         hosts,
+        manages,
         ...
       }:
       [
@@ -32,10 +33,13 @@
         hosts.local-media
         hosts.media
         hosts.monitoring
+        hosts.container-monitoring
         hosts.notes
         hosts.photos
         hosts.proxy
         hosts.records
+
+        manages.container-agent
       ];
     mounts = {
       data = "/home/tyler/shared/safe/data";
@@ -43,6 +47,5 @@
       media = "/home/tyler/shared/media";
       fast = "/home/tyler/fast";
     };
-    ips.dns = "192.168.0.200";
   };
 }

@@ -1,19 +1,17 @@
 services:
-  app:
+  containers:
+    container_name: container-monitor
     image: "portainer/portainer-ce:${PORTAINER_VERSION:-lts}"
     expose:
       - 9000
     volumes:
       - /home/tyler/apps/portainer/data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - cluster
-    deploy:
-      placement:
-        constraints:
-          - node.hostname == coconut
+      - container-monitoring
 
 networks:
   cluster:
     external: true
-
+  container-monitoring:
+    external: true
