@@ -1,5 +1,6 @@
 services:
   proxy:
+    container_name: reverse-proxy
     image: "docker.io/jc21/nginx-proxy-manager:${NPM_VERSION:-latest}"
     ports:
       - 80:80

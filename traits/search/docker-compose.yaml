@@ -1,5 +1,6 @@
 services:
   search:
+    container_name: search-server
     image: ghcr.io/fccview/degoog:latest
     volumes:
       - ${DATA_DIR}:/app/data

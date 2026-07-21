@@ -1,5 +1,6 @@
 services:
   wiki:
+    container_name: wiki-server
     image: ghcr.io/perber/leafwiki:latest
     user: 1000:1000
     expose:

@@ -1,5 +1,6 @@
 services:
   keep:
+    container_name: keep-server
     image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
     restart: unless-stopped
     volumes:
@@ -20,6 +21,7 @@ services:
       - default
       - proxy
   chrome:
+    container_name: keep-browser
     image: gcr.io/zenika-hub/alpine-chrome:124
     restart: unless-stopped
     command:
@@ -32,6 +34,7 @@ services:
     networks:
       - default
   meilisearch:
+    container_name: keep-search
     image: getmeili/meilisearch:v1.13.3
     restart: unless-stopped
     environment:

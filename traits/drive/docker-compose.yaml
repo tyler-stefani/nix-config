@@ -1,5 +1,6 @@
 services:
   drive:
+    container_name: drive-server
     image: ${OC_DOCKER_IMAGE:-opencloudeu/opencloud-rolling}:${OC_DOCKER_TAG:-latest}
     entrypoint:
       - /bin/sh
@@ -23,6 +24,7 @@ services:
       - default
 
   wopi:
+    container_name: drive-wopi
     image: ${OC_DOCKER_IMAGE:-opencloudeu/opencloud-rolling}:${OC_DOCKER_TAG:-latest}
     user: ${OC_CONTAINER_UID_GID:-1000:1000}
     networks:
@@ -53,6 +55,7 @@ services:
     restart: always
 
   office:
+    container_name: drive-office
     image: collabora/code:25.04.7.1.1
     networks:
       - proxy

@@ -1,5 +1,6 @@
 services:
   dash-app:
+    container_name: dash-server
     image: glanceapp/glance:${GLANCE_VERSION}
     expose:
       - 8080

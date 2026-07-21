@@ -1,5 +1,6 @@
 services:
   feed:
+    container_name: feed-server
     image: miniflux/miniflux:${MINIFLUX_VERSION}
     depends_on:
       db:
@@ -21,6 +22,7 @@ services:
     restart: always
 
   db:
+    container_name: feed-db
     image: postgres:17-alpine
     environment:
       - POSTGRES_USER=miniflux

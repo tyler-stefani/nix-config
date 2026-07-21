@@ -1,5 +1,6 @@
 services:
   hole:
+    container_name: dns-server
     image: pihole/pihole:${PIHOLE_VERSION:-latest}
     hostname: hole
     dns:
