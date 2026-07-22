@@ -54,7 +54,7 @@ services:
     restart: unless-stopped
     networks: [netbird]
     env_file:
-      - ./dashboard.env
+      - ${DASHBOARD_ENV_PATH}
     labels:
       - traefik.enable=true
       - traefik.http.routers.netbird-dashboard.rule=Host(`${NETBIRD_DOMAIN}`)
@@ -122,7 +122,7 @@ services:
       crowdsec:
         condition: service_healthy
     env_file:
-      - ./proxy.env
+      - ${PROXY_ENV_PATH}
     volumes:
       - netbird_proxy_certs:/certs
     labels:
