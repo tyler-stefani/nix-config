@@ -12,7 +12,7 @@
     in
     {
       sops.envs.dns = {
-        sopsFile = secrets/.env;
+        sopsFile = ./secrets/.env;
       };
       virtualisation.docker-compose.dns = {
         file = ./docker-compose.yaml;

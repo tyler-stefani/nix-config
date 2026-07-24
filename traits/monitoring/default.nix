@@ -8,7 +8,7 @@
     }:
     {
       sops.envs.monitoring = {
-        sopsFile = secrets/.env;
+        sopsFile = ./secrets/.env;
       };
       services.grafana = {
         enable = true;
