@@ -1,0 +1,81 @@
+(
+    config: {
+        []: [],
+        [
+            (
+                connector: "Unknown-1",
+                make: "Unknown",
+                model: "Unknown",
+            ),
+        ]: [
+            (
+                mode: ((1024, 768), Some(59999)),
+                vrr: r#false,
+                scale: 1.0,
+                transform: Normal,
+                position: (0, 0),
+                xwayland_primary: true,
+            ),
+        ],
+        [
+            (
+                connector: "DP-3",
+                make: "Acer Technologies",
+                model: "XV275K P5",
+            ),
+        ]: [
+            (
+                mode: ((3840, 2160), Some(120000)),
+                vrr: r#false,
+                scale: 1.75,
+                transform: Normal,
+                position: (0, 0),
+                xwayland_primary: true,
+            ),
+        ],
+        [
+            (
+                connector: "DP-3",
+                make: "Acer Technologies",
+                model: "XV275K P5",
+            ),
+            (
+                connector: "HDMI-A-1",
+                make: "Acer Technologies",
+                model: "R240HY",
+            ),
+        ]: [
+            (
+                mode: ((3840, 2160), Some(120000)),
+                vrr: r#false,
+                scale: 1.75,
+                transform: Normal,
+                position: (1920, 0),
+            ),
+            (
+                mode: ((1920, 1080), Some(60000)),
+                vrr: r#false,
+                scale: 1.0,
+                transform: Normal,
+                position: (0, 0),
+                xwayland_primary: true,
+            ),
+        ],
+        [
+            (
+                connector: "HDMI-A-1",
+                make: "Acer Technologies",
+                model: "R240HY",
+            ),
+        ]: [
+            (
+                mode: ((1920, 1080), Some(60000)),
+                vrr: r#false,
+                scale: 1.0,
+                transform: Normal,
+                position: (0, 0),
+                xwayland_primary: true,
+            ),
+        ],
+    },
+)
