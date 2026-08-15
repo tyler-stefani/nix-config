@@ -1,15 +1,31 @@
 services:
-  hole:
+  dns:
     container_name: dns-server
-    image: pihole/pihole:${PIHOLE_VERSION:-latest}
-    hostname: hole
-    dns:
-      - 9.9.9.9
+    image: docker.io/technitium/dns-server:${TECHNITIUM_VERSION:-latest}
+    networks:
+      dns_lan:
+        ipv4_address: ${BIND_IP}
+    mac_address: ${BIND_MAC}
     volumes:
-      - ${DATA_DIR}:/etc/pihole
-      - ${DNSMASQ_DIR}:/etc/dnsmasq.d
+      - ${CONFIG_DIR}:/etc/dns
+      - logs:/var/log/technitium/dns
     environment:
-      TZ: ${TIMEZONE}
-      WEBPASSWORD: ${PASSWORD}
-      FTLCONF_webserver_port: '8888o,[::]:8888o'
-    network_mode: host
+      - DNS_SERVER_DOMAIN=dns-server
+      - DNS_SERVER_LOG_USING_LOCAL_TIME=true
+      - DNS_SERVER_LOG_FOLDER_PATH=/var/log/technitium/dns
+    restart: unless-stopped
+    sysctls:
+      - net.ipv4.ip_local_port_range=1024 65535
+
+networks:
+  dns_lan:
+    driver: macvlan
+    driver_opts:
+      parent: ${PARENT_INTERFACE}
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
+
+volumes:
+  logs:

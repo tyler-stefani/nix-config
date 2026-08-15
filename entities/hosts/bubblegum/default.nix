@@ -32,6 +32,16 @@
       config = "/home/tyler/apps";
       data = "/home/tyler/shared/safe/data";
     };
-    ips.dns = "192.168.0.201";
+    networking = {
+      ips = {
+        dns = "192.168.1.200";
+        macvlan-shim = "192.168.1.210";
+      };
+      macs = {
+        dns = "02:00:00:00:00:68";
+        macvlan-shim = "02:00:00:00:01:68";
+      };
+      interfaces.primary = "enp1s0";
+    };
   };
 }

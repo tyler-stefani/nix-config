@@ -47,5 +47,16 @@
       media = "/home/tyler/shared/media";
       fast = "/home/tyler/fast";
     };
+    networking = {
+      ips = {
+        dns = "192.168.1.201";
+        macvlan-shim = "192.168.1.211";
+      };
+      macs = {
+        dns = "02:00:00:00:00:69";
+        macvlan-shim = "02:00:00:00:01:69";
+      };
+      interfaces.primary = "eno1";
+    };
   };
 }

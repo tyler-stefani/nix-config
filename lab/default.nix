@@ -27,10 +27,58 @@ with lib;
                 default = { };
                 description = "Absolute paths to state not directly managed by nix";
               };
-              ips = mkOption {
-                type = types.attrsOf types.str;
+              networking = mkOption {
                 default = { };
-                description = "IP addresses of this host and other services it makes available";
+                description = "IP addresses which are claimed by this host";
+                type = types.submodule {
+                  options = {
+                    ips = mkOption {
+                      type = types.submodule {
+                        options = {
+                          self = mkOption {
+                            type = types.str;
+                            description = "LAN IP address for this host";
+                          };
+                          dns = mkOption {
+                            type = types.str;
+                            description = "Additional LAN IP address for the DNS server hosted by this host";
+                          };
+                          macvlan-shim = mkOption {
+                            type = types.str;
+                            description = "Additional unused LAN IP address for a shim that facilitates communication with docker macvlan containers";
+                          };
+                        };
+                      };
+                    };
+                    macs = mkOption {
+                      default = { };
+                      description = "MAC addresses which are given to oci containers to be used on MACVLANs";
+                      type = types.submodule {
+                        options = {
+                          dns = mkOption {
+                            type = types.str;
+                            description = "Private MAC address given to the DNS server container";
+                          };
+                          macvlan-shim = mkOption {
+                            type = types.str;
+                            description = "Private MAC address given to the MACVLAN shim that facilitates communication between host and container";
+                          };
+                        };
+                      };
+                    };
+                    interfaces = mkOption {
+                      default = { };
+                      type = types.submodule {
+                        options = {
+                          primary = mkOption {
+                            type = types.str;
+                            description = "The primary ethernet interface this host uses";
+                          };
+                        };
+                      };
+                    };
+                  };
+                };
               };
               config = mkOption {
                 type = types.deferredModule;
@@ -154,7 +202,7 @@ with lib;
           inputs.nixpkgs.lib.nixosSystem {
             system = value.system;
             specialArgs = {
-              inherit (value) mounts ips;
+              inherit (value) mounts networking;
               nixpkgs-unstable = import inputs.nixpkgs-unstable {
                 system = value.system;
               };
