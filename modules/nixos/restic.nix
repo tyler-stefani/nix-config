@@ -116,31 +116,82 @@
             );
             default = { };
           };
+        zeroDowntimeBackups =
+          let
+            inherit (utils.systemdUtils.unitOptions) unitOption;
+          in
+          mkOption {
+            type = types.attrsOf (
+              types.submodule (
+                { name, ... }:
+                {
+                  options = {
+                    prepareCommand = mkOption {
+                      type = types.str;
+                      description = "Command run immediately before the backup to produce a consistent snapshot into `paths`. The service is never stopped.";
+                    };
+                    paths = mkOption {
+                      type = types.listOf types.str;
+                      default = [ ];
+                      description = "Host paths holding the snapshot produced by `prepareCommand` to back up";
+                    };
+                    timerConfig = mkOption {
+                      type = types.nullOr (types.attrsOf unitOption);
+                      default = {
+                        OnCalendar = "03:00";
+                        Persistent = true;
+                      };
+                      description = "Timer config to be passed directly to the restic timer";
+                    };
+                  };
+                }
+              )
+            );
+            default = { };
+          };
       };
 
       config = {
         environment.systemPackages = mkIf cfg.enable [
           pkgs.restic
         ];
-        services.restic.backups = mapAttrs' (
-          name: value:
-          nameValuePair (name) ({
-            initialize = true;
-            paths = value.paths;
-            timerConfig = value.timerConfig // {
-              RandomizedDelaySec = 1800;
-            };
-            repositoryFile = cfg.defaultRepositoryFile;
-            environmentFile = cfg.defaultEnvironmentFile;
-            passwordFile = cfg.defaultPasswordFile;
-            extraBackupArgs = [
-              "--tag"
-              name
-            ];
-            backupPrepareCommand = "systemctl stop ${value.serviceName}.service";
-            backupCleanupCommand = "systemctl start ${value.serviceName}.service";
-          })
-        ) cfg.serviceBackups;
+        services.restic.backups =
+          let
+            timerConfig = value: value.timerConfig // { RandomizedDelaySec = 1800; };
+          in
+          (mapAttrs' (
+            name: value:
+            nameValuePair (name) ({
+              initialize = true;
+              paths = value.paths;
+              timerConfig = timerConfig value;
+              repositoryFile = cfg.defaultRepositoryFile;
+              environmentFile = cfg.defaultEnvironmentFile;
+              passwordFile = cfg.defaultPasswordFile;
+              extraBackupArgs = [
+                "--tag"
+                name
+              ];
+              backupPrepareCommand = "systemctl stop ${value.serviceName}.service";
+              backupCleanupCommand = "systemctl start ${value.serviceName}.service";
+            })
+          ) cfg.serviceBackups)
+          // (mapAttrs' (
+            name: value:
+            nameValuePair (name) ({
+              initialize = true;
+              paths = value.paths;
+              timerConfig = timerConfig value;
+              repositoryFile = cfg.defaultRepositoryFile;
+              environmentFile = cfg.defaultEnvironmentFile;
+              passwordFile = cfg.defaultPasswordFile;
+              extraBackupArgs = [
+                "--tag"
+                name
+              ];
+              backupPrepareCommand = value.prepareCommand;
+            })
+          ) cfg.zeroDowntimeBackups);
       };
     };
 }

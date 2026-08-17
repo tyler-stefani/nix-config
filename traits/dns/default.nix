@@ -3,12 +3,21 @@
   lab.traits.hosts.dns.nixos =
     {
       config,
+      pkgs,
       mounts,
       networking,
       ...
     }:
     let
-      configDir = "${mounts.config}/technitium";
+      configDir = "${mounts.config}/technitium/config";
+      backupDir = "${mounts.config}/technitium/backups";
+
+      backupScript = pkgs.buildGoModule {
+        pname = "technitium-backup";
+        version = "0.1.0";
+        src = ./backups;
+        vendorHash = null;
+      };
     in
     {
       virtualisation.docker-compose.dns = {
@@ -43,6 +52,26 @@
               prefixLength = 32;
             }
           ];
+        };
+      };
+
+      sops.secrets."dns/api-token" = {
+        sopsFile = ./secrets/secrets.yaml;
+        key = "api-token";
+      };
+
+      services.restic.zeroDowntimeBackups.dns = {
+        prepareCommand =
+          "${backupScript}/bin/technitium-backup"
+          + " --url http://${networking.ips.dns}:5380"
+          + " --token-file ${config.sops.secrets."dns/api-token".path}"
+          + " --out ${backupDir}/technitium-backup.zip";
+        paths = [
+          backupDir
+        ];
+        timerConfig = {
+          OnCalendar = "Mon *-*-* 03:30";
+          Persistent = true;
         };
       };
     };
