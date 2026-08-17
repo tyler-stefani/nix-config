@@ -106,7 +106,7 @@ with lib;
       };
     };
     "${username}@peppermint" = mkHome {
-      system = "x86_64-darwin";
+      system = "aarch64-darwin";
       traits = { has, ... }: [ has.git-work ];
       config = {
         home.homeDirectory = mkForce "/Users/tylerstefani";
