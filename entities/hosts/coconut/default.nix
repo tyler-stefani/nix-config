@@ -58,5 +58,9 @@
       };
       interfaces.primary = "eno1";
     };
+    deploy = {
+      username = "tyler";
+      hostname = "192.168.1.69";
+    };
   };
 }

@@ -29,9 +29,10 @@ let
       system,
       traits ? (_: [ ]),
       config ? { },
+      deploy ? null,
     }:
     {
-      inherit system;
+      inherit system deploy;
       traits = { has, ... }@inputs: (headlessTraits inputs) ++ (traits inputs);
       config = {
         imports = [
@@ -67,6 +68,7 @@ with lib;
           home.packages = with pkgs; [
             beeper
             # bitwarden-desktop
+            deploy-rs
             ente-auth
             obsidian
           ];
@@ -75,14 +77,26 @@ with lib;
     "${username}@bubblegum" = mkHome {
       system = "x86_64-linux";
       traits = { has, ... }: [ has.git ];
+      deploy = {
+        inherit username;
+        hostname = "192.168.1.68";
+      };
     };
     "${username}@coconut" = mkHome {
       system = "x86_64-linux";
       traits = { has, ... }: [ has.git ];
+      deploy = {
+        inherit username;
+        hostname = "192.168.1.69";
+      };
     };
     "${username}@cookies-and-cream" = mkHome {
       system = "x86_64-linux";
       traits = { has, ... }: [ has.git ];
+      deploy = {
+        inherit username;
+        hostname = "23.95.220.100";
+      };
     };
     "${username}@noodle" = mkHome {
       system = "x86_64-darwin";

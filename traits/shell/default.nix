@@ -23,17 +23,6 @@
           fish_greeting = {
             body = "";
           };
-          nixdeploy =
-            let
-              hosts = ''
-                "bubblegum=bubblegum" \
-                "coconut=coconut" \
-                "cookies-and-cream=23.95.220.100"
-              '';
-            in
-            {
-              body = builtins.readFile (pkgs.replaceVars ./nixdeploy.fish { inherit hosts; });
-            };
         };
         plugins = [
           {

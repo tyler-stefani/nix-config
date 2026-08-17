@@ -27,5 +27,9 @@
     mounts = {
       config = "/home/tyler/apps";
     };
+    deploy = {
+      username = "tyler";
+      hostname = "23.95.220.100";
+    };
   };
 }

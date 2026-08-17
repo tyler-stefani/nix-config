@@ -37,6 +37,10 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -69,6 +73,7 @@
       systems = [
         "x86_64-linux"
         "x86_64-darwin"
+        "aarch64-darwin"
       ];
 
       perSystem =

@@ -43,5 +43,9 @@
       };
       interfaces.primary = "enp1s0";
     };
+    deploy = {
+      username = "tyler";
+      hostname = "192.168.1.68";
+    };
   };
 }

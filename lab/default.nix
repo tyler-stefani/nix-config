@@ -85,6 +85,22 @@ with lib;
                 default = { };
                 description = "The base configuration module for this host";
               };
+              deploy = mkOption {
+                default = null;
+                description = "Configuration for declarative deployments, only to be used for servers";
+                type = types.nullOr (
+                  types.submodule {
+                    options = {
+                      hostname = mkOption {
+                        type = types.str;
+                      };
+                      username = mkOption {
+                        type = types.str;
+                      };
+                    };
+                  }
+                );
+              };
             };
           }
         );
@@ -107,6 +123,22 @@ with lib;
                 type = types.deferredModule;
                 default = { };
                 description = "The base configuration module for this home";
+              };
+              deploy = mkOption {
+                default = null;
+                description = "Configuration for declarative deployments, only to be used for servers";
+                type = types.nullOr (
+                  types.submodule {
+                    options = {
+                      hostname = mkOption {
+                        type = types.str;
+                      };
+                      username = mkOption {
+                        type = types.str;
+                      };
+                    };
+                  }
+                );
               };
             };
           }
@@ -188,6 +220,46 @@ with lib;
   config =
     let
       cfg = config.lab;
+      hosts = cfg.entities.hosts;
+      homes = cfg.entities.homes;
+
+      deployableHosts = filterAttrs (name: value: value.deploy != null) hosts;
+      deployableHomes = filterAttrs (name: value: value.deploy != null) homes;
+
+      hostNode = name: value: {
+        hostname = value.deploy.hostname;
+        profiles.host = {
+          user = "root";
+          sshUser = value.deploy.username;
+          path =
+            inputs.deploy-rs.lib."${value.system}".activate.nixos
+              config.flake.nixosConfigurations."${name}";
+          interactiveSudo = true;
+        };
+      };
+
+      homeNode = name: value: {
+        hostname = value.deploy.hostname;
+        profiles.home = {
+          user = value.deploy.username;
+          sshUser = value.deploy.username;
+          path =
+            inputs.deploy-rs.lib."${value.system}".activate.home-manager
+              config.flake.homeConfigurations."${name}";
+        };
+      };
+
+      homeProfilesByHost = mapAttrs' (
+        name: value: nameValuePair (last (splitString "@" name)) (homeNode name value)
+      ) deployableHomes;
+
+      nodeWithHomes =
+        name: value:
+        value
+        // optionalAttrs (homeProfilesByHost ? ${name}) {
+          profiles = value.profiles // homeProfilesByHost.${name}.profiles;
+        };
+
       collectModules =
         systemType: traits:
         pipe (traits cfg.traits) [
@@ -215,7 +287,8 @@ with lib;
             ++ builtins.attrValues config.flake.nixosModules
             ++ collectModules "nixos" value.traits;
           }
-        ) cfg.entities.hosts;
+        ) hosts;
+
         homeConfigurations = mapAttrs (
           name: value:
           inputs.home-manager.lib.homeManagerConfiguration {
@@ -231,6 +304,9 @@ with lib;
             ++ collectModules "home" value.traits;
           }
         ) cfg.entities.homes;
+
+        deploy.nodes = mapAttrs nodeWithHomes (mapAttrs hostNode deployableHosts);
+
       };
     };
 }
