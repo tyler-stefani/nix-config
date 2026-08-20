@@ -3,15 +3,13 @@
   lab.entities.hosts.bloob = {
     system = "x86_64-linux";
     config = ./configuration.nix;
-    traits =
-      { is, has, ... }:
-      [
-        is.nixos
-        is.ssh-server
+    traits = with config.lab.traits; [
+      attributes.nixos
+      attributes.ssh-server
+      attributes.user-tyler
 
-        has.user-tyler
-        has.desktop-environment
-        has.games
-      ];
+      programs.desktop-environment
+      programs.games
+    ];
   };
 }

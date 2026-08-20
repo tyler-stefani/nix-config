@@ -1,0 +1,45 @@
+{ ... }:
+{
+  lab.traits.programs.coding-agent.home =
+    {
+      lib,
+      pkgs,
+      config,
+      ...
+    }:
+    {
+      services.podman.enable = true;
+
+      programs.pi.enable = true;
+
+      programs.opencode = {
+        enable = true;
+        package = pkgs.writeShellScriptBin "occ" ''
+          export PATH="${
+            pkgs.lib.makeBinPath [
+              pkgs.podman
+              pkgs.coreutils
+            ]
+          }:$PATH"
+          exec ${pkgs.fish}/bin/fish ${./occ.fish} "$@"
+        '';
+        settings = {
+          model = "opencode/mimo-v2.5-free";
+          autoupdate = false;
+          permission = {
+            "*" = "allow";
+            edit = "ask";
+            webfetch = "allow";
+            external_directory = "ask";
+            bash = {
+              "*" = "allow";
+              "rm *" = "ask";
+              "rmdir *" = "ask";
+            };
+          };
+        };
+      };
+
+      stylix.targets.opencode.enable = lib.mkIf config.stylix.enable true;
+    };
+}

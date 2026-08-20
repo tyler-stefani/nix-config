@@ -1,0 +1,40 @@
+{ ... }:
+{
+
+  lab.traits.services.auth.nixos = {
+    hostname = "auth-server";
+    module =
+      { config, mounts, ... }:
+      let
+        dataDir = "${mounts.config}/authentik/data";
+        mediaDir = "${mounts.config}/authentik/media";
+        templatesDir = "${mounts.config}/authentik/templates";
+        certsDir = "${mounts.config}/authentik/certs";
+      in
+      {
+        sops.envs.auth = {
+          sopsFile = ./secrets/.env;
+        };
+        virtualisation.docker-compose.auth = {
+          file = ./docker-compose.yaml;
+          envPath = config.sops.envs.auth.path;
+          env = {
+            AUTHENTIK_TAG = "2026.5";
+            DATA_DIR = dataDir;
+            MEDIA_DIR = mediaDir;
+            TEMPLATES_DIR = templatesDir;
+            CERTS_DIR = certsDir;
+          };
+        };
+        services.restic.serviceBackups.auth = {
+          serviceName = config.virtualisation.docker-compose.auth.serviceName;
+          paths = [
+            dataDir
+            mediaDir
+            templatesDir
+            certsDir
+          ];
+        };
+      };
+  };
+}

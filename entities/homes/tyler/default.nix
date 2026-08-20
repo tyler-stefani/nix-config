@@ -1,16 +1,21 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   username = "tyler";
 
-  headlessTraits =
-    { has, ... }:
-    with has;
-    [
-      editor
-      prompt
-      shell
-      styling
-    ];
+  # Trait sets (attributes/programs/services) for building host/home trait lists.
+  traits = config.lab.traits;
+
+  headlessTraits = with traits; [
+    programs.editor
+    programs.prompt
+    programs.shell
+    programs.styling
+  ];
 
   baseConfig =
     { pkgs, ... }:
@@ -27,13 +32,13 @@ let
   mkHome =
     {
       system,
-      traits ? (_: [ ]),
+      traits ? [ ],
       config ? { },
-      deploy ? null,
+      deploy ? { },
     }:
     {
       inherit system deploy;
-      traits = { has, ... }@inputs: (headlessTraits inputs) ++ (traits inputs);
+      traits = headlessTraits ++ traits;
       config = {
         imports = [
           baseConfig
@@ -48,16 +53,13 @@ with lib;
   lab.entities.homes = {
     "${username}@bloob" = mkHome {
       system = "x86_64-linux";
-      traits =
-        { has, ... }:
-        with has;
-        [
-          browser
-          coding-agent
-          graphical-editor
-          terminal
-          git
-        ];
+      traits = with traits; [
+        programs.browser
+        programs.coding-agent
+        programs.graphical-editor
+        programs.terminal
+        programs.git
+      ];
       config =
         { pkgs, ... }:
         {
@@ -76,38 +78,41 @@ with lib;
     };
     "${username}@bubblegum" = mkHome {
       system = "x86_64-linux";
-      traits = { has, ... }: [ has.git ];
+      traits = with traits; [ programs.git ];
       deploy = {
+        enable = true;
         inherit username;
         hostname = "192.168.1.68";
       };
     };
     "${username}@coconut" = mkHome {
       system = "x86_64-linux";
-      traits = { has, ... }: [ has.git ];
+      traits = with traits; [ programs.git ];
       deploy = {
+        enable = true;
         inherit username;
         hostname = "192.168.1.69";
       };
     };
     "${username}@cookies-and-cream" = mkHome {
       system = "x86_64-linux";
-      traits = { has, ... }: [ has.git ];
+      traits = with traits; [ programs.git ];
       deploy = {
+        enable = true;
         inherit username;
         hostname = "23.95.220.100";
       };
     };
     "${username}@noodle" = mkHome {
       system = "x86_64-darwin";
-      traits = { has, ... }: [ has.git ];
+      traits = with traits; [ programs.git ];
       config = {
         home.homeDirectory = mkForce "/Users/tyler";
       };
     };
     "${username}@peppermint" = mkHome {
       system = "aarch64-darwin";
-      traits = { has, ... }: [ has.git-work ];
+      traits = with traits; [ programs.git-work ];
       config = {
         home.homeDirectory = mkForce "/Users/tylerstefani";
       };

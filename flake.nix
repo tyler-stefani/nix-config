@@ -55,8 +55,7 @@
       imports = [
         home-manager.flakeModules.home-manager
 
-        ./lab
-
+        (import-tree ./lab)
         (import-tree ./modules)
         (import-tree ./traits)
 

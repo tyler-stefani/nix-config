@@ -3,44 +3,38 @@
   config,
   ...
 }:
+let
+  cfg = config.lab.entities.hosts.coconut;
+in
 {
   lab.entities.hosts.coconut = {
     system = "x86_64-linux";
     config = ./configuration.nix;
-    traits =
-      {
-        is,
-        has,
-        hosts,
-        manages,
-        ...
-      }:
-      [
-        is.nixos
-        is.container-host
-        is.mesh-node
-        is.cluster-manager
-        is.ssh-server
+    traits = with config.lab.traits; [
+      attributes.nixos
+      attributes.container-host
+      attributes.mesh-node
+      attributes.cluster-manager
+      attributes.ssh-server
+      attributes.user-tyler
 
-        has.user-tyler
-        has.backups
-        has.metrics
+      programs.backups
+      programs.metrics
 
-        hosts.dns
-        hosts.drive
-        hosts.feed
-        hosts.keep
-        hosts.local-media
-        hosts.media
-        hosts.monitoring
-        hosts.container-monitoring
-        hosts.notes
-        hosts.photos
-        hosts.proxy
-        hosts.records
-
-        manages.container-agent
-      ];
+      services.dns
+      services.drive
+      services.feed
+      services.keep
+      services.local-media
+      services.media
+      services.monitoring
+      services.container-monitoring
+      services.notes
+      services.photos
+      services.proxy
+      services.records
+      services.container-agent
+    ];
     mounts = {
       data = "/home/tyler/shared/safe/data";
       config = "/home/tyler/apps";
@@ -49,6 +43,7 @@
     };
     networking = {
       ips = {
+        self = "192.168.1.69";
         dns = "192.168.1.201";
         macvlan-shim = "192.168.1.211";
       };
@@ -59,8 +54,9 @@
       interfaces.primary = "eno1";
     };
     deploy = {
+      enable = true;
       username = "tyler";
-      hostname = "192.168.1.69";
+      hostname = cfg.networking.ips.self;
     };
   };
 }
