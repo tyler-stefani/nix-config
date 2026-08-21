@@ -57,6 +57,7 @@ with lib;
         programs.browser
         programs.coding-agent
         programs.graphical-editor
+        programs.email
         programs.terminal
         programs.git
       ];
