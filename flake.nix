@@ -45,8 +45,10 @@
 
   outputs =
     {
+      self,
       extras,
       home-manager,
+      disko,
       flake-parts,
       import-tree,
       ...
@@ -54,17 +56,12 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         home-manager.flakeModules.home-manager
+        disko.flakeModules.default
 
         (import-tree ./lab)
         (import-tree ./modules)
         (import-tree ./traits)
-
-        # TODO: structure so that import-tree can be used
-        ./entities/hosts/bloob
-        ./entities/hosts/bubblegum
-        ./entities/hosts/coconut
-        ./entities/hosts/cookies-and-cream
-        ./entities/homes/tyler
+        (import-tree ./entities)
       ];
 
       lab.traits = extras.traits;

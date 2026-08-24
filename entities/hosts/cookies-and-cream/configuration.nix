@@ -1,48 +1,40 @@
-{
-  pkgs,
-  traits,
-  ...
-}:
-{
-  imports = with traits; [ ./hardware-configuration.nix ];
+{ ... }: {
+  lab.traits.attributes.cookies-and-cream.nixos =
+    {
+      self,
+      pkgs,
+      lib,
+      modulesPath,
+      ...
+    }:
+    {
+      imports = [
+        (modulesPath + "/profiles/qemu-guest.nix")
+        self.diskoConfigurations.cookies-and-cream
+      ];
 
-  boot.loader.grub.enable = true;
+      boot.loader.grub.enable = true;
 
-  networking = {
-    hostName = "cookies-and-cream";
-    useDHCP = true;
-    firewall.enable = true;
-  };
+      boot.initrd.availableKernelModules = [
+        "ata_piix"
+        "uhci_hcd"
+        "virtio_pci"
+        "sr_mod"
+        "virtio_blk"
+      ];
+      boot.kernelModules = [ "kvm-intel" ];
 
-  environment.systemPackages = with pkgs; [
-    git
-  ];
-
-  disko.devices = {
-    disk = {
-      vda = {
-        type = "disk";
-        device = "/dev/vda";
-        content = {
-          type = "gpt";
-          partitions = {
-            boot = {
-              size = "1M";
-              type = "EF02";
-            };
-            root = {
-              size = "100%";
-              content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/";
-              };
-            };
-          };
-        };
+      networking = {
+        hostName = "cookies-and-cream";
+        firewall.enable = true;
       };
-    };
-  };
 
-  system.stateVersion = "24.11";
+      nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
+      environment.systemPackages = with pkgs; [
+        git
+      ];
+
+      system.stateVersion = "24.11";
+    };
 }

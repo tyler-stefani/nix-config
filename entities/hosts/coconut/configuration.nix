@@ -1,58 +1,74 @@
-{
-  pkgs,
-  traits,
-  ...
-}:
-{
-  imports = with traits; [ ./hardware-configuration.nix ];
+{ ... }: {
+  lab.traits.attributes.coconut.nixos =
+    {
+      pkgs,
+      self,
+      lib,
+      config,
+      modulesPath,
+      ...
+    }:
+    {
+      imports = [
+        (modulesPath + "/installer/scan/not-detected.nix")
+        self.diskoConfigurations.coconut
+      ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_6_1;
+      boot.loader.systemd-boot.enable = true;
+      boot.loader.efi.canTouchEfiVariables = true;
+      boot.kernelPackages = pkgs.linuxPackages_6_1;
 
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      boot.initrd.availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+        "fuse"
+      ];
+      boot.kernelModules = [ "kvm-intel" ];
 
-  programs.ssh.startAgent = true;
+      fileSystems."/home" = {
+        fsType = "mergerfs";
+        device = "/mnt/merge/*";
+        depends = [
+          "/mnt/merge/01"
+          "/mnt/merge/02"
+        ];
+        options = [
+          "allow_other"
+          "use_ino"
+          "cache.files=partial"
+          "dropcacheonclose=true"
+          "category.create=mfs"
+        ];
+        noCheck = true;
+      };
 
-  networking = {
-    hostName = "coconut";
-    networkmanager.enable = true;
-    firewall.allowedTCPPorts = [ 3000 ];
-  };
+      networking = {
+        hostName = "coconut";
+        networkmanager.enable = true;
+        firewall.allowedTCPPorts = [ 3000 ];
+      };
 
-  virtualisation.docker-swarm.enable-manager = true;
+      nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
-  fileSystems."/home" = {
-    fsType = "mergerfs";
-    device = "/mnt/merge/*";
-    depends = [
-      "/mnt/merge/01"
-      "/mnt/merge/02"
-    ];
-    options = [
-      "allow_other"
-      "use_ino"
-      "cache.files=partial"
-      "dropcacheonclose=true"
-      "category.create=mfs"
-    ];
-    noCheck = true;
-  };
+      hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  programs.fuse.userAllowOther = true;
+      programs.fuse.userAllowOther = true;
+      programs.ssh.startAgent = true;
 
-  environment.systemPackages = with pkgs; [
-    git
-    mergerfs
-    mergerfs-tools
-  ];
+      virtualisation.docker-swarm.enable-manager = true;
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+      sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+      environment.systemPackages = with pkgs; [
+        git
+        mergerfs
+        mergerfs-tools
+      ];
+
+      system.stateVersion = "24.11";
+    };
 }

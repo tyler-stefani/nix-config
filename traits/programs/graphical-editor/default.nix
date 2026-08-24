@@ -3,6 +3,7 @@
   lab.traits.programs.graphical-editor.home =
     { pkgs, ... }:
     {
+      home.packages = [ pkgs.nixfmt ];
       programs.vscodium = {
         enable = true;
         profiles.default = {

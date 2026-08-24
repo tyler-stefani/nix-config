@@ -8,6 +8,15 @@
       ...
     }:
     {
+      security.sudo.extraRules = [
+        {
+          users = [ "tyler" ];
+          commands = [
+            { command = "ALL"; options = [ "NOPASSWD" ]; }
+          ];
+        }
+      ];
+
       users.users.tyler = {
         isNormalUser = true;
         description = "tyler";
@@ -17,7 +26,10 @@
           "docker"
         ];
         homeMode = "711";
-        packages = [ ];
+        packages = [
+          pkgs.restic
+          pkgs.rsync
+        ];
         shell = pkgs.fish;
         openssh.authorizedKeys.keys = lib.mkIf config.services.openssh.enable [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK5w7m9bwtX1tMoxmOKfDRPUeN4scTtpnBTNHdkI8Wgt tyler"

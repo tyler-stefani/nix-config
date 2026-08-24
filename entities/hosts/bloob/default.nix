@@ -2,7 +2,7 @@
 {
   lab.entities.hosts.bloob = {
     system = "x86_64-linux";
-    config = ./configuration.nix;
+    config = config.lab.traits.attributes.bloob.nixos;
     traits = with config.lab.traits; [
       attributes.nixos
       attributes.ssh-server
