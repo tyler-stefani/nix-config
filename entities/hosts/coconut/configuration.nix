@@ -19,12 +19,6 @@
     hostName = "coconut";
     networkmanager.enable = true;
     firewall.allowedTCPPorts = [ 3000 ];
-    oci.networks = {
-      bridge = {
-        enable = true;
-        name = "private";
-      };
-    };
   };
 
   virtualisation.docker-swarm.enable-manager = true;
