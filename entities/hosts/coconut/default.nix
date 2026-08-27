@@ -24,7 +24,7 @@ in
       services.dns
       services.drive
       services.feed
-      services.keep
+      # services.keep
       services.local-media
       services.media
       services.monitoring

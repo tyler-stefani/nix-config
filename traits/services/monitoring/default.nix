@@ -17,9 +17,6 @@
           server = {
             http_addr = "0.0.0.0";
           };
-          security = {
-            secret_key = "SW2YcwTIb9zpOOhoPsMm";
-          };
           auth = {
             oauth_auto_login = false;
           };

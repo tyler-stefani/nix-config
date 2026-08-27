@@ -7,6 +7,8 @@ services:
     command: ["-c", "opencloud server"]
     environment:
       OC_URL: https://${DRIVE_DOMAIN}
+      OC_SERVICE_ACCOUNT_ID: ${OC_SERVICE_ACCOUNT_ID}
+      OC_SERVICE_ACCOUNT_SECRET: ${OC_SERVICE_ACCOUNT_SECRET}
       OC_LOG_LEVEL: warn
       PROXY_TLS: false
       PROXY_CSP_CONFIG_FILE_LOCATION: /etc/opencloud/csp.yaml

@@ -8,14 +8,10 @@
       ...
     }:
     {
-      security.sudo.extraRules = [
-        {
-          users = [ "tyler" ];
-          commands = [
-            { command = "ALL"; options = [ "NOPASSWD" ]; }
-          ];
-        }
-      ];
+      sops.secrets."tyler/hashpass" = {
+        sopsFile = ./secrets/hashpass.yaml;
+        key = "hashpass";
+      };
 
       users.users.tyler = {
         isNormalUser = true;
@@ -26,10 +22,8 @@
           "docker"
         ];
         homeMode = "711";
-        packages = [
-          pkgs.restic
-          pkgs.rsync
-        ];
+        hashedPasswordFile = config.sops.secrets."tyler/hashpass".path;
+        packages = [ ];
         shell = pkgs.fish;
         openssh.authorizedKeys.keys = lib.mkIf config.services.openssh.enable [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK5w7m9bwtX1tMoxmOKfDRPUeN4scTtpnBTNHdkI8Wgt tyler"
