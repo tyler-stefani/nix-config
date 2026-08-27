@@ -72,12 +72,7 @@
                   environmentFile = mkDefault cfg.defaultEnvironmentFile;
                   repositoryFile = mkDefault cfg.defaultRepositoryFile;
 
-                  pruneOpts = [
-                    "--keep-daily ${toString config.snapshotsToKeep.daily}"
-                    "--keep-weekly ${toString config.snapshotsToKeep.weekly}"
-                    "--keep-monthly ${toString config.snapshotsToKeep.monthly}"
-                    "--keep-yearly ${toString config.snapshotsToKeep.yearly}"
-                  ];
+                  pruneOpts = mapAttrsToList (k: v: "--keep-${k} ${toString v}") config.snapshotsToKeep;
                 };
               }
             )
@@ -158,40 +153,28 @@
         services.restic.backups =
           let
             timerConfig = value: value.timerConfig // { RandomizedDelaySec = 1800; };
+
+            # Common fields for every backup entry.
+            mkBackup = name: value: {
+              initialize = true;
+              paths = value.paths;
+              timerConfig = timerConfig value;
+              repositoryFile = cfg.defaultRepositoryFile;
+              environmentFile = cfg.defaultEnvironmentFile;
+              passwordFile = cfg.defaultPasswordFile;
+              extraBackupArgs = [
+                "--tag"
+                name
+              ];
+            };
           in
-          (mapAttrs' (
-            name: value:
-            nameValuePair (name) ({
-              initialize = true;
-              paths = value.paths;
-              timerConfig = timerConfig value;
-              repositoryFile = cfg.defaultRepositoryFile;
-              environmentFile = cfg.defaultEnvironmentFile;
-              passwordFile = cfg.defaultPasswordFile;
-              extraBackupArgs = [
-                "--tag"
-                name
-              ];
-              backupPrepareCommand = "systemctl stop ${value.serviceName}.service";
-              backupCleanupCommand = "systemctl start ${value.serviceName}.service";
-            })
-          ) cfg.serviceBackups)
-          // (mapAttrs' (
-            name: value:
-            nameValuePair (name) ({
-              initialize = true;
-              paths = value.paths;
-              timerConfig = timerConfig value;
-              repositoryFile = cfg.defaultRepositoryFile;
-              environmentFile = cfg.defaultEnvironmentFile;
-              passwordFile = cfg.defaultPasswordFile;
-              extraBackupArgs = [
-                "--tag"
-                name
-              ];
-              backupPrepareCommand = value.prepareCommand;
-            })
-          ) cfg.zeroDowntimeBackups);
+          (mapAttrs' (name: value: nameValuePair name (mkBackup name value // {
+            backupPrepareCommand = "systemctl stop ${value.serviceName}.service";
+            backupCleanupCommand = "systemctl start ${value.serviceName}.service";
+          })) cfg.serviceBackups)
+          // (mapAttrs' (name: value: nameValuePair name (mkBackup name value // {
+            backupPrepareCommand = value.prepareCommand;
+          })) cfg.zeroDowntimeBackups);
       };
     };
 }

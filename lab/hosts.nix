@@ -1,4 +1,5 @@
 {
+  self,
   lib,
   config,
   inputs,
@@ -41,6 +42,7 @@ in
       inputs.nixpkgs.lib.nixosSystem {
         system = value.system;
         specialArgs = {
+          inherit self;
           inherit (value) mounts networking;
           nixpkgs-unstable = import inputs.nixpkgs-unstable {
             system = value.system;

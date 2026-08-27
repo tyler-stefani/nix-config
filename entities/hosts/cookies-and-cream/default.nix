@@ -9,7 +9,7 @@ in
 {
   lab.entities.hosts.cookies-and-cream = {
     system = "x86_64-linux";
-    config = ./configuration.nix;
+    config = config.lab.traits.attributes.cookies-and-cream.nixos;
     traits = with config.lab.traits; [
       attributes.nixos
       attributes.container-host

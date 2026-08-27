@@ -1,6 +1,6 @@
 { ... }:
 {
-  disko.devices = {
+  flake.diskoConfigurations.bubblegum.disko.devices = {
     disk = {
       sda = {
         type = "disk";

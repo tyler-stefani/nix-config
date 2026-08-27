@@ -8,6 +8,11 @@
       ...
     }:
     {
+      sops.secrets."tyler/hashpass" = {
+        sopsFile = ./secrets/hashpass.yaml;
+        key = "hashpass";
+      };
+
       users.users.tyler = {
         isNormalUser = true;
         description = "tyler";
@@ -17,6 +22,7 @@
           "docker"
         ];
         homeMode = "711";
+        hashedPasswordFile = config.sops.secrets."tyler/hashpass".path;
         packages = [ ];
         shell = pkgs.fish;
         openssh.authorizedKeys.keys = lib.mkIf config.services.openssh.enable [
