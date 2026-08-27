@@ -13,11 +13,13 @@ in
     traits = with config.lab.traits; [
       attributes.nixos
       attributes.container-host
+      attributes.mesh-node
       attributes.public-facing
       attributes.ssh-server
       attributes.user-tyler
 
       services.mesh-vpn
+      services.uptime-monitoring
     ];
     mounts = {
       config = "/home/tyler/apps";
