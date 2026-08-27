@@ -38,8 +38,7 @@
         experimental-features = "nix-command flakes pipe-operators";
       };
 
-      hardware.cpu.intel.updateMicrocode =
-        lib.mkDefault config.hardware.enableRedistributableFirmware;
+      hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
       services.avahi = {
         enable = true;

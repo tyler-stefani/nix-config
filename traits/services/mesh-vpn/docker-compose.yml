@@ -35,8 +35,8 @@ services:
       - "--serverstransport.forwardingtimeouts.idleconntimeout=0s"
       - "--providers.file.filename=/etc/traefik/dynamic.yaml"
     ports:
-      - '443:443'
-      - '80:80'
+      - "443:443"
+      - "80:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - netbird_traefik_letsencrypt:/letsencrypt
@@ -77,7 +77,7 @@ services:
     restart: unless-stopped
     networks: [netbird]
     ports:
-      - '3478:3478/udp'
+      - "3478:3478/udp"
     volumes:
       - netbird_data:/var/lib/netbird
       - ${CONFIG_PATH}/config.yaml:/etc/netbird/config.yaml
@@ -108,14 +108,11 @@ services:
         max-size: "500m"
         max-file: "2"
 
-  # NetBird Proxy - exposes internal resources to the internet
-  # Published host port is 53230 (container stays on 51820) so that cookies-and-
-  # cream can run a NetBird mesh node client on host UDP 51820 without a clash.
   proxy:
     image: netbirdio/reverse-proxy:latest
     container_name: netbird-proxy
     ports:
-    - 53230:51820/udp
+      - 53230:51820/udp
     restart: unless-stopped
     networks: [netbird]
     depends_on:

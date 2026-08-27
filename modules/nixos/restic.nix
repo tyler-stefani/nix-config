@@ -168,13 +168,25 @@
               ];
             };
           in
-          (mapAttrs' (name: value: nameValuePair name (mkBackup name value // {
-            backupPrepareCommand = "systemctl stop ${value.serviceName}.service";
-            backupCleanupCommand = "systemctl start ${value.serviceName}.service";
-          })) cfg.serviceBackups)
-          // (mapAttrs' (name: value: nameValuePair name (mkBackup name value // {
-            backupPrepareCommand = value.prepareCommand;
-          })) cfg.zeroDowntimeBackups);
+          (mapAttrs' (
+            name: value:
+            nameValuePair name (
+              mkBackup name value
+              // {
+                backupPrepareCommand = "systemctl stop ${value.serviceName}.service";
+                backupCleanupCommand = "systemctl start ${value.serviceName}.service";
+              }
+            )
+          ) cfg.serviceBackups)
+          // (mapAttrs' (
+            name: value:
+            nameValuePair name (
+              mkBackup name value
+              // {
+                backupPrepareCommand = value.prepareCommand;
+              }
+            )
+          ) cfg.zeroDowntimeBackups);
       };
     };
 }
