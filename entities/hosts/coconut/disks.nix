@@ -34,18 +34,27 @@
                   };
                   "@fast".mountpoint = "/home/tyler/fast";
                   "@home".mountpoint = "/mnt/merge/01";
-                  "@data".mountpoint = "/mnt/merge/01/data";
-                  "@config".mountpoint = "/mnt/merge/01/config";
-                  "@media".mountpoint = "/mnt/merge/01/media";
+                  "@data" = {
+                    mountpoint = "/mnt/merge/01/data";
+                    mountOptions = [ "noatime" ];
+                  };
+                  "@config" = {
+                    mountpoint = "/mnt/merge/01/config";
+                    mountOptions = [ "noatime" ];
+                  };
+                  "@media" = {
+                    mountpoint = "/mnt/merge/01/media";
+                    mountOptions = [ "noatime" ];
+                  };
                 };
               };
             };
           };
         };
       };
-      sda = {
+      ssd01 = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/sdc";
         content = {
           type = "gpt";
           partitions = {
@@ -62,12 +71,77 @@
                 type = "btrfs";
                 extraArgs = [ "-f" ];
                 subvolumes = {
-                  "@home".mountpoint = "/mnt/merge/02";
-                  "@data".mountpoint = "/mnt/merge/02/data";
-                  "@config".mountpoint = "/mnt/merge/02/config";
-                  "@media".mountpoint = "/mnt/merge/02/media";
+                  "@home" = {
+                    mountpoint = "/mnt/merge/02";
+                    mountOptions = [ "noatime" ];
+                  };
+                  "@data" = {
+                    mountpoint = "/mnt/merge/02/data";
+                    mountOptions = [ "noatime" ];
+                  };
+                  "@config" = {
+                    mountpoint = "/mnt/merge/02/config";
+                    mountOptions = [ "noatime" ];
+                  };
+                  "@media" = {
+                    mountpoint = "/mnt/merge/02/media";
+                    mountOptions = [ "noatime" ];
+                  };
                 };
               };
+            };
+          };
+        };
+      };
+      hdd01 = {
+        type = "disk";
+        device = "/dev/sdb";
+        content = {
+          type = "gpt";
+          partitions = {
+            data = {
+              size = "100%";
+              content = {
+                type = "btrfs";
+                extraArgs = [ "-f" ];
+                subvolumes = {
+                  "@home" = {
+                    mountpoint = "/mnt/merge/03";
+                    mountOptions = [ "noatime" ];
+                  };
+                  "@data" = {
+                    mountpoint = "/mnt/merge/03/data";
+                    mountOptions = [ "noatime" ];
+                  };
+                  "@config" = {
+                    mountpoint = "/mnt/merge/03/config";
+                    mountOptions = [ "noatime" ];
+                  };
+                  "@media" = {
+                    mountpoint = "/mnt/merge/03/media";
+                    mountOptions = [ "noatime" ];
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+      hdd02 = {
+        type = "disk";
+        device = "/dev/sda";
+        content = {
+          type = "gpt";
+          partitions.data = {
+            size = "100%";
+            content = {
+              type = "btrfs";
+              extraArgs = [ "-f" ];
+              mountpoint = "/mnt/parity";
+              mountOptions = [
+                "nodatacow"
+                "noatime"
+              ];
             };
           };
         };

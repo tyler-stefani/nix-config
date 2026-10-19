@@ -35,6 +35,7 @@
         depends = [
           "/mnt/merge/01"
           "/mnt/merge/02"
+          "/mnt/merge/03"
         ];
         options = [
           "allow_other"
@@ -62,6 +63,24 @@
       virtualisation.docker-swarm.enable-manager = true;
 
       sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+      services.snapraid = {
+        enable = true;
+        dataDisks = {
+          d1 = "/mnt/merge/01";
+          d2 = "/mnt/merge/02";
+          d3 = "/mnt/merge/03";
+        };
+        parityFiles = [ "/mnt/parity/snapraid.parity" ];
+        contentFiles = [
+          "/mnt/parity/snapraid.content"
+          "/mnt/merge/01/snapraid.content"
+          "/mnt/merge/02/snapraid.content"
+          "/mnt/merge/03/snapraid.content"
+        ];
+        sync.interval = "*-*-* 04/12:00:00";
+        scrub.interval = "Mon *-*-* 04:00:00";
+      };
 
       environment.systemPackages = with pkgs; [
         git
