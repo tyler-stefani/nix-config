@@ -18,6 +18,8 @@ in
       attributes.ssh-server
       attributes.user-tyler
 
+      programs.backups
+
       services.mesh-vpn
       services.uptime-monitoring
     ];

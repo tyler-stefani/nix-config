@@ -5,6 +5,13 @@
     hostname = "netbird-server";
     module =
       { config, mounts, ... }:
+      let
+        configDir = "${mounts.config}/netbird";
+        dataDir = "${configDir}/data";
+        letsencryptDir = "${configDir}/letsencrypt";
+        proxyCertsDir = "${configDir}/proxy-certs";
+        crowdsecDataDir = "${configDir}/crowdsec-data";
+      in
       {
         sops.envs = {
           mesh-vpn-dash = {
@@ -23,8 +30,18 @@
           env = {
             DASHBOARD_ENV_PATH = config.sops.envs.mesh-vpn-dash.path;
             PROXY_ENV_PATH = config.sops.envs.mesh-vpn-proxy.path;
-            CONFIG_PATH = "${mounts.config}/netbird";
+            CONFIG_PATH = configDir;
+            NETBIRD_DATA_DIR = dataDir;
+            LETSENCRYPT_DIR = letsencryptDir;
+            PROXY_CERTS_DIR = proxyCertsDir;
+            CROWDSEC_DATA_DIR = crowdsecDataDir;
           };
+        };
+        services.restic.serviceBackups.mesh-vpn = {
+          serviceName = config.virtualisation.docker-compose.mesh-vpn.serviceName;
+          paths = [
+            configDir
+          ];
         };
         networking.firewall.allowedTCPPorts = [
           80

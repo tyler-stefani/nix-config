@@ -39,7 +39,7 @@ services:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - netbird_traefik_letsencrypt:/letsencrypt
+      - ${LETSENCRYPT_DIR}:/letsencrypt
       - ${CONFIG_PATH}/traefik-dynamic.yaml:/etc/traefik/dynamic.yaml:ro
     logging:
       driver: "json-file"
@@ -79,7 +79,7 @@ services:
     ports:
       - "3478:3478/udp"
     volumes:
-      - netbird_data:/var/lib/netbird
+      - ${NETBIRD_DATA_DIR}:/var/lib/netbird
       - ${CONFIG_PATH}/config.yaml:/etc/netbird/config.yaml
     command: ["--config", "/etc/netbird/config.yaml"]
     labels:
@@ -123,7 +123,7 @@ services:
     env_file:
       - ${PROXY_ENV_PATH}
     volumes:
-      - netbird_proxy_certs:/certs
+      - ${PROXY_CERTS_DIR}:/certs
     labels:
       # TCP passthrough for any unmatched domain (proxy handles its own TLS)
       - traefik.enable=true
@@ -149,7 +149,7 @@ services:
       COLLECTIONS: crowdsecurity/linux
     volumes:
       - ${CONFIG_PATH}/crowdsec:/etc/crowdsec
-      - crowdsec_db:/var/lib/crowdsec/data
+      - ${CROWDSEC_DATA_DIR}:/var/lib/crowdsec/data
     healthcheck:
       test: [CMD, cscli, lapi, status]
       interval: 10s
@@ -162,12 +162,6 @@ services:
       options:
         max-size: "500m"
         max-file: "2"
-
-volumes:
-  netbird_data:
-  netbird_traefik_letsencrypt:
-  netbird_proxy_certs:
-  crowdsec_db:
 
 networks:
   netbird:
