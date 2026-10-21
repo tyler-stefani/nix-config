@@ -12,6 +12,7 @@ let
 
   headlessTraits = with traits; [
     programs.editor
+    programs.coding-agent
     programs.prompt
     programs.shell
     programs.styling
@@ -55,7 +56,6 @@ with lib;
       system = "x86_64-linux";
       traits = with traits; [
         programs.browser
-        programs.coding-agent
         programs.graphical-editor
         programs.email
         programs.terminal

@@ -4,7 +4,7 @@
     {
       lib,
       config,
-      pkgs,
+      nixpkgs-unstable,
       ...
     }:
     with lib;
@@ -22,18 +22,30 @@
           }) files
         );
 
+      linkInstructionFiles =
+        files:
+        listToAttrs (
+          map (f: {
+            name = ".pi/agent/${builtins.baseNameOf f}";
+            value = {
+              source = f;
+            };
+          }) files
+        );
+
       linkedFiles =
         linkFilesIn "extensions" cfg.extensions
         // linkFilesIn "themes" cfg.themes
         // linkFilesIn "prompts" cfg.prompts
-        // linkFilesIn "skills" cfg.skills;
+        // linkFilesIn "skills" cfg.skills
+        // linkInstructionFiles cfg.instructions;
 
     in
     {
       options.programs.pi = {
         enable = mkEnableOption "pi coding agent";
 
-        package = mkPackageOption pkgs "pi-coding-agent" { };
+        package = mkPackageOption nixpkgs-unstable "pi-coding-agent" { };
 
         extensions = mkOption {
           type = types.listOf types.path;
@@ -72,6 +84,17 @@
           description = ''
             Skills to symlink into ~/.pi/agent/skills/.
             Files are linked by their basename.
+          '';
+        };
+
+        instructions = mkOption {
+          type = types.listOf types.path;
+          default = [ ];
+          example = [ ./AGENTS.md ];
+          description = ''
+            Markdown instruction files (e.g. AGENTS.md) to symlink into
+            ~/.pi/agent/. Files are linked by their basename and apply to
+            all pi agents across working directories.
           '';
         };
       };

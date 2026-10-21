@@ -44,6 +44,9 @@ in
       name: value:
       inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = import inputs.nixpkgs { inherit (value) system; };
+        extraSpecialArgs = {
+          nixpkgs-unstable = import inputs.nixpkgs-unstable { inherit (value) system; };
+        };
         modules = [
           inputs.nixvim.homeModules.nixvim
           inputs.stylix.homeModules.stylix
