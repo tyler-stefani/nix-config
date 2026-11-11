@@ -209,14 +209,150 @@ async function toggleCheatSheet(ctx: any): Promise<void> {
 	}
 }
 
-const PI_LOGO = [
-	"████████████████",
-	"████████████████",
-	"  ████    ████  ",
-	"  ████    ████  ",
-	"  ████    ████  ",
-	"  ████    ████  ",
-];
+const GENGAR_BASE64 =
+	"AAAAAAAAAAAAAAAAAAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+	"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/3tj" +
+	"tf8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+	"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/3tjtf97Y7X/AAAA/wAAAP8AAAAA" +
+	"AAAAAAAAAAAAAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8A" +
+	"AAD/AAAAAAAAAAAAAAAAAAAAAAAAAP97Y7X/e2O1/3tjtf8AAAD/AAAAAAAAAP+ce9b/AAAA/wAA" +
+	"AAAAAAD/AAAA/wAAAAAAAAAAAAAAAAAAAP8AAAD/nHvW/5x71v8AAAD/AAAAAAAAAAAAAAAAAAAA" +
+	"AAAAAP97Y7X/e2O1/3tjtf97Y7X/AAAA/5x71v+ce9b/AAAA/wAAAP+ce9b/AAAA/wAAAAAAAAD/" +
+	"AAAA/5x71v+ce9b/e2O1/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP97Y7X/e2O1/3tjtf9B" +
+	"QUH/nHvW/5x71v+ce9b/AAAA/5x71v+ce9b/AAAA/wAAAP+ce9b/nHvW/5x71v97Y7X/e2O1/wAA" +
+	"AP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/QUFB/5x71v+ce9b/nHvW/5x71v+ce9b/nHvW" +
+	"/5x71v9BQUH/QUFB/5x71v+ce9b/nHvW/3tjtf97Y7X/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+	"AAAAAAAAAAAAAAD/nHvW/5x71v+ce9b/nHvW/5x71v+ce9b/nHvW/5x71v97Y7X/e2O1/5x71v97" +
+	"Y7X/e2O1/3tjtf97Y7X/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP97Y7X/nHvW/5x7" +
+	"1v+ce9b/nHvW/5x71v+ce9b/nHvW/3tjtf97Y7X/e2O1/3tjtf97Y7X/e2O1/3tjtf8AAAD/AAAA" +
+	"AAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/7VrlP97Y7X/e2O1/5x71v+ce9b/nHvW/5x71v97Y7X/" +
+	"e2O1/3tjtf97Y7X/e2O1/3tjtf97Y7X/e2O1/0FBQf9rUpT/AAAA/wAAAP8AAAAAAAAAAAAAAP9r" +
+	"UpT/QUFB/+97c/97Y7X/e2O1/3tjtf97Y7X/e2O1/3tjtf97Y7X/e2O1/7VrlP+1a5T/e2O1/3tj" +
+	"tf97Y7X/e2O1/2tSlP9rUpT/a1KU/wAAAP8AAAAAAAAA/2tSlP9rUpT/QUFB/+97c/8AAAD/e2O1" +
+	"/3tjtf97Y7X/e2O1/3tjtf+1a5T/73tz/+97c/97Y7X/e2O1/3tjtf97Y7X/QUFB/2tSlP9rUpT/" +
+	"AAAA/wAAAAAAAAAAAAAA/2tSlP9rUpT/QUFB/3tjtf97Y7X/e2O1/3tjtf97Y7X/73tz/wAAAP/v" +
+	"e3P/73tz/7VrlP97Y7X/e2O1/3tjtf97Y7X/e2O1/0FBQf9rUpT/a1KU/wAAAP8AAAAAAAAAAAAA" +
+	"AP8AAAD/AAAA/0FBQf97Y7X/e2O1/3tjtf97Y7X/e2O1/+97c//ve3P/tWuU/3tjtf97Y7X/a1KU" +
+	"/3tjtf97Y7X/e2O1/3tjtf9BQUH/a1KU/2tSlP8AAAD/AAAAAAAAAAAAAAAAAAAA/72ttf9BQUH/" +
+	"QUFB/3tjtf97Y7X/e2O1/3tjtf97Y7X/e2O1/0FBQf9BQUH/e2O1/3tjtf97Y7X/e2O1/3tjtf97" +
+	"Y7X/QUFB/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//////va21/0FBQf9BQUH/QUFB/0FB" +
+	"Qf9BQUH/QUFB//////9rUpT/e2O1/3tjtf97Y7X/e2O1/3tjtf9BQUH/a1KU/wAAAP8AAAAAAAAA" +
+	"AAAAAAAAAAAAAAAAAAAAAP97Y7X/va21////////////va21//////+9rbX//////2tSlP97Y7X/" +
+	"e2O1/0FBQf9BQUH/e2O1/3tjtf97Y7X/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+	"AAD/e2O1/72ttf//////va21//////9rUpT/a1KU/3tjtf97Y7X/e2O1/3tjtf97Y7X/QUFB/0FB" +
+	"Qf9BQUH/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/QUFB/3tjtf97Y7X/a1KU" +
+	"/2tSlP97Y7X/e2O1/3tjtf97Y7X/e2O1/3tjtf97Y7X/e2O1/3tjtf9BQUH/a1KU/wAAAP8AAAAA" +
+	"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/a1KU/0FBQf9BQUH/e2O1/3tjtf97Y7X/e2O1/3tjtf97" +
+	"Y7X/e2O1/2tSlP97Y7X/e2O1/3tjtf9BQUH/a1KU/2tSlP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAA" +
+	"AAAAAAAAAAAA/2tSlP9rUpT/QUFB/wAAAP97Y7X/e2O1/3tjtf9rUpT/a1KU/3tjtf97Y7X/e2O1" +
+	"/0FBQf9rUpT/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/" +
+	"AAAA/wAAAAAAAAD/AAAA/wAAAP97Y7X/e2O1/3tjtf97Y7X/e2O1/wAAAP8AAAD/AAAAAAAAAAAA" +
+	"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+	"AAAAAAD/e2O1/3tjtf97Y7X/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+	"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8AAAD/" +
+	"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+
+const GENGAR_WIDTH = 24;
+const GENGAR_HEIGHT = 24;
+
+function buildGengarLines(): string[] {
+	const pixels = Buffer.from(GENGAR_BASE64, "base64");
+	const FOREGROUND = "\x1b[38;2;";
+	const BACKGROUND = "\x1b[48;2;";
+	const DEFAULT_BG = "\x1b[49m";
+	const RESET = "\x1b[0m";
+	const offset = (x: number, y: number) => (y * GENGAR_WIDTH + x) * 4;
+	const rgb = (o: number) => `${pixels[o]};${pixels[o + 1]};${pixels[o + 2]}`;
+	const lines: string[] = [];
+	for (let y = 0; y < GENGAR_HEIGHT; y += 2) {
+		let line = "";
+		for (let x = 0; x < GENGAR_WIDTH; x++) {
+			const top = offset(x, y);
+			const topOpaque = pixels[top + 3] >= 128;
+			const bottomOpaque = y + 1 < GENGAR_HEIGHT && pixels[offset(x, y + 1) + 3] >= 128;
+			if (!topOpaque && !bottomOpaque) {
+				line += `${DEFAULT_BG} `;
+			} else if (topOpaque && bottomOpaque) {
+				line += `${FOREGROUND}${rgb(top)}m${BACKGROUND}${rgb(offset(x, y + 1))}m▀`;
+			} else if (topOpaque) {
+				line += `${FOREGROUND}${rgb(top)}m${DEFAULT_BG}▀`;
+			} else {
+				line += `${FOREGROUND}${rgb(offset(x, y + 1))}m${DEFAULT_BG}▄`;
+			}
+		}
+		lines.push(`${line}${RESET}`);
+	}
+	return lines;
+}
+
+const GENGAR_LINES = buildGengarLines();
+
+/*
+const BULBASAUR_BASE64 =
+	"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";
+
+const BULBASAUR_WIDTH = 20;
+const BULBASAUR_HEIGHT = 19;
+
+function buildBulbasaurLines(): string[] {
+	const pixels = Buffer.from(BULBASAUR_BASE64, "base64");
+	const FOREGROUND = "\x1b[38;2;";
+	const BACKGROUND = "\x1b[48;2;";
+	const DEFAULT_BG = "\x1b[49m";
+	const RESET = "\x1b[0m";
+	const offset = (x: number, y: number) => (y * BULBASAUR_WIDTH + x) * 4;
+	const rgb = (o: number) => `${pixels[o]};${pixels[o + 1]};${pixels[o + 2]}`;
+	const lines: string[] = [];
+	for (let y = 0; y < BULBASAUR_HEIGHT; y += 2) {
+		let line = "";
+		for (let x = 0; x < BULBASAUR_WIDTH; x++) {
+			const top = offset(x, y);
+			const topOpaque = pixels[top + 3] >= 128;
+			const bottomOpaque = y + 1 < BULBASAUR_HEIGHT && pixels[offset(x, y + 1) + 3] >= 128;
+			if (!topOpaque && !bottomOpaque) {
+				line += `${DEFAULT_BG} `;
+			} else if (topOpaque && bottomOpaque) {
+				line += `${FOREGROUND}${rgb(top)}m${BACKGROUND}${rgb(offset(x, y + 1))}m▀`;
+			} else if (topOpaque) {
+				line += `${FOREGROUND}${rgb(top)}m${DEFAULT_BG}▀`;
+			} else {
+				line += `${FOREGROUND}${rgb(offset(x, y + 1))}m${DEFAULT_BG}▄`;
+			}
+		}
+		lines.push(`${line}${RESET}`);
+	}
+	return lines;
+}
+
+const BULBASAUR_LINES = buildBulbasaurLines();
+*/
+
 
 interface GitFile {
 	code: string;
@@ -326,15 +462,6 @@ class Sidebar implements Component {
 		return home && cwd.startsWith(home) ? `~${cwd.slice(home.length)}` : cwd;
 	}
 
-	private hyperStatus(): string | undefined {
-		try {
-			const text = this.footerData.getExtensionStatuses?.()?.get?.("hyper");
-			return text ? text.replace(/[\r\n\t]/g, " ").replace(/ +/g, " ").trim() : undefined;
-		} catch {
-			return undefined;
-		}
-	}
-
 	invalidate(): void {
 		/* rendered fresh every frame */
 	}
@@ -362,8 +489,6 @@ class Sidebar implements Component {
 				`${theme.fg("dim", `/${fmtTokens(usage.contextWindow)}`)} ${theme.fg(color, pctStr)}`;
 		}
 		stats += ` ${theme.fg("dim", "cost")} ${theme.fg("text", `$${this.totalCost().toFixed(4)}`)}`;
-		const hyper = this.hyperStatus();
-		if (hyper) stats += `  ${hyper}`;
 
 		let changes: string;
 		if (this.error) {
@@ -404,7 +529,7 @@ class Sidebar implements Component {
 
 		const body: string[] = [];
 		body.push(blank());
-		for (const line of PI_LOGO) body.push(center(theme.fg("accent", line)));
+		for (const line of GENGAR_LINES) body.push(center(line));
 		body.push(blank());
 
 		// Directory
@@ -428,8 +553,6 @@ class Sidebar implements Component {
 			body.push(row(ctxLine));
 		}
 		body.push(row(`${theme.fg("muted", "cost")} ${theme.fg("text", `$${this.totalCost().toFixed(4)}`)}`));
-		const hyper = this.hyperStatus();
-		if (hyper) body.push(row(hyper));
 		body.push(blank());
 
 		// Changes
