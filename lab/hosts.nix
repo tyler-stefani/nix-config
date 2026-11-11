@@ -51,6 +51,7 @@ in
         modules = [
           inputs.sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
+          inputs.stylix.nixosModules.stylix
           value.config
         ]
         ++ builtins.attrValues config.flake.nixosModules
