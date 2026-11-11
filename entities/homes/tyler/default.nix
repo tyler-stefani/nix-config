@@ -58,6 +58,7 @@ with lib;
         programs.browser
         programs.graphical-editor
         programs.email
+        programs.music
         programs.terminal
         programs.git
       ];
