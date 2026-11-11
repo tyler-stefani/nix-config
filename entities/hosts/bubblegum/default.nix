@@ -20,6 +20,7 @@ in
 
       programs.backups
       programs.metrics
+      programs.styling
 
       services.auth
       services.dash

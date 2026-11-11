@@ -10,6 +10,7 @@ services:
       - MINIFLUX_LINKS_URL=${MINIFLUX_URL}
     volumes:
       - ${CONFIG_DIR}:/app/config
+      - ${THEME_FILE}:/app/config/theme.yml
     networks:
       - cluster
 
