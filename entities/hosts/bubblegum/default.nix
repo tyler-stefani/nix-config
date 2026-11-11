@@ -23,6 +23,7 @@ in
       programs.styling
 
       services.auth
+      services.contacts
       services.dash
       services.dns
       services.home-automation

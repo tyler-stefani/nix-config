@@ -1,0 +1,42 @@
+services:
+  contacts:
+    container_name: contacts-server
+    image: tomsquest/docker-radicale:${RADICALE_VERSION}
+    restart: unless-stopped
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETUID
+      - SETGID
+      - CHOWN
+      - KILL
+    environment:
+      UID: "1000"
+      GID: "1000"
+      RADICALE_CONFIG_AUTH_TYPE: htpasswd
+      RADICALE_CONFIG_AUTH_HTPASSWD_FILENAME: /config/users
+      RADICALE_CONFIG_AUTH_HTPASSWD_ENCRYPTION: bcrypt
+      RADICALE_CONFIG_WEB_PREFER_BROWSER_LOGIN: "True"
+    env_file:
+      - ${ENV_FILE_PATH}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        umask 077
+        printf '%s\n' "$$HTPASSWD_USERS" > /config/users
+        chown radicale:radicale /config/users
+        exec su-exec radicale /venv/bin/radicale --config /config/config
+    expose:
+      - 5232
+    volumes:
+      - ${DATA_DIR}:/data
+    networks:
+      - cluster
+
+networks:
+  cluster:
+    external: true
