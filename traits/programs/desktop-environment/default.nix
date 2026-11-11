@@ -1,7 +1,7 @@
 { ... }:
 {
   lab.traits.programs.desktop-environment.nixos =
-    { nixpkgs-unstable, ... }:
+    { pkgs, nixpkgs-unstable, ... }:
     {
       # nixpkgs.overlays = [
       #   (final: prev: {
@@ -33,5 +33,7 @@
 
       services.displayManager.cosmic-greeter.enable = true;
       services.desktopManager.cosmic.enable = true;
+
+      environment.systemPackages = [ pkgs.wl-clipboard ];
     };
 }
