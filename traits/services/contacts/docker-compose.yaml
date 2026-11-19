@@ -12,6 +12,7 @@ services:
       - SETUID
       - SETGID
       - CHOWN
+      - DAC_READ_SEARCH
       - KILL
     environment:
       UID: "1000"
